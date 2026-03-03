@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /mi-portal.html
+
+Sitemap: https://memaneinternational.in/sitemap.xml
