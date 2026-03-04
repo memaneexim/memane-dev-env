@@ -379,6 +379,19 @@ footer{background:var(--ndk);padding:48px 0 0;}
 <!-- WA FLOAT -->
 <div id="waf" onclick="openWA()" title="WhatsApp Us">💬</div>
 
+<!-- WhatsApp Prompt Modal -->
+<div id="wa-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.5);align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:16px;padding:28px 32px;max-width:380px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3);">
+    <div style="font-size:2.5rem;margin-bottom:12px;">💬</div>
+    <h3 style="color:var(--navy);margin-bottom:8px;font-size:1.1rem;">Send via WhatsApp too?</h3>
+    <p style="color:var(--mut);font-size:.88rem;margin-bottom:20px;" id="wa-modal-msg">Get an instant response on WhatsApp!</p>
+    <div style="display:flex;gap:10px;justify-content:center;">
+      <button onclick="waModalYes()" style="background:#25D366;color:#fff;border:none;padding:10px 24px;border-radius:8px;font-weight:700;cursor:pointer;font-size:.9rem;">Yes, Send on WhatsApp</button>
+      <button onclick="waModalNo()" style="background:var(--off);color:var(--navy);border:1px solid var(--bdr);padding:10px 20px;border-radius:8px;font-weight:600;cursor:pointer;font-size:.9rem;">No Thanks</button>
+    </div>
+  </div>
+</div>
+
 <!-- ════════════════════════════════════════════════════
      HOME
 ════════════════════════════════════════════════════ -->
@@ -611,14 +624,12 @@ footer{background:var(--ndk);padding:48px 0 0;}
   </div></section>
 
   <section class="sec" style="background:#fff;"><div class="con">
-    <div style="position:relative;border-radius:12px;overflow:hidden;height:280px;margin-bottom:40px;">
-      <img src="https://images.unsplash.com/photo-1561494738-b9a05e834069?w=1200&q=80" alt="India Agriculture Farms" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
-      <div style="position:absolute;inset:0;background:rgba(10,18,45,.65);display:flex;align-items:center;justify-content:center;">
-        <div style="text-align:center;padding:20px;">
-          <div style="font-family:'Playfair Display',serif;font-size:1.6rem;color:#fff;margin-bottom:8px;">Headquartered in Pune, Maharashtra</div>
-          <div style="color:rgba(255,255,255,.7);font-size:.9rem;">Supplier links across multiple cities in India · Ready to export worldwide</div>
-        </div>
-      </div>
+    <div style="border-radius:12px;overflow:hidden;height:300px;margin-bottom:40px;box-shadow:0 4px 20px rgba(0,0,0,.1);">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d242058.08047783535!2d73.72288!3d18.52461!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf2e67461101%3A0x828d43bf9d9ee343!2sPune%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1709500000000!5m2!1sen!2sin"
+        width="100%" height="300" style="border:0;display:block;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade" title="Memane International — Pune, Maharashtra, India">
+      </iframe>
     </div>
     <div class="ctr fade" style="margin-bottom:24px;"><div class="stag">Compliance</div><h2 class="sh">Certifications &amp; <span>Compliance</span></h2></div>
     <div class="clst">
@@ -654,13 +665,13 @@ footer{background:var(--ndk);padding:48px 0 0;}
           <div class="citem"><div class="cico">📍</div><div><div class="clbl">Address</div><div class="cval">Pune, Maharashtra, India</div></div></div>
           <div class="citem"><div class="cico">📞</div><div><div class="clbl">Phone</div><div class="cval"><a href="tel:+918999662331">+91 8999662331</a> &nbsp;|&nbsp; <a href="tel:+919011503140">+91 9011503140</a></div></div></div>
           <div class="citem"><div class="cico">📱</div><div><div class="clbl">WhatsApp</div><div class="cval"><a onclick="openWA()" style="color:var(--grn);">+91 8999662331 — Chat Now →</a></div></div></div>
-          <div class="citem"><div class="cico">📧</div><div><div class="clbl">Email</div><div class="cval"><a href="/cdn-cgi/l/email-protection#9df4f3fbf2ddf0f8f0fcf3f8f4f3e9f8eff3fce9f4f2f3fcf1b3f4f3"><span class="__cf_email__" data-cfemail="0e676068614e636b636f606b67607a6b7c606f7a6761606f62206760">[email&#160;protected]</span></a><br><a href="/cdn-cgi/l/email-protection#d1bcb4bcb0bfb4b4a9b8bc91b6bcb0b8bdffb2bebc"><span class="__cf_email__" data-cfemail="711c141c101f141409181c31161c10181d5f121e1c">[email&#160;protected]</span></a></div></div></div>
+          <div class="citem"><div class="cico">📧</div><div><div class="clbl">Email</div><div class="cval"><span class="em-show" data-u="info" data-d="memaneinternational.in"></span><br><span class="em-show" data-u="memaneexim" data-d="gmail.com"></span></div></div></div>
           <div class="citem"><div class="cico">🌐</div><div><div class="clbl">Website</div><div class="cval">www.memaneinternational.in</div></div></div>
           <div class="citem"><div class="cico">🕘</div><div><div class="clbl">Business Hours</div><div class="cval">Monday – Saturday, 9:00 AM – 6:00 PM IST</div></div></div>
         </div>
         <div style="display:flex;flex-direction:column;gap:9px;margin-top:18px;">
           <a onclick="openWA()" class="btn-wa" style="justify-content:center;">💬 Chat on WhatsApp</a>
-          <a href="/cdn-cgi/l/email-protection#6801060e0728050d0509060d01061c0d1a06091c0107060904460106" class="btn-r" style="justify-content:center;">✉ Send Email</a>
+          <a id="btn-send-email" href="#" class="btn-r" style="justify-content:center;">✉ Send Email</a>
         </div>
         <div class="wnxt" style="margin-top:18px;">
           <h4>What Happens After You Contact Us?</h4>
@@ -757,8 +768,8 @@ footer{background:var(--ndk);padding:48px 0 0;}
 <template id="ftpl">
 <div class="ft-cta">
   <div class="ft-cta-in">
-    <a href="/cdn-cgi/l/email-protection#92fbfcf4fdd2fff7fff3fcf7fbfce6f7e0fcf3e6fbfdfcf3febcfbfc">✉ <span class="__cf_email__" data-cfemail="ddb4b3bbb29db0b8b0bcb3b8b4b3a9b8afb3bca9b4b2b3bcb1f3b4b3">[email&#160;protected]</span></a>
-    <a href="/cdn-cgi/l/email-protection#a3cec6cec2cdc6c6dbcacee3c4cec2cacf8dc0ccce">✉ <span class="__cf_email__" data-cfemail="4c2129212d2229293425210c2b212d2520622f2321">[email&#160;protected]</span></a>
+    <span class="em-show" data-u="info" data-d="memaneinternational.in" data-pre="✉ "></span>
+    <span class="em-show" data-u="memaneexim" data-d="gmail.com" data-pre="✉ "></span>
     <a href="tel:+918999662331">📞 +91 8999662331</a>
     <a href="tel:+919011503140">📞 +91 9011503140</a>
     <a onclick="openWA()">💬 WhatsApp Us</a>
@@ -790,8 +801,8 @@ footer{background:var(--ndk);padding:48px 0 0;}
       <li><a onclick="goPage('contact')">Contact Us</a></li>
     </ul></div>
     <div class="fcol"><h4>Contact</h4><ul>
-      <li><a href="/cdn-cgi/l/email-protection#f69f989099b69b939b9798939f988293849897829f9998979ad89f98"><span class="__cf_email__" data-cfemail="a9c0c7cfc6e9c4ccc4c8c7ccc0c7ddccdbc7c8ddc0c6c7c8c587c0c7">[email&#160;protected]</span></a></li>
-      <li><a href="/cdn-cgi/l/email-protection#c3aea6aea2ada6a6bbaaae83a4aea2aaafeda0acae"><span class="__cf_email__" data-cfemail="90fdf5fdf1fef5f5e8f9fdd0f7fdf1f9fcbef3fffd">[email&#160;protected]</span></a></li>
+      <li><span class="em-show" data-u="info" data-d="memaneinternational.in"></span></li>
+      <li><span class="em-show" data-u="memaneexim" data-d="gmail.com"></span></li>
       <li><a href="tel:+918999662331">+91 8999662331</a></li>
       <li><a href="tel:+919011503140">+91 9011503140</a></li>
       <li><span style="color:rgba(255,255,255,.4);">Pune, Maharashtra, India</span></li>
@@ -810,167 +821,47 @@ footer{background:var(--ndk);padding:48px 0 0;}
 // IMAGE MAP — Unsplash (free, Unsplash License)
 // ════════════════════════════════════════════════════
 var IMGS = {
-  // ── CATEGORY FALLBACKS (used when no product-specific match) ──
-  basmati:     'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500&q=80',
-  nonbasmati:  'https://images.unsplash.com/photo-1516684732162-798a0062be99?w=500&q=80',
-  pulses:      'https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?w=500&q=80',
-  wholespices: 'https://images.unsplash.com/photo-1532336414038-cf19250c5757?w=500&q=80',
+  basmati:    'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500&q=80',
+  nonbasmati: 'https://images.unsplash.com/photo-1516684732162-798a0062be99?w=500&q=80',
+  pulses:     'https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?w=500&q=80',
+  wholespices:'https://images.unsplash.com/photo-1532336414038-cf19250c5757?w=500&q=80',
   groundspices:'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&q=80',
-  freshfruits: 'https://images.unsplash.com/photo-1519996529931-28324d5a630e?w=500&q=80',
-  freshveg:    'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=500&q=80',
-  dairy:       'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&q=80',
-  canned:      'https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=500&q=80',
-  flour:       'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&q=80',
-  bakery:      'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&q=80',
-  edibleoil:   'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=500&q=80',
-  sesame:      'https://images.unsplash.com/photo-1612187029458-cef1b9a76da2?w=500&q=80',
-  seafood:     'https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=500&q=80',
-  chicken:     'https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=500&q=80',
-  mutton:      'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=500&q=80',
-  sugar:       'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=500&q=80',
-
-  // ── BASMATI RICE ──────────────────────────────────────────────
-  '1121 Golden Sella Basmati Rice':   'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500&q=80',
-  '1121 Steam Basmati Rice':          'https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?w=500&q=80',
-  '1121 Raw Basmati Rice':            'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=500&q=80',
-  '1121 White Sella Basmati Rice':    'https://images.unsplash.com/photo-1516684732162-798a0062be99?w=500&q=80',
-  '1509 Sella Basmati Rice':          'https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=500&q=80',
-  '1509 Steam Basmati Rice':          'https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?w=500&q=80',
-  'Sharbati Basmati Rice':            'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500&q=80',
-  'Pusa Basmati Rice':                'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=500&q=80',
-  'Sugandha Basmati Rice':            'https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=500&q=80',
-  'Traditional Basmati Rice':         'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500&q=80',
-
-  // ── NON BASMATI ───────────────────────────────────────────────
-  'IR 64 Parboiled Rice':             'https://images.unsplash.com/photo-1516684732162-798a0062be99?w=500&q=80',
-  'IR 64 Raw White Rice':             'https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=500&q=80',
-  'Sona Masoori Rice':                'https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?w=500&q=80',
-  'Swarna Non Basmati Rice':          'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=500&q=80',
-  'Ponni Rice':                       'https://images.unsplash.com/photo-1516684732162-798a0062be99?w=500&q=80',
-  '100% Broken Rice':                 'https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=500&q=80',
-  'Matta Red Rice':                   'https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?w=500&q=80',
-
-  // ── PULSES ────────────────────────────────────────────────────
-  'Toor Dal (Yellow)':                'https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?w=500&q=80',
-  'Chana Dal (Yellow)':               'https://images.unsplash.com/photo-1612857440200-fe15d3f2b4b7?w=500&q=80',
-  'Moong Dal (Green)':                'https://images.unsplash.com/photo-1598169284893-2a208d28cbe1?w=500&q=80',
-  'Masoor Dal (Red)':                 'https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=500&q=80',
-  'Kabuli Chana (White)':             'https://images.unsplash.com/photo-1559181567-c3190b007a5a?w=500&q=80',
-  'Urad Dal (Black)':                 'https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?w=500&q=80',
-
-  // ── WHOLE SPICES ──────────────────────────────────────────────
-  'Black Pepper (Whole)':             'https://images.unsplash.com/photo-1599909631628-cbb61e600827?w=500&q=80',
-  'Turmeric Finger':                  'https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=500&q=80',
-  'Green Cardamom':                   'https://images.unsplash.com/photo-1573477236062-6e8b3dcc8f8d?w=500&q=80',
-  'Cumin Seeds':                      'https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=500&q=80',
-  'Coriander Seeds':                  'https://images.unsplash.com/photo-1532336414038-cf19250c5757?w=500&q=80',
-  'Dry Red Chilli':                   'https://images.unsplash.com/photo-1526346698789-22fd84314424?w=500&q=80',
-  'Cloves':                           'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=500&q=80',
-  'Cinnamon Sticks':                  'https://images.unsplash.com/photo-1514733670139-4d66e2fb5c59?w=500&q=80',
-  'Black Cardamom':                   'https://images.unsplash.com/photo-1532336414038-cf19250c5757?w=500&q=80',
-
-  // ── GROUND SPICES ─────────────────────────────────────────────
-  'Red Chilli Powder':                'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&q=80',
-  'Turmeric Powder':                  'https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=500&q=80',
-  'Coriander Powder':                 'https://images.unsplash.com/photo-1505253716362-afcea1eae1f2?w=500&q=80',
-  'Cumin Powder':                     'https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=500&q=80',
-  'Black Pepper Powder':              'https://images.unsplash.com/photo-1599909631628-cbb61e600827?w=500&q=80',
-  'Cinnamon Powder':                  'https://images.unsplash.com/photo-1514733670139-4d66e2fb5c59?w=500&q=80',
-  'Cardamom Powder (Green)':          'https://images.unsplash.com/photo-1573477236062-6e8b3dcc8f8d?w=500&q=80',
-
-  // ── FRESH FRUITS ──────────────────────────────────────────────
-  'Fresh Mango (Alphonso / Kesar)':   'https://images.unsplash.com/photo-1553279768-865429fa0078?w=500&q=80',
-  'Green A Grade Malda Mango':        'https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?w=500&q=80',
-  'Fresh Pomegranate (Bhagwa)':       'https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=500&q=80',
-  'Fresh Green Grapes (Thompson)':    'https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=500&q=80',
-  'Fresh Orange (Nagpur Mandarin)':   'https://images.unsplash.com/photo-1547514701-42782101795e?w=500&q=80',
-  'Fresh Banana (Cavendish G9)':      'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=500&q=80',
-  'Fresh Papaya (Red Lady)':          'https://images.unsplash.com/photo-1526318472351-c75fcf070305?w=500&q=80',
-  'Fresh Guava':                      'https://images.unsplash.com/photo-1536511132770-e5058c7e8c46?w=500&q=80',
-  'Fresh Watermelon':                 'https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?w=500&q=80',
-
-  // ── FRESH VEGETABLES ──────────────────────────────────────────
-  'Fresh Red Onion':                  'https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=500&q=80',
-  'Fresh White Garlic':               'https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?w=500&q=80',
-  'Fresh Potato':                     'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500&q=80',
-  'Fresh Ginger':                     'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=500&q=80',
-  'Fresh Tomato':                     'https://images.unsplash.com/photo-1558818498-28c1e002b655?w=500&q=80',
-  'Fresh Green Chilli':               'https://images.unsplash.com/photo-1526346698789-22fd84314424?w=500&q=80',
-  'Fresh Lady Finger (Okra)':         'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=500&q=80',
-  'Fresh Capsicum (Red/Green)':       'https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=500&q=80',
-  'Fresh Carrot':                     'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=500&q=80',
-  'Fresh Lemon':                      'https://images.unsplash.com/photo-1582087654735-8cdf5ad35c6f?w=500&q=80',
-  'Fresh Broccoli':                   'https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=500&q=80',
-
-  // ── DAIRY ─────────────────────────────────────────────────────
-  'Pure Cow Ghee (Desi)':             'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&q=80',
-  'Buffalo Ghee':                     'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&q=80',
-  'Fresh Paneer':                     'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=500&q=80',
-  'Full Cream Milk Powder':           'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&q=80',
-  'Skimmed Milk Powder':              'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&q=80',
-  'Salted / Unsalted Butter':         'https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=500&q=80',
-
-  // ── CANNED ────────────────────────────────────────────────────
-  'Canned Sweet Corn':                'https://images.unsplash.com/photo-1601593346740-925612772716?w=500&q=80',
-  'Canned Mushroom':                  'https://images.unsplash.com/photo-1504545102780-26774c1bb073?w=500&q=80',
-  'Canned Pineapple':                 'https://images.unsplash.com/photo-1589927986089-35812388d1f4?w=500&q=80',
-  'Canned Lychee':                    'https://images.unsplash.com/photo-1519996529931-28324d5a630e?w=500&q=80',
-  'Canned Fruit Cocktail':            'https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=500&q=80',
-
-  // ── FLOUR ─────────────────────────────────────────────────────
-  'Whole Wheat Flour (Atta)':         'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&q=80',
-  'White Wheat Flour (Maida)':        'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&q=80',
-  'Gram Flour (Besan)':               'https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=500&q=80',
-  'Fine Semolina (Suji/Rawa)':        'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&q=80',
-  'Maize Flour (Corn)':               'https://images.unsplash.com/photo-1601593346740-925612772716?w=500&q=80',
-
-  // ── BAKERY ────────────────────────────────────────────────────
-  'Wheat Rusk':                       'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&q=80',
-  'Ajwain Rusk':                      'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&q=80',
-  'Butter Cookies':                   'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=500&q=80',
-  'Jeera Cookies':                    'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=500&q=80',
-  'Sandwich / Milk Bread':            'https://images.unsplash.com/photo-1549931319-a545dcf3bc7b?w=500&q=80',
-  'Multigrain Bread':                 'https://images.unsplash.com/photo-1549931319-a545dcf3bc7b?w=500&q=80',
-
-  // ── EDIBLE OIL ────────────────────────────────────────────────
-  'Refined Sunflower Oil':            'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=500&q=80',
-  'Pure Mustard Oil (Kachi Ghani)':   'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=500&q=80',
-  'Pure Coconut Oil (Virgin)':        'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=500&q=80',
-  'Pure Sesame Oil':                  'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=500&q=80',
-  'Groundnut Oil':                    'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=500&q=80',
-
-  // ── SESAME SEEDS ──────────────────────────────────────────────
-  'Natural White Sesame Seeds':       'https://images.unsplash.com/photo-1612187029458-cef1b9a76da2?w=500&q=80',
-  'Hulled White Sesame Seeds':        'https://images.unsplash.com/photo-1612187029458-cef1b9a76da2?w=500&q=80',
-  'Black Sesame Seeds':               'https://images.unsplash.com/photo-1612187029458-cef1b9a76da2?w=500&q=80',
-
-  // ── FROZEN SEAFOOD ────────────────────────────────────────────
-  'Frozen Vannamei Prawns (White)':   'https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=500&q=80',
-  'Frozen Black Tiger Shrimp':        'https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=500&q=80',
-  'Frozen Mackerel':                  'https://images.unsplash.com/photo-1534482421-64566f976cfa?w=500&q=80',
-  'Frozen Red Snapper':               'https://images.unsplash.com/photo-1534482421-64566f976cfa?w=500&q=80',
-  'Frozen Blue Swim Crab':            'https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=500&q=80',
-  'Frozen Deep Sea Shrimp':           'https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=500&q=80',
-
-  // ── FROZEN CHICKEN ────────────────────────────────────────────
-  'Frozen Whole Chicken (Halal)':     'https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=500&q=80',
-  'Frozen Chicken Quarter Leg':       'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=500&q=80',
-  'Frozen Chicken Breast (Boneless)': 'https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=500&q=80',
-  'Frozen Chicken Wings':             'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=500&q=80',
-  'Frozen Chicken Feet (Paws)':       'https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=500&q=80',
-  'Frozen Chicken Liver / Gizzard':   'https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=500&q=80',
-
-  // ── FROZEN MUTTON ─────────────────────────────────────────────
-  'Frozen Boneless Mutton (Goat)':    'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=500&q=80',
-  'Frozen Mutton Leg (Bone-in)':      'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=500&q=80',
-  'Whole Frozen Mutton (Carcass)':    'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=500&q=80',
-  'Frozen Mutton Liver':              'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=500&q=80',
-
-  // ── SUGAR ─────────────────────────────────────────────────────
-  'S30 White Refined Sugar':          'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=500&q=80',
-  'M30 White Mill Sugar':             'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=500&q=80',
-  'Indian Jaggery (Gur)':             'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&q=80',
-  'Molasses (Sugarcane)':             'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=500&q=80'
+  freshfruits:'https://images.unsplash.com/photo-1519996529931-28324d5a630e?w=500&q=80',
+  freshveg:   'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=500&q=80',
+  dairy:      'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&q=80',
+  canned:     'https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=500&q=80',
+  flour:      'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&q=80',
+  bakery:     'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&q=80',
+  edibleoil:  'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=500&q=80',
+  sesame:     'https://images.unsplash.com/photo-1612187029458-cef1b9a76da2?w=500&q=80',
+  seafood:    'https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=500&q=80',
+  chicken:    'https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=500&q=80',
+  mutton:     'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=500&q=80',
+  sugar:      'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=500&q=80',
+  // product-specific overrides
+  'Fresh Mango (Alphonso / Kesar)':'https://images.unsplash.com/photo-1553279768-865429fa0078?w=500&q=80',
+  'Fresh Pomegranate (Bhagwa)':'https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=500&q=80',
+  'Fresh Green Grapes (Thompson)':'https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=500&q=80',
+  'Fresh Orange (Nagpur Mandarin)':'https://images.unsplash.com/photo-1547514701-42782101795e?w=500&q=80',
+  'Fresh Banana (Cavendish G9)':'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=500&q=80',
+  'Fresh Red Onion':'https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=500&q=80',
+  'Fresh White Garlic':'https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?w=500&q=80',
+  'Fresh Potato':'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500&q=80',
+  'Fresh Ginger':'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=500&q=80',
+  'Fresh Tomato':'https://images.unsplash.com/photo-1558818498-28c1e002b655?w=500&q=80',
+  'Black Pepper (Whole)':'https://images.unsplash.com/photo-1599909631628-cbb61e600827?w=500&q=80',
+  'Turmeric Finger':'https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=500&q=80',
+  'Dry Red Chilli':'https://images.unsplash.com/photo-1526346698789-22fd84314424?w=500&q=80',
+  'Red Chilli Powder':'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&q=80',
+  'Turmeric Powder':'https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=500&q=80',
+  'Pure Cow Ghee (Desi)':'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&q=80',
+  'Fresh Paneer':'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=500&q=80',
+  'Whole Wheat Flour (Atta)':'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&q=80',
+  'Natural White Sesame Seeds':'https://images.unsplash.com/photo-1612187029458-cef1b9a76da2?w=500&q=80',
+  'Frozen Vannamei Prawns (White)':'https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=500&q=80',
+  'Frozen Whole Chicken (Halal)':'https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=500&q=80',
+  'S30 White Refined Sugar':'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=500&q=80',
+  'Indian Jaggery (Gur)':'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&q=80'
 };
 function img(key){ return IMGS[key]||null; }
 function imgEl(key,alt,h,cover){
@@ -1263,12 +1154,23 @@ function buildCarousel(cid,curIdx){
         +'<button class="car-btn car-next" onclick="slideCar(1)">›</button>'
       +'</div></div>';
   carPos['car0']=0;
+  startCarAuto();
 }
 function slideCar(dir){
   var t=document.getElementById('car0'); if(!t) return;
-  var max=Math.max(0,t.children.length-4);
-  carPos['car0']=Math.max(0,Math.min(max,(carPos['car0']||0)+dir));
-  t.style.transform='translateX(-'+(carPos['car0']*207)+'px)';
+  var total=t.children.length;
+  if(!total) return;
+  carPos['car0']=((carPos['car0']||0)+dir+total)%total;
+  var visible=Math.min(4,total);
+  var itemW=207;
+  var maxShift=(total-visible)*itemW;
+  var shift=Math.min(carPos['car0']*itemW, maxShift);
+  t.style.transform='translateX(-'+shift+'px)';
+}
+var carTimer=null;
+function startCarAuto(){
+  if(carTimer) clearInterval(carTimer);
+  carTimer=setInterval(function(){ slideCar(1); },3000);
 }
 
 // ════════════════════════════════════════════════════
@@ -1361,6 +1263,30 @@ function chkClose(e){if(e.target===document.getElementById('mnav'))closeMob();}
 // ════════════════════════════════════════════════════
 function openWA(m){window.open('https://wa.me/918999662331?text='+encodeURIComponent(m||'Hi Memane International, I am interested in your products. Please share details.'),'_blank');}
 
+// WhatsApp Modal
+var _waMsg='';
+function showWAModal(label,msg){
+  _waMsg=msg;
+  document.getElementById('wa-modal-msg').textContent=label;
+  var m=document.getElementById('wa-modal');
+  m.style.display='flex';
+}
+function waModalYes(){ document.getElementById('wa-modal').style.display='none'; openWA(_waMsg); }
+function waModalNo(){ document.getElementById('wa-modal').style.display='none'; }
+document.addEventListener('click',function(e){ if(e.target.id==='wa-modal') waModalNo(); });
+
+// Render emails safely (bypass Cloudflare obfuscation)
+function renderEmails(){
+  document.querySelectorAll('.em-show').forEach(function(el){
+    var e=el.dataset.u+'@'+el.dataset.d;
+    var pre=el.dataset.pre||'';
+    el.outerHTML='<a href="ma'+'ilto:'+e+'">'+pre+e+'</a>';
+  });
+  var btn=document.getElementById('btn-send-email');
+  if(btn) btn.href='ma'+'ilto:info@memaneinternational.in';
+}
+document.addEventListener('DOMContentLoaded', renderEmails);
+
 // ════════════════════════════════════════════════════
 // FORMS — Formspree + WhatsApp fallback
 // ════════════════════════════════════════════════════
@@ -1382,7 +1308,7 @@ function submitPE(btn,prod){
       btn.textContent='Send Enquiry';btn.disabled=false;
       var ok=document.getElementById('pe-ok');
       ok.textContent='✅ Enquiry sent! We\'ll get back to you within 24 hours.';ok.style.display='block';
-      setTimeout(function(){if(confirm('Also send via WhatsApp for instant response?')) openWA('Hi, enquiry for '+prod+'. Name: '+nm+', Qty: '+qt+', Email: '+em);},400);
+      setTimeout(function(){showWAModal('Also send on WhatsApp for instant response?','Hi, enquiry for '+prod+'. Name: '+nm+', Qty: '+qt+', Email: '+em);},400);
     })
     .catch(function(){
       btn.textContent='Send Enquiry';btn.disabled=false;
@@ -1407,7 +1333,7 @@ function submitCF(btn){
     .then(function(){
       btn.textContent='Send Enquiry →';btn.disabled=false;
       document.getElementById('cf-ok').style.display='block';
-      setTimeout(function(){if(confirm('Also send via WhatsApp for faster response?')) openWA('Hi, Trade Enquiry. Name: '+nm+', Country: '+co+', Product: '+pr+', Qty: '+qt+', Email: '+em);},400);
+      setTimeout(function(){showWAModal('Also send on WhatsApp for faster response?','Hi, Trade Enquiry. Name: '+nm+', Country: '+co+', Product: '+pr+', Qty: '+qt+', Email: '+em);},400);
     })
     .catch(function(){
       btn.textContent='Send Enquiry →';btn.disabled=false;
