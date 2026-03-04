@@ -1,2 +1,4 @@
-/mi-portal   /mi-portal.html   301
-/*           /index.html       200
+/mi-portal    /mi-portal.html   301
+/mi-portal.html /mi-portal.html 200
+/index.html   /index.html       200
+/*            /index.html       200
