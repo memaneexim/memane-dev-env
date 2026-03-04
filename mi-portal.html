@@ -511,6 +511,7 @@ async function doLogin() {
       localStorage.setItem('mi_token', TOKEN);
       document.getElementById('login').style.display = 'none';
       document.getElementById('app').style.display = '';
+      showPanel('dash');
       await loadAdminData();
     } else {
       document.getElementById('lerr').style.display = 'block';
@@ -536,6 +537,7 @@ async function loadAdminData() {
     renderProds();
     renderCats();
     renderEnqs();
+    showPanel('dash');
     var nw = D.enquiries.filter(e => (e.status||'new')==='new').length;
     if (nw > 0) { var b=document.getElementById('enq-badge'); b.style.display='inline'; b.textContent=nw; }
   } catch(e) { toast('Failed to load data','err'); }
