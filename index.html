@@ -379,19 +379,6 @@ footer{background:var(--ndk);padding:48px 0 0;}
 <!-- WA FLOAT -->
 <div id="waf" onclick="openWA()" title="WhatsApp Us">💬</div>
 
-<!-- WhatsApp Prompt Modal -->
-<div id="wa-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.5);align-items:center;justify-content:center;">
-  <div style="background:#fff;border-radius:16px;padding:28px 32px;max-width:380px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3);">
-    <div style="font-size:2.5rem;margin-bottom:12px;">💬</div>
-    <h3 style="color:var(--navy);margin-bottom:8px;font-size:1.1rem;">Send via WhatsApp too?</h3>
-    <p style="color:var(--mut);font-size:.88rem;margin-bottom:20px;" id="wa-modal-msg">Get an instant response on WhatsApp!</p>
-    <div style="display:flex;gap:10px;justify-content:center;">
-      <button onclick="waModalYes()" style="background:#25D366;color:#fff;border:none;padding:10px 24px;border-radius:8px;font-weight:700;cursor:pointer;font-size:.9rem;">Yes, Send on WhatsApp</button>
-      <button onclick="waModalNo()" style="background:var(--off);color:var(--navy);border:1px solid var(--bdr);padding:10px 20px;border-radius:8px;font-weight:600;cursor:pointer;font-size:.9rem;">No Thanks</button>
-    </div>
-  </div>
-</div>
-
 <!-- ════════════════════════════════════════════════════
      HOME
 ════════════════════════════════════════════════════ -->
@@ -624,12 +611,14 @@ footer{background:var(--ndk);padding:48px 0 0;}
   </div></section>
 
   <section class="sec" style="background:#fff;"><div class="con">
-    <div style="border-radius:12px;overflow:hidden;height:300px;margin-bottom:40px;box-shadow:0 4px 20px rgba(0,0,0,.1);">
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d242058.08047783535!2d73.72288!3d18.52461!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf2e67461101%3A0x828d43bf9d9ee343!2sPune%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1709500000000!5m2!1sen!2sin"
-        width="100%" height="300" style="border:0;display:block;" allowfullscreen="" loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade" title="Memane International — Pune, Maharashtra, India">
-      </iframe>
+    <div style="position:relative;border-radius:12px;overflow:hidden;height:280px;margin-bottom:40px;">
+      <img src="https://images.unsplash.com/photo-1561494738-b9a05e834069?w=1200&q=80" alt="India Agriculture Farms" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
+      <div style="position:absolute;inset:0;background:rgba(10,18,45,.65);display:flex;align-items:center;justify-content:center;">
+        <div style="text-align:center;padding:20px;">
+          <div style="font-family:'Playfair Display',serif;font-size:1.6rem;color:#fff;margin-bottom:8px;">Headquartered in Pune, Maharashtra</div>
+          <div style="color:rgba(255,255,255,.7);font-size:.9rem;">Supplier links across multiple cities in India · Ready to export worldwide</div>
+        </div>
+      </div>
     </div>
     <div class="ctr fade" style="margin-bottom:24px;"><div class="stag">Compliance</div><h2 class="sh">Certifications &amp; <span>Compliance</span></h2></div>
     <div class="clst">
@@ -665,13 +654,13 @@ footer{background:var(--ndk);padding:48px 0 0;}
           <div class="citem"><div class="cico">📍</div><div><div class="clbl">Address</div><div class="cval">Pune, Maharashtra, India</div></div></div>
           <div class="citem"><div class="cico">📞</div><div><div class="clbl">Phone</div><div class="cval"><a href="tel:+918999662331">+91 8999662331</a> &nbsp;|&nbsp; <a href="tel:+919011503140">+91 9011503140</a></div></div></div>
           <div class="citem"><div class="cico">📱</div><div><div class="clbl">WhatsApp</div><div class="cval"><a onclick="openWA()" style="color:var(--grn);">+91 8999662331 — Chat Now →</a></div></div></div>
-          <div class="citem"><div class="cico">📧</div><div><div class="clbl">Email</div><div class="cval"><span class="em-show" data-u="info" data-d="memaneinternational.in"></span><br><span class="em-show" data-u="memaneexim" data-d="gmail.com"></span></div></div></div>
+          <div class="citem"><div class="cico">📧</div><div><div class="clbl">Email</div><div class="cval"><a href="/cdn-cgi/l/email-protection#9df4f3fbf2ddf0f8f0fcf3f8f4f3e9f8eff3fce9f4f2f3fcf1b3f4f3"><span class="__cf_email__" data-cfemail="0e676068614e636b636f606b67607a6b7c606f7a6761606f62206760">[email&#160;protected]</span></a><br><a href="/cdn-cgi/l/email-protection#d1bcb4bcb0bfb4b4a9b8bc91b6bcb0b8bdffb2bebc"><span class="__cf_email__" data-cfemail="711c141c101f141409181c31161c10181d5f121e1c">[email&#160;protected]</span></a></div></div></div>
           <div class="citem"><div class="cico">🌐</div><div><div class="clbl">Website</div><div class="cval">www.memaneinternational.in</div></div></div>
           <div class="citem"><div class="cico">🕘</div><div><div class="clbl">Business Hours</div><div class="cval">Monday – Saturday, 9:00 AM – 6:00 PM IST</div></div></div>
         </div>
         <div style="display:flex;flex-direction:column;gap:9px;margin-top:18px;">
           <a onclick="openWA()" class="btn-wa" style="justify-content:center;">💬 Chat on WhatsApp</a>
-          <a id="btn-send-email" href="#" class="btn-r" style="justify-content:center;">✉ Send Email</a>
+          <a href="/cdn-cgi/l/email-protection#6801060e0728050d0509060d01061c0d1a06091c0107060904460106" class="btn-r" style="justify-content:center;">✉ Send Email</a>
         </div>
         <div class="wnxt" style="margin-top:18px;">
           <h4>What Happens After You Contact Us?</h4>
@@ -768,8 +757,8 @@ footer{background:var(--ndk);padding:48px 0 0;}
 <template id="ftpl">
 <div class="ft-cta">
   <div class="ft-cta-in">
-    <span class="em-show" data-u="info" data-d="memaneinternational.in" data-pre="✉ "></span>
-    <span class="em-show" data-u="memaneexim" data-d="gmail.com" data-pre="✉ "></span>
+    <a href="/cdn-cgi/l/email-protection#92fbfcf4fdd2fff7fff3fcf7fbfce6f7e0fcf3e6fbfdfcf3febcfbfc">✉ <span class="__cf_email__" data-cfemail="ddb4b3bbb29db0b8b0bcb3b8b4b3a9b8afb3bca9b4b2b3bcb1f3b4b3">[email&#160;protected]</span></a>
+    <a href="/cdn-cgi/l/email-protection#a3cec6cec2cdc6c6dbcacee3c4cec2cacf8dc0ccce">✉ <span class="__cf_email__" data-cfemail="4c2129212d2229293425210c2b212d2520622f2321">[email&#160;protected]</span></a>
     <a href="tel:+918999662331">📞 +91 8999662331</a>
     <a href="tel:+919011503140">📞 +91 9011503140</a>
     <a onclick="openWA()">💬 WhatsApp Us</a>
@@ -801,8 +790,8 @@ footer{background:var(--ndk);padding:48px 0 0;}
       <li><a onclick="goPage('contact')">Contact Us</a></li>
     </ul></div>
     <div class="fcol"><h4>Contact</h4><ul>
-      <li><span class="em-show" data-u="info" data-d="memaneinternational.in"></span></li>
-      <li><span class="em-show" data-u="memaneexim" data-d="gmail.com"></span></li>
+      <li><a href="/cdn-cgi/l/email-protection#f69f989099b69b939b9798939f988293849897829f9998979ad89f98"><span class="__cf_email__" data-cfemail="a9c0c7cfc6e9c4ccc4c8c7ccc0c7ddccdbc7c8ddc0c6c7c8c587c0c7">[email&#160;protected]</span></a></li>
+      <li><a href="/cdn-cgi/l/email-protection#c3aea6aea2ada6a6bbaaae83a4aea2aaafeda0acae"><span class="__cf_email__" data-cfemail="90fdf5fdf1fef5f5e8f9fdd0f7fdf1f9fcbef3fffd">[email&#160;protected]</span></a></li>
       <li><a href="tel:+918999662331">+91 8999662331</a></li>
       <li><a href="tel:+919011503140">+91 9011503140</a></li>
       <li><span style="color:rgba(255,255,255,.4);">Pune, Maharashtra, India</span></li>
@@ -1154,23 +1143,12 @@ function buildCarousel(cid,curIdx){
         +'<button class="car-btn car-next" onclick="slideCar(1)">›</button>'
       +'</div></div>';
   carPos['car0']=0;
-  startCarAuto();
 }
 function slideCar(dir){
   var t=document.getElementById('car0'); if(!t) return;
-  var total=t.children.length;
-  if(!total) return;
-  carPos['car0']=((carPos['car0']||0)+dir+total)%total;
-  var visible=Math.min(4,total);
-  var itemW=207;
-  var maxShift=(total-visible)*itemW;
-  var shift=Math.min(carPos['car0']*itemW, maxShift);
-  t.style.transform='translateX(-'+shift+'px)';
-}
-var carTimer=null;
-function startCarAuto(){
-  if(carTimer) clearInterval(carTimer);
-  carTimer=setInterval(function(){ slideCar(1); },3000);
+  var max=Math.max(0,t.children.length-4);
+  carPos['car0']=Math.max(0,Math.min(max,(carPos['car0']||0)+dir));
+  t.style.transform='translateX(-'+(carPos['car0']*207)+'px)';
 }
 
 // ════════════════════════════════════════════════════
@@ -1263,30 +1241,6 @@ function chkClose(e){if(e.target===document.getElementById('mnav'))closeMob();}
 // ════════════════════════════════════════════════════
 function openWA(m){window.open('https://wa.me/918999662331?text='+encodeURIComponent(m||'Hi Memane International, I am interested in your products. Please share details.'),'_blank');}
 
-// WhatsApp Modal
-var _waMsg='';
-function showWAModal(label,msg){
-  _waMsg=msg;
-  document.getElementById('wa-modal-msg').textContent=label;
-  var m=document.getElementById('wa-modal');
-  m.style.display='flex';
-}
-function waModalYes(){ document.getElementById('wa-modal').style.display='none'; openWA(_waMsg); }
-function waModalNo(){ document.getElementById('wa-modal').style.display='none'; }
-document.addEventListener('click',function(e){ if(e.target.id==='wa-modal') waModalNo(); });
-
-// Render emails safely (bypass Cloudflare obfuscation)
-function renderEmails(){
-  document.querySelectorAll('.em-show').forEach(function(el){
-    var e=el.dataset.u+'@'+el.dataset.d;
-    var pre=el.dataset.pre||'';
-    el.outerHTML='<a href="ma'+'ilto:'+e+'">'+pre+e+'</a>';
-  });
-  var btn=document.getElementById('btn-send-email');
-  if(btn) btn.href='ma'+'ilto:info@memaneinternational.in';
-}
-document.addEventListener('DOMContentLoaded', renderEmails);
-
 // ════════════════════════════════════════════════════
 // FORMS — Formspree + WhatsApp fallback
 // ════════════════════════════════════════════════════
@@ -1308,7 +1262,7 @@ function submitPE(btn,prod){
       btn.textContent='Send Enquiry';btn.disabled=false;
       var ok=document.getElementById('pe-ok');
       ok.textContent='✅ Enquiry sent! We\'ll get back to you within 24 hours.';ok.style.display='block';
-      setTimeout(function(){showWAModal('Also send on WhatsApp for instant response?','Hi, enquiry for '+prod+'. Name: '+nm+', Qty: '+qt+', Email: '+em);},400);
+      setTimeout(function(){if(confirm('Also send via WhatsApp for instant response?')) openWA('Hi, enquiry for '+prod+'. Name: '+nm+', Qty: '+qt+', Email: '+em);},400);
     })
     .catch(function(){
       btn.textContent='Send Enquiry';btn.disabled=false;
@@ -1333,7 +1287,7 @@ function submitCF(btn){
     .then(function(){
       btn.textContent='Send Enquiry →';btn.disabled=false;
       document.getElementById('cf-ok').style.display='block';
-      setTimeout(function(){showWAModal('Also send on WhatsApp for faster response?','Hi, Trade Enquiry. Name: '+nm+', Country: '+co+', Product: '+pr+', Qty: '+qt+', Email: '+em);},400);
+      setTimeout(function(){if(confirm('Also send via WhatsApp for faster response?')) openWA('Hi, Trade Enquiry. Name: '+nm+', Country: '+co+', Product: '+pr+', Qty: '+qt+', Email: '+em);},400);
     })
     .catch(function(){
       btn.textContent='Send Enquiry →';btn.disabled=false;
