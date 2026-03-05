@@ -8,8 +8,7 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{--bg:#0D1B2A;--card:#152535;--bdr:#1e3448;--gold:#C9A84C;--red:#9B1C31;--txt:#E2E8F0;--mut:#64748B;}
 body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--txt);}
-button{cursor:pointer;font-family:inherit;}
-input,select,textarea{font-family:inherit;}
+button{cursor:pointer;font-family:inherit;}input,select,textarea{font-family:inherit;}
 
 /* LOGIN */
 #login{display:flex;align-items:center;justify-content:center;min-height:100vh;}
@@ -17,50 +16,85 @@ input,select,textarea{font-family:inherit;}
 .lbox h1{font-size:1.1rem;color:#fff;text-align:center;margin-bottom:4px;}
 .lbox small{display:block;font-size:.75rem;color:var(--mut);text-align:center;margin-bottom:24px;}
 .lbox label{display:block;font-size:.72rem;font-weight:600;color:var(--mut);text-transform:uppercase;margin-bottom:5px;}
-.lbox input[type=password]{width:100%;background:#0a1520;border:1px solid var(--bdr);color:var(--txt);padding:10px 12px;border-radius:6px;font-size:.9rem;margin-bottom:12px;}
+.lbox input{width:100%;background:#0a1520;border:1px solid var(--bdr);color:var(--txt);padding:10px 12px;border-radius:6px;font-size:.9rem;margin-bottom:12px;}
 .lbox input:focus{outline:none;border-color:var(--gold);}
-.btn-primary{width:100%;background:var(--gold);color:#000;border:none;padding:11px;border-radius:6px;font-size:.88rem;font-weight:700;}
-.btn-primary:hover{opacity:.88;}
+.btn-login{width:100%;background:var(--gold);color:#000;border:none;padding:11px;border-radius:6px;font-size:.88rem;font-weight:700;}
+.btn-login:hover{opacity:.88;}
 #lerr{background:rgba(155,28,49,.2);border:1px solid var(--red);color:#fca5a5;padding:9px;border-radius:5px;font-size:.8rem;margin-top:10px;display:none;text-align:center;}
 
 /* LAYOUT */
 #app{display:none;min-height:100vh;}
-#sb{position:fixed;top:0;left:0;bottom:0;width:210px;background:var(--card);border-right:1px solid var(--bdr);display:flex;flex-direction:column;}
+#sb{position:fixed;top:0;left:0;bottom:0;width:210px;background:var(--card);border-right:1px solid var(--bdr);display:flex;flex-direction:column;z-index:100;}
 .sb-top{padding:18px 16px;border-bottom:1px solid var(--bdr);}
 .sb-top h2{font-size:.88rem;color:#fff;}
 .sb-top span{font-size:.68rem;color:var(--mut);}
 .sb-nav{flex:1;padding:10px 0;}
-.ni{display:flex;align-items:center;gap:9px;padding:9px 16px;font-size:.82rem;color:var(--mut);cursor:pointer;border-left:3px solid transparent;}
+.ni{display:flex;align-items:center;gap:9px;padding:9px 16px;font-size:.82rem;color:var(--mut);cursor:pointer;border-left:3px solid transparent;transition:all .15s;}
 .ni:hover{color:var(--txt);background:rgba(255,255,255,.03);}
 .ni.on{color:var(--gold);background:rgba(201,168,76,.07);border-left-color:var(--gold);}
 .sb-bot{padding:14px 16px;border-top:1px solid var(--bdr);}
 .btn-out{width:100%;background:rgba(155,28,49,.15);color:#fca5a5;border:1px solid var(--red);padding:8px;border-radius:5px;font-size:.78rem;font-weight:600;}
 #main{margin-left:210px;padding:26px;min-height:100vh;}
-.pg{display:none;}
-.pg.on{display:block;}
+.pg{display:none;}.pg.on{display:block;}
 .ptitle{font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:4px;}
 .psub{font-size:.78rem;color:var(--mut);margin-bottom:22px;}
 
-/* CARDS & TABLES */
+/* CARDS */
 .card{background:var(--card);border:1px solid var(--bdr);border-radius:9px;padding:18px;}
+
+/* DASHBOARD */
 .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
-.stat{background:var(--card);border:1px solid var(--bdr);border-radius:8px;padding:16px;}
-.stat b{display:block;font-size:1.5rem;color:var(--gold);}
+.stat{background:var(--card);border:1px solid var(--bdr);border-radius:8px;padding:16px;cursor:pointer;transition:border-color .2s;}
+.stat:hover{border-color:var(--gold);}
+.stat b{display:block;font-size:1.6rem;color:var(--gold);margin-bottom:2px;}
 .stat small{font-size:.72rem;color:var(--mut);}
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.dash-cat-bar{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--bdr);cursor:pointer;}
+.dash-cat-bar:last-child{border:none;}
+.dash-cat-bar:hover .dcb-name{color:var(--gold);}
+.dcb-icon{font-size:1.1rem;width:24px;text-align:center;}
+.dcb-name{font-size:.82rem;flex:1;color:var(--txt);transition:color .15s;}
+.dcb-bar-wrap{width:80px;height:6px;background:var(--bdr);border-radius:3px;overflow:hidden;}
+.dcb-bar{height:100%;background:var(--gold);border-radius:3px;transition:width .5s;}
+.dcb-count{font-size:.72rem;color:var(--mut);width:22px;text-align:right;}
+.dash-enq-row{padding:8px 0;border-bottom:1px solid var(--bdr);display:flex;justify-content:space-between;align-items:center;cursor:pointer;}
+.dash-enq-row:last-child{border:none;}
+.dash-enq-row:hover .den-name{color:var(--gold);}
+.den-name{font-size:.83rem;font-weight:600;color:#fff;transition:color .15s;}
+.den-prod{font-size:.73rem;color:var(--mut);}
+.quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.qa-btn{background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);color:var(--gold);padding:12px;border-radius:7px;font-size:.78rem;font-weight:600;text-align:center;transition:all .2s;}
+.qa-btn:hover{background:rgba(201,168,76,.15);border-color:var(--gold);}
+
+/* TABLE */
 table{width:100%;border-collapse:collapse;}
 th{text-align:left;padding:9px 10px;font-size:.7rem;font-weight:700;color:var(--mut);text-transform:uppercase;border-bottom:1px solid var(--bdr);}
 td{padding:9px 10px;font-size:.8rem;border-bottom:1px solid rgba(30,52,72,.6);vertical-align:middle;}
 tr:last-child td{border:none;}
+.tr-click{cursor:pointer;transition:background .12s;}
+.tr-click:hover td{background:rgba(201,168,76,.05);}
+
+/* PRODUCT THUMB */
+.prod-thumb{width:36px;height:36px;border-radius:5px;object-fit:cover;background:var(--bdr);display:block;}
+.prod-thumb-placeholder{width:36px;height:36px;border-radius:5px;background:var(--bdr);display:flex;align-items:center;justify-content:center;font-size:.9rem;}
+
+/* CAT THUMB */
+.cat-img-wrap{position:relative;width:44px;height:44px;border-radius:6px;overflow:hidden;background:var(--bdr);flex-shrink:0;}
+.cat-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+.cat-img-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;cursor:pointer;font-size:.65rem;color:#fff;font-weight:600;}
+.cat-img-wrap:hover .cat-img-overlay{opacity:1;}
+
+/* IMG PREVIEW */
+.img-preview-box{width:100%;height:100px;border-radius:6px;background:#0a1520;border:1px dashed var(--bdr);display:flex;align-items:center;justify-content:center;overflow:hidden;margin-top:6px;}
+.img-preview-box img{width:100%;height:100%;object-fit:cover;display:block;}
+.img-preview-box span{font-size:.75rem;color:var(--mut);}
 
 /* BUTTONS */
-.btn{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:5px;font-size:.76rem;font-weight:600;border:none;}
-.btn-gold{background:var(--gold);color:#000;}
-.btn-gold:hover{opacity:.85;}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:5px;font-size:.76rem;font-weight:600;border:none;transition:all .15s;}
+.btn-gold{background:var(--gold);color:#000;}.btn-gold:hover{opacity:.85;}
 .btn-sm{padding:4px 9px;font-size:.7rem;}
-.btn-ghost{background:rgba(255,255,255,.06);color:var(--txt);border:1px solid var(--bdr);}
-.btn-ghost:hover{background:rgba(255,255,255,.1);}
-.btn-red{background:rgba(155,28,49,.2);color:#fca5a5;border:1px solid var(--red);}
-.btn-red:hover{background:rgba(155,28,49,.35);}
+.btn-ghost{background:rgba(255,255,255,.06);color:var(--txt);border:1px solid var(--bdr);}.btn-ghost:hover{background:rgba(255,255,255,.1);}
+.btn-red{background:rgba(155,28,49,.2);color:#fca5a5;border:1px solid var(--red);}.btn-red:hover{background:rgba(155,28,49,.35);}
 .btn-grn{background:rgba(34,197,94,.12);color:#86efac;border:1px solid #22c55e;}
 .badge{display:inline-block;padding:2px 7px;border-radius:3px;font-size:.65rem;font-weight:700;}
 .bg-grn{background:rgba(34,197,94,.12);color:#86efac;}
@@ -73,18 +107,17 @@ tr:last-child td{border:none;}
 .toolbar input{background:#0a1520;border:1px solid var(--bdr);color:var(--txt);padding:7px 11px;border-radius:5px;font-size:.8rem;width:220px;}
 .toolbar input:focus{outline:none;border-color:var(--gold);}
 .tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;}
-.tab{padding:5px 12px;border-radius:4px;font-size:.75rem;font-weight:600;border:1px solid var(--bdr);color:var(--mut);background:none;}
+.tab{padding:5px 12px;border-radius:4px;font-size:.75rem;font-weight:600;border:1px solid var(--bdr);color:var(--mut);background:none;transition:all .15s;}
 .tab.on,.tab:hover{background:var(--gold);color:#000;border-color:var(--gold);}
 
 /* MODAL */
 #mbg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;align-items:center;justify-content:center;padding:20px;}
 #mbg.on{display:flex;}
-.modal{background:var(--card);border:1px solid var(--bdr);border-radius:10px;width:100%;max-width:540px;max-height:90vh;overflow-y:auto;}
+.modal{background:var(--card);border:1px solid var(--bdr);border-radius:10px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;}
 .mhead{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--bdr);}
 .mhead h3{font-size:.9rem;color:#fff;}
 .mclose{background:none;border:none;color:var(--mut);font-size:1.1rem;padding:2px 6px;}
-.mbody{padding:18px;}
-.mfoot{padding:12px 18px;border-top:1px solid var(--bdr);display:flex;justify-content:flex-end;gap:8px;}
+.mbody{padding:18px;}.mfoot{padding:12px 18px;border-top:1px solid var(--bdr);display:flex;justify-content:flex-end;gap:8px;}
 .fg{display:flex;flex-direction:column;gap:4px;margin-bottom:12px;}
 .fg label{font-size:.7rem;font-weight:600;color:var(--mut);text-transform:uppercase;}
 .fg input,.fg select,.fg textarea{background:#0a1520;border:1px solid var(--bdr);color:var(--txt);padding:8px 10px;border-radius:5px;font-size:.82rem;}
@@ -124,7 +157,7 @@ tr:last-child td{border:none;}
     <small>Admin Panel — Sign In</small>
     <label>Password</label>
     <input type="password" id="pw" placeholder="Enter password" onkeydown="if(event.key==='Enter')login()">
-    <button class="btn-primary" onclick="login()" id="lbtn">Sign In</button>
+    <button class="btn-login" onclick="login()" id="lbtn">Sign In</button>
     <div id="lerr">Wrong password. Try again.</div>
   </div>
 </div>
@@ -134,47 +167,81 @@ tr:last-child td{border:none;}
   <div id="sb">
     <div class="sb-top"><h2>MI Admin</h2><span>Memane International</span></div>
     <nav class="sb-nav">
-      <div class="ni on" onclick="nav('dash')"   id="ni-dash">   📊 Dashboard</div>
-      <div class="ni"    onclick="nav('prods')"  id="ni-prods">  📦 Products</div>
-      <div class="ni"    onclick="nav('cats')"   id="ni-cats">   🗂 Categories</div>
-      <div class="ni"    onclick="nav('enqs')"   id="ni-enqs">   ✉️ Enquiries</div>
-      <div class="ni"    onclick="nav('setts')"  id="ni-setts">  ⚙️ Settings</div>
+      <div class="ni on" onclick="nav('dash')"  id="ni-dash">  📊 Dashboard</div>
+      <div class="ni"    onclick="nav('prods')" id="ni-prods"> 📦 Products</div>
+      <div class="ni"    onclick="nav('cats')"  id="ni-cats">  🗂 Categories</div>
+      <div class="ni"    onclick="nav('enqs')"  id="ni-enqs">  ✉️ Enquiries</div>
+      <div class="ni"    onclick="nav('setts')" id="ni-setts"> ⚙️ Settings</div>
     </nav>
     <div class="sb-bot"><button class="btn-out" onclick="logout()">Sign Out</button></div>
   </div>
+
   <div id="main">
 
     <!-- DASHBOARD -->
     <div class="pg on" id="pg-dash">
       <div class="ptitle">Dashboard</div>
-      <div class="psub">Overview</div>
+      <div class="psub" id="dash-greet">Welcome back</div>
       <div class="stat-row">
-        <div class="stat"><b id="s-total">—</b><small>Products</small></div>
-        <div class="stat"><b id="s-active">—</b><small>Active</small></div>
-        <div class="stat"><b id="s-cats">—</b><small>Categories</small></div>
-        <div class="stat"><b id="s-enqs">—</b><small>Enquiries</small></div>
+        <div class="stat" onclick="nav('prods')"><b id="s-total">—</b><small>Total Products</small></div>
+        <div class="stat" onclick="nav('prods')"><b id="s-active">—</b><small>Active</small></div>
+        <div class="stat" onclick="nav('cats')"><b id="s-cats">—</b><small>Categories</small></div>
+        <div class="stat" onclick="nav('enqs')"><b id="s-enqs" style="color:#93c5fd;">—</b><small>Enquiries</small></div>
       </div>
-      <div class="card"><div style="font-size:.85rem;font-weight:600;color:#fff;margin-bottom:12px;">Recent Enquiries</div><div id="d-enqs"><span style="color:var(--mut)">Loading...</span></div></div>
+      <div class="dash-grid">
+        <div class="card">
+          <div style="font-size:.82rem;font-weight:700;color:#fff;margin-bottom:14px;">Products by Category</div>
+          <div id="d-catbars"></div>
+        </div>
+        <div class="card">
+          <div style="font-size:.82rem;font-weight:700;color:#fff;margin-bottom:12px;">Quick Actions</div>
+          <div class="quick-actions">
+            <button class="qa-btn" onclick="nav('prods');openProd()">+ Add Product</button>
+            <button class="qa-btn" onclick="nav('cats');openCat()">+ Add Category</button>
+            <button class="qa-btn" onclick="nav('enqs')">View Enquiries</button>
+            <button class="qa-btn" onclick="nav('setts')">Settings</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <div style="font-size:.82rem;font-weight:700;color:#fff;">Recent Enquiries</div>
+          <button class="btn btn-ghost btn-sm" onclick="nav('enqs')">View All →</button>
+        </div>
+        <div id="d-enqs"><span style="color:var(--mut)">Loading...</span></div>
+      </div>
     </div>
 
     <!-- PRODUCTS -->
     <div class="pg" id="pg-prods">
       <div class="ptitle">Products</div>
-      <div class="psub">Manage product catalogue</div>
+      <div class="psub">Click any row to edit • <span id="prod-count" style="color:var(--gold);">0</span> products total</div>
       <div class="toolbar">
-        <input id="psearch" placeholder="Search..." oninput="renderProds()">
+        <input id="psearch" placeholder="Search products..." oninput="renderProds()">
         <button class="btn btn-gold" onclick="openProd()">+ Add Product</button>
       </div>
       <div class="tabs" id="ptabs"></div>
-      <div class="card"><table><thead><tr><th>Name</th><th>Category</th><th>MOQ Export</th><th>Status</th><th>Actions</th></tr></thead><tbody id="ptbody"></tbody></table></div>
+      <div class="card">
+        <table>
+          <thead><tr><th style="width:44px;"></th><th>Name</th><th>Category</th><th>MOQ Export</th><th>Status</th><th style="width:140px;">Actions</th></tr></thead>
+          <tbody id="ptbody"></tbody>
+        </table>
+      </div>
     </div>
 
     <!-- CATEGORIES -->
     <div class="pg" id="pg-cats">
       <div class="ptitle">Categories</div>
       <div class="psub">Manage product categories</div>
-      <div style="display:flex;justify-content:flex-end;margin-bottom:14px;"><button class="btn btn-gold" onclick="openCat()">+ Add Category</button></div>
-      <div class="card"><table><thead><tr><th>Icon</th><th>Name</th><th>Subtitle</th><th>Products</th><th>Actions</th></tr></thead><tbody id="ctbody"></tbody></table></div>
+      <div style="display:flex;justify-content:flex-end;margin-bottom:14px;">
+        <button class="btn btn-gold" onclick="openCat()">+ Add Category</button>
+      </div>
+      <div class="card">
+        <table>
+          <thead><tr><th style="width:60px;">Image</th><th>Icon</th><th>Name</th><th>Subtitle</th><th>Products</th><th>Actions</th></tr></thead>
+          <tbody id="ctbody"></tbody>
+        </table>
+      </div>
     </div>
 
     <!-- ENQUIRIES -->
@@ -183,9 +250,9 @@ tr:last-child td{border:none;}
       <div class="psub">Customer trade enquiries</div>
       <div class="tabs">
         <button class="tab on" onclick="setEF('all',this)">All</button>
-        <button class="tab" onclick="setEF('new',this)">New</button>
+        <button class="tab" onclick="setEF('new',this)">🔵 New</button>
         <button class="tab" onclick="setEF('read',this)">Read</button>
-        <button class="tab" onclick="setEF('done',this)">Done</button>
+        <button class="tab" onclick="setEF('done',this)">✅ Done</button>
       </div>
       <div id="egrid"></div>
     </div>
@@ -211,7 +278,6 @@ tr:last-child td{border:none;}
 <div id="toast"></div>
 
 <script>
-// ─── STATE ───────────────────────────────────────────────────
 var TOK = sessionStorage.getItem('mit') || '';
 var D = {settings:{}, categories:[], products:[], enquiries:[]};
 var EF = 'all', PCF = 'all';
@@ -220,8 +286,8 @@ var EF = 'all', PCF = 'all';
 async function api(path, body) {
   var h = {'Content-Type':'application/json'};
   if (TOK) h['Authorization'] = 'Bearer ' + TOK;
-  var r = await fetch('/api/' + path, body ? {method:'POST',headers:h,body:JSON.stringify(body)} : {headers:h});
-  var d = await r.json();
+  var r = await fetch('/api/' + path, body !== undefined ? {method:'POST',headers:h,body:JSON.stringify(body)} : {headers:h});
+  var d = await r.json().catch(()=>({msg:'Invalid response'}));
   if (!r.ok) throw new Error(d.msg || d.error || 'Error ' + r.status);
   return d;
 }
@@ -247,7 +313,6 @@ async function login() {
 
 function logout() { TOK = ''; sessionStorage.removeItem('mit'); location.reload(); }
 
-// Auto-restore session
 if (TOK) {
   document.getElementById('login').style.display = 'none';
   document.getElementById('app').style.display = 'block';
@@ -259,66 +324,97 @@ async function load() {
   try {
     var d = await api('admin/data', {});
     D.settings   = d.settings   || {};
-    D.categories = d.categories || [];
-    D.products   = d.products   || [];
-    D.enquiries  = d.enquiries  || [];
+    D.categories = Array.isArray(d.categories) ? d.categories : [];
+    D.products   = Array.isArray(d.products)   ? d.products   : [];
+    D.enquiries  = Array.isArray(d.enquiries)  ? d.enquiries  : [];
     renderDash(); renderProds(); renderCats(); renderEnqs(); renderSetts();
   } catch(e) {
-    if (e.message.includes('403') || e.message.includes('401')) { logout(); }
-    else { toast('Load failed: ' + e.message, 'err'); }
+    if (e.message.includes('403') || e.message.includes('401')) logout();
+    else toast('Load failed: ' + e.message, 'err');
   }
 }
 
 // ─── NAV ──────────────────────────────────────────────────────
 function nav(id) {
-  document.querySelectorAll('.pg').forEach(p => p.classList.remove('on'));
-  document.querySelectorAll('.ni').forEach(n => n.classList.remove('on'));
-  document.getElementById('pg-' + id).classList.add('on');
-  document.getElementById('ni-' + id).classList.add('on');
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));
+  document.getElementById('pg-'+id).classList.add('on');
+  document.getElementById('ni-'+id).classList.add('on');
 }
 
-// ─── DASHBOARD ───────────────────────────────────────────────
+// ─── DASHBOARD ────────────────────────────────────────────────
 function renderDash() {
+  var hr = new Date().getHours();
+  var gr = hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening';
+  document.getElementById('dash-greet').textContent = gr + ', ' + (D.settings.proprietor || 'Admin');
+
   document.getElementById('s-total').textContent  = D.products.length;
   document.getElementById('s-active').textContent = D.products.filter(p=>p.active!==false).length;
   document.getElementById('s-cats').textContent   = D.categories.length;
-  document.getElementById('s-enqs').textContent   = D.enquiries.length;
-  var rec = D.enquiries.slice(-5).reverse();
+  var newEnqs = D.enquiries.filter(e=>(e.status||'new')==='new').length;
+  document.getElementById('s-enqs').textContent   = D.enquiries.length + (newEnqs ? ' 🔵' : '');
+
+  // Category bars
+  var maxP = Math.max(...D.categories.map(c=>D.products.filter(p=>p.category_id===c.id).length), 1);
+  document.getElementById('d-catbars').innerHTML = D.categories.map(c => {
+    var cnt = D.products.filter(p=>p.category_id===c.id).length;
+    return '<div class="dash-cat-bar" onclick="nav(\'prods\');setPCFid(\''+c.id+'\')">' +
+      '<span class="dcb-icon">'+(c.icon||'📦')+'</span>' +
+      '<span class="dcb-name">'+x(c.name)+'</span>' +
+      '<div class="dcb-bar-wrap"><div class="dcb-bar" style="width:'+(cnt/maxP*100)+'%"></div></div>' +
+      '<span class="dcb-count">'+cnt+'</span>' +
+    '</div>';
+  }).join('') || '<span style="color:var(--mut);font-size:.8rem;">No categories yet.</span>';
+
+  // Recent enquiries
+  var rec = D.enquiries.slice(-6).reverse();
   document.getElementById('d-enqs').innerHTML = rec.length ? rec.map(e =>
-    '<div style="padding:8px 0;border-bottom:1px solid var(--bdr);display:flex;justify-content:space-between;">' +
-    '<div><div style="font-size:.83rem;font-weight:600;color:#fff;">' + x(e.name) + '</div>' +
-    '<div style="font-size:.73rem;color:var(--mut);">' + x(e.product||'General') + '</div></div>' +
-    '<span class="badge ' + ebadge(e.status) + '">' + (e.status||'new') + '</span></div>'
+    '<div class="dash-enq-row" onclick="nav(\'enqs\')">' +
+    '<div><div class="den-name">'+x(e.name)+'</div><div class="den-prod">'+x(e.product||'General Enquiry')+'</div></div>' +
+    '<span class="badge '+ebadge(e.status)+'">'+(e.status||'new')+'</span></div>'
   ).join('') : '<span style="color:var(--mut);font-size:.82rem;">No enquiries yet.</span>';
 }
 
 // ─── PRODUCTS ─────────────────────────────────────────────────
-function renderProds() {
-  // Tabs
-  var tabs = document.getElementById('ptabs');
-  if (tabs) tabs.innerHTML = '<button class="tab' + (PCF==='all'?' on':'') + '" onclick="setPCF(\'all\',this)">All</button>' +
-    D.categories.map(c => '<button class="tab' + (PCF===c.id?' on':'') + '" onclick="setPCF(\'' + c.id + '\',this)">' + c.icon + ' ' + x(c.name) + '</button>').join('');
+function setPCFid(id) { PCF = id; renderProds(); }
 
-  var q = (document.getElementById('psearch')||{}).value||'';
-  q = q.toLowerCase();
-  var rows = '';
-  D.products.forEach(p => {
-    if (PCF !== 'all' && p.category_id !== PCF) return;
-    if (q && !p.name.toLowerCase().includes(q)) return;
-    var cat = D.categories.find(c => c.id === p.category_id) || {};
-    rows += '<tr>' +
-      '<td style="font-weight:600;max-width:240px;">' + x(p.name) + '</td>' +
-      '<td style="font-size:.75rem;">' + (cat.icon||'') + ' ' + x(cat.name||p.category_id) + '</td>' +
-      '<td style="font-size:.75rem;color:var(--mut);">' + x(p.moq_export||'—') + '</td>' +
-      '<td><span class="badge ' + (p.active===false?'bg-red':'bg-grn') + '">' + (p.active===false?'Off':'On') + '</span></td>' +
-      '<td style="display:flex;gap:5px;">' +
-        '<button class="btn btn-ghost btn-sm" onclick="openProd(\'' + p.id + '\')">Edit</button>' +
-        '<button class="btn btn-sm ' + (p.active===false?'btn-grn':'btn-red') + '" onclick="toggleProd(\'' + p.id + '\')">' + (p.active===false?'Enable':'Disable') + '</button>' +
-        '<button class="btn btn-red btn-sm" onclick="delProd(\'' + p.id + '\')">Del</button>' +
-      '</td></tr>';
+function renderProds() {
+  var tabs = document.getElementById('ptabs');
+  if (tabs) tabs.innerHTML =
+    '<button class="tab'+(PCF==='all'?' on':'')+'" onclick="setPCF(\'all\',this)">All ('+D.products.length+')</button>' +
+    D.categories.map(c => {
+      var cnt = D.products.filter(p=>p.category_id===c.id).length;
+      return '<button class="tab'+(PCF===c.id?' on':'')+'" onclick="setPCF(\''+c.id+'\',this)">'+c.icon+' '+x(c.name)+' ('+cnt+')</button>';
+    }).join('');
+
+  var q = ((document.getElementById('psearch')||{}).value||'').toLowerCase();
+  var list = D.products.filter(p => {
+    if (PCF !== 'all' && p.category_id !== PCF) return false;
+    if (q && !p.name.toLowerCase().includes(q)) return false;
+    return true;
   });
+
+  document.getElementById('prod-count').textContent = D.products.length;
+
+  var rows = list.map(p => {
+    var cat = D.categories.find(c=>c.id===p.category_id) || {};
+    var thumb = p.img
+      ? '<img class="prod-thumb" src="'+x(p.img)+'" alt="" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">' +
+        '<div class="prod-thumb-placeholder" style="display:none;">'+(cat.icon||'📦')+'</div>'
+      : '<div class="prod-thumb-placeholder">'+(cat.icon||'📦')+'</div>';
+    return '<tr class="tr-click" onclick="openProd(\''+p.id+'\')">' +
+      '<td><div style="position:relative;">'+thumb+'</div></td>' +
+      '<td style="font-weight:600;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+x(p.name)+'</td>' +
+      '<td style="font-size:.75rem;">'+(cat.icon||'')+'  '+x(cat.name||p.category_id||'—')+'</td>' +
+      '<td style="font-size:.75rem;color:var(--mut);">'+x(p.moq_export||'—')+'</td>' +
+      '<td><span class="badge '+(p.active===false?'bg-red':'bg-grn')+'">'+(p.active===false?'Off':'On')+'</span></td>' +
+      '<td onclick="event.stopPropagation()" style="display:flex;gap:5px;">' +
+        '<button class="btn btn-sm '+(p.active===false?'btn-grn':'btn-red')+'" onclick="toggleProd(\''+p.id+'\')">'+(p.active===false?'Enable':'Disable')+'</button>' +
+        '<button class="btn btn-red btn-sm" onclick="delProd(\''+p.id+'\')">Del</button>' +
+      '</td></tr>';
+  }).join('');
   var tb = document.getElementById('ptbody');
-  if (tb) tb.innerHTML = rows || '<tr><td colspan="5" style="text-align:center;color:var(--mut);padding:24px;">No products.</td></tr>';
+  if (tb) tb.innerHTML = rows || '<tr><td colspan="6" style="text-align:center;color:var(--mut);padding:24px;">No products found.</td></tr>';
 }
 
 function setPCF(id, btn) {
@@ -329,50 +425,54 @@ function setPCF(id, btn) {
 }
 
 function openProd(id) {
-  var p = id ? D.products.find(pr=>pr.id===id) : {};
-  if (!p) return;
+  var p = id ? D.products.find(pr=>pr.id===id) : null;
+  if (!p) p = {};
   document.getElementById('mtitle').textContent = id ? 'Edit Product' : 'Add Product';
+  var imgVal = x(p.img||'');
   document.getElementById('mbody').innerHTML =
-    '<div class="fg"><label>Name *</label><input id="mp-name" value="' + x(p.name||'') + '"></div>' +
-    '<div class="fg"><label>Category *</label><select id="mp-cat">' + D.categories.map(c=>'<option value="'+c.id+'"'+(c.id===p.category_id?' selected':'')+'>'+c.icon+' '+x(c.name)+'</option>').join('') + '</select></div>' +
+    '<div class="fg"><label>Name *</label><input id="mp-name" value="'+x(p.name||'')+'"></div>' +
+    '<div class="fg"><label>Category *</label><select id="mp-cat">'+
+      D.categories.map(c=>'<option value="'+c.id+'"'+(c.id===p.category_id?' selected':'')+'>'+c.icon+' '+x(c.name)+'</option>').join('')+
+    '</select></div>' +
     '<div class="fgrow">' +
-      '<div class="fg"><label>MOQ India</label><input id="mp-mi" value="' + x(p.moq_india||'') + '"></div>' +
-      '<div class="fg"><label>MOQ Export</label><input id="mp-mx" value="' + x(p.moq_export||'') + '"></div>' +
+      '<div class="fg"><label>MOQ India</label><input id="mp-mi" value="'+x(p.moq_india||'')+'"></div>' +
+      '<div class="fg"><label>MOQ Export</label><input id="mp-mx" value="'+x(p.moq_export||'')+'"></div>' +
     '</div>' +
     '<div class="fgrow">' +
-      '<div class="fg"><label>Form</label><input id="mp-form" value="' + x(p.form||'') + '"></div>' +
-      '<div class="fg"><label>Grade</label><input id="mp-grade" value="' + x(p.grade||'') + '"></div>' +
+      '<div class="fg"><label>Form</label><input id="mp-form" value="'+x(p.form||'')+'"></div>' +
+      '<div class="fg"><label>Grade</label><input id="mp-grade" value="'+x(p.grade||'')+'"></div>' +
     '</div>' +
     '<div class="fgrow">' +
-      '<div class="fg"><label>Origin</label><input id="mp-origin" value="' + x(p.origin||'') + '"></div>' +
-      '<div class="fg"><label>Shelf Life</label><input id="mp-shelf" value="' + x(p.shelf_life||'') + '"></div>' +
+      '<div class="fg"><label>Origin</label><input id="mp-origin" value="'+x(p.origin||'')+'"></div>' +
+      '<div class="fg"><label>Shelf Life</label><input id="mp-shelf" value="'+x(p.shelf_life||'')+'"></div>' +
     '</div>' +
-    '<div class="fg"><label>Packing</label><input id="mp-pack" value="' + x(p.packing||'') + '"></div>' +
-    '<div class="fg"><label>Certifications</label><input id="mp-cert" value="' + x(p.certifications||'') + '"></div>' +
-    '<div class="fg"><label>Storage</label><input id="mp-stor" value="' + x(p.storage||'') + '"></div>' +
-    '<div class="fg"><label>Image URL</label><input id="mp-img" value="' + x(p.img||'') + '"></div>' +
-    '<div class="fg"><label>Description</label><textarea id="mp-desc" rows="3">' + x(p.description||'') + '</textarea></div>' +
+    '<div class="fg"><label>Packing</label><input id="mp-pack" value="'+x(p.packing||'')+'"></div>' +
+    '<div class="fg"><label>Certifications</label><input id="mp-cert" value="'+x(p.certifications||'')+'"></div>' +
+    '<div class="fg"><label>Storage</label><input id="mp-stor" value="'+x(p.storage||'')+'"></div>' +
+    '<div class="fg"><label>Image URL</label>' +
+      '<input id="mp-img" value="'+imgVal+'" placeholder="https://images.unsplash.com/..." oninput="prevImg(\'mp-img\',\'mp-prev\')">' +
+      '<div class="img-preview-box" id="mp-prev">'+(p.img?'<img src="'+imgVal+'" onerror="this.parentNode.innerHTML=\'<span>Invalid URL</span>\'">':'<span>Paste image URL above to preview</span>')+'</div>' +
+    '</div>' +
+    '<div class="fg"><label>Description</label><textarea id="mp-desc" rows="3">'+x(p.description||'')+'</textarea></div>' +
     '<div class="fg"><label>Status</label><select id="mp-active"><option value="1"'+(p.active!==false?' selected':'')+'>Active</option><option value="0"'+(p.active===false?' selected':'')+'>Inactive</option></select></div>';
   document.getElementById('mfoot').innerHTML =
     '<button class="btn btn-ghost" onclick="cm()">Cancel</button>' +
-    '<button class="btn btn-gold" onclick="saveProd(\'' + (id||'') + '\')">Save</button>';
+    '<button class="btn btn-gold" onclick="saveProd(\''+id+'\')">Save Product</button>';
   om();
 }
 
 async function saveProd(id) {
   var name = gv('mp-name'), cat = gv('mp-cat');
   if (!name || !cat) return toast('Name and category required', 'err');
-  var p = {
-    category_id:cat, name, moq_india:gv('mp-mi'), moq_export:gv('mp-mx'),
+  var p = {category_id:cat, name, moq_india:gv('mp-mi'), moq_export:gv('mp-mx'),
     form:gv('mp-form'), grade:gv('mp-grade'), origin:gv('mp-origin'),
     shelf_life:gv('mp-shelf'), packing:gv('mp-pack'), certifications:gv('mp-cert'),
     storage:gv('mp-stor'), img:gv('mp-img'), description:gv('mp-desc'),
-    active: document.getElementById('mp-active').value === '1'
-  };
+    active: document.getElementById('mp-active').value === '1'};
   if (id) p.id = id;
   try {
     await api('admin/save-product', p);
-    var d = await api('admin/data', {}); D.products = d.products||[];
+    var d = await api('admin/data', {}); D.products = Array.isArray(d.products)?d.products:[];
     renderProds(); renderDash(); cm(); toast('Product saved!', 'ok');
   } catch(e) { toast(e.message, 'err'); }
 }
@@ -380,7 +480,7 @@ async function saveProd(id) {
 async function toggleProd(id) {
   try {
     await api('admin/toggle-product', {id});
-    var d = await api('admin/data', {}); D.products = d.products||[];
+    var d = await api('admin/data', {}); D.products = Array.isArray(d.products)?d.products:[];
     renderProds(); renderDash(); toast('Updated.', 'ok');
   } catch(e) { toast(e.message, 'err'); }
 }
@@ -389,7 +489,7 @@ async function delProd(id) {
   if (!confirm('Delete this product?')) return;
   try {
     await api('admin/delete-product', {id});
-    var d = await api('admin/data', {}); D.products = d.products||[];
+    var d = await api('admin/data', {}); D.products = Array.isArray(d.products)?d.products:[];
     renderProds(); renderDash(); toast('Deleted.', 'ok');
   } catch(e) { toast(e.message, 'err'); }
 }
@@ -398,61 +498,69 @@ async function delProd(id) {
 function renderCats() {
   var rows = D.categories.map(c => {
     var cnt = D.products.filter(p=>p.category_id===c.id).length;
+    var imgHtml = c.img
+      ? '<div class="cat-img-wrap"><img src="'+x(c.img)+'" onerror="this.style.display=\'none\'"><div class="cat-img-overlay" onclick="event.stopPropagation();openCat(\''+c.id+'\')">Change</div></div>'
+      : '<div class="cat-img-wrap" style="display:flex;align-items:center;justify-content:center;font-size:1.2rem;" onclick="event.stopPropagation();openCat(\''+c.id+'\')"><span>+img</span></div>';
     return '<tr>' +
-      '<td style="font-size:1.3rem;">' + (c.icon||'📦') + '</td>' +
-      '<td style="font-weight:600;">' + x(c.name) + '</td>' +
-      '<td style="font-size:.76rem;color:var(--mut);">' + x(c.sub||'') + '</td>' +
-      '<td><span class="badge bg-gold">' + cnt + '</span></td>' +
+      '<td>'+imgHtml+'</td>' +
+      '<td style="font-size:1.4rem;">'+(c.icon||'📦')+'</td>' +
+      '<td style="font-weight:600;">'+x(c.name)+'</td>' +
+      '<td style="font-size:.76rem;color:var(--mut);">'+x(c.sub||'')+'</td>' +
+      '<td><span class="badge bg-gold">'+cnt+'</span></td>' +
       '<td style="display:flex;gap:5px;">' +
-        '<button class="btn btn-ghost btn-sm" onclick="openCat(\'' + c.id + '\')">Edit</button>' +
-        '<button class="btn btn-red btn-sm" onclick="delCat(\'' + c.id + '\')">Del</button>' +
+        '<button class="btn btn-ghost btn-sm" onclick="openCat(\''+c.id+'\')">Edit</button>' +
+        '<button class="btn btn-red btn-sm" onclick="delCat(\''+c.id+'\')">Del</button>' +
       '</td></tr>';
   }).join('');
   var tb = document.getElementById('ctbody');
-  if (tb) tb.innerHTML = rows || '<tr><td colspan="5" style="text-align:center;color:var(--mut);padding:24px;">No categories.</td></tr>';
+  if (tb) tb.innerHTML = rows || '<tr><td colspan="6" style="text-align:center;color:var(--mut);padding:24px;">No categories.</td></tr>';
 }
 
 function openCat(id) {
-  var c = id ? D.categories.find(ct=>ct.id===id) : {};
-  if (!c) return;
+  var c = id ? D.categories.find(ct=>ct.id===id) : null;
+  if (!c) c = {};
   document.getElementById('mtitle').textContent = id ? 'Edit Category' : 'Add Category';
+  var imgVal = x(c.img||'');
   document.getElementById('mbody').innerHTML =
     '<div class="fgrow">' +
-      '<div class="fg"><label>Icon (emoji) *</label><input id="mc-icon" value="' + x(c.icon||'') + '" placeholder="🌾"></div>' +
-      '<div class="fg"><label>ID * (no spaces)</label><input id="mc-id" value="' + x(c.id||'') + '" placeholder="basmati" ' + (id?'readonly':'') + '></div>' +
+      '<div class="fg"><label>Icon (emoji) *</label><input id="mc-icon" value="'+x(c.icon||'')+'" placeholder="🌾"></div>' +
+      '<div class="fg"><label>ID * (no spaces)</label><input id="mc-id" value="'+x(c.id||'')+'" placeholder="basmati" '+(id?'readonly':'')+' style="'+(id?'opacity:.5':'')+'"></div>' +
     '</div>' +
-    '<div class="fg"><label>Name *</label><input id="mc-name" value="' + x(c.name||'') + '"></div>' +
-    '<div class="fg"><label>Subtitle</label><input id="mc-sub" value="' + x(c.sub||'') + '"></div>' +
-    '<div class="fg"><label>Image URL</label><input id="mc-img" value="' + x(c.img||'') + '"></div>';
+    '<div class="fg"><label>Name *</label><input id="mc-name" value="'+x(c.name||'')+'"></div>' +
+    '<div class="fg"><label>Subtitle</label><input id="mc-sub" value="'+x(c.sub||'')+'"></div>' +
+    '<div class="fg"><label>Image URL</label>' +
+      '<input id="mc-img" value="'+imgVal+'" placeholder="https://images.unsplash.com/..." oninput="prevImg(\'mc-img\',\'mc-prev\')">' +
+      '<div class="img-preview-box" id="mc-prev">'+(c.img?'<img src="'+imgVal+'" onerror="this.parentNode.innerHTML=\'<span>Invalid URL</span>\'">':'<span>Paste image URL to preview</span>')+'</div>' +
+    '</div>';
   document.getElementById('mfoot').innerHTML =
     '<button class="btn btn-ghost" onclick="cm()">Cancel</button>' +
-    '<button class="btn btn-gold" onclick="saveCat(\'' + (id||'') + '\')">Save</button>';
+    '<button class="btn btn-gold" onclick="saveCat(\''+id+'\')">Save Category</button>';
   om();
 }
 
 async function saveCat(id) {
   var icon=gv('mc-icon'), cid=gv('mc-id').toLowerCase().replace(/\s+/g,''), name=gv('mc-name');
-  if (!icon||!cid||!name) return toast('Icon, ID and Name required', 'err');
+  if (!icon||!cid||!name) return toast('Icon, ID and Name required','err');
   var c = {icon, id:cid, name, sub:gv('mc-sub'), img:gv('mc-img')};
   try {
     await api('admin/save-category', c);
-    var d = await api('admin/data', {}); D.categories=d.categories||[]; D.products=d.products||[];
-    renderCats(); renderProds(); cm(); toast('Category saved!', 'ok');
-  } catch(e) { toast(e.message, 'err'); }
+    var d = await api('admin/data', {}); D.categories=Array.isArray(d.categories)?d.categories:[]; D.products=Array.isArray(d.products)?d.products:[];
+    renderCats(); renderProds(); renderDash(); cm(); toast('Category saved!','ok');
+  } catch(e) { toast(e.message,'err'); }
 }
 
 async function delCat(id) {
-  if (!confirm('Delete category? Products inside will be removed.')) return;
+  if (!confirm('Delete category? Products inside will also be removed.')) return;
   try {
     await api('admin/delete-category', {id});
-    var d = await api('admin/data', {}); D.categories=d.categories||[]; D.products=d.products||[];
-    renderCats(); renderProds(); renderDash(); toast('Deleted.', 'ok');
-  } catch(e) { toast(e.message, 'err'); }
+    var d = await api('admin/data', {}); D.categories=Array.isArray(d.categories)?d.categories:[]; D.products=Array.isArray(d.products)?d.products:[];
+    renderCats(); renderProds(); renderDash(); toast('Deleted.','ok');
+  } catch(e) { toast(e.message,'err'); }
 }
 
 // ─── ENQUIRIES ────────────────────────────────────────────────
-function setEF(f, btn) {
-  EF = f;
+function setEF(f,btn) {
+  EF=f;
   document.querySelectorAll('#pg-enqs .tab').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
   renderEnqs();
@@ -460,121 +568,123 @@ function setEF(f, btn) {
 
 function renderEnqs() {
   var list = D.enquiries.slice().reverse();
-  if (EF !== 'all') list = list.filter(e=>(e.status||'new')===EF);
-  var el = document.getElementById('egrid');
+  if (EF!=='all') list=list.filter(e=>(e.status||'new')===EF);
+  var el=document.getElementById('egrid');
   if (!el) return;
-  if (!list.length) { el.innerHTML = '<div class="card" style="text-align:center;color:var(--mut);padding:28px;">No enquiries.</div>'; return; }
-  el.innerHTML = list.map(e =>
+  if (!list.length) { el.innerHTML='<div class="card" style="text-align:center;color:var(--mut);padding:28px;">No enquiries.</div>'; return; }
+  el.innerHTML=list.map(e=>
     '<div class="ecard">' +
       '<div class="ehead">' +
-        '<div><div class="ename">' + x(e.name) + '</div>' +
-        '<div class="emeta">' + x(e.email||'') + (e.phone?' · '+x(e.phone):'') + ' · ' + (e.date||'').slice(0,10) + '</div></div>' +
-        '<span class="badge ' + ebadge(e.status) + '">' + (e.status||'new') + '</span>' +
+        '<div><div class="ename">'+x(e.name)+'</div>' +
+        '<div class="emeta">'+x(e.email||'')+(e.phone?' · '+x(e.phone):'')+' · '+(e.date||'').slice(0,10)+'</div></div>' +
+        '<span class="badge '+ebadge(e.status)+'">'+(e.status||'new')+'</span>' +
       '</div>' +
-      (e.product?'<div class="eprod">📦 '+x(e.product)+(e.quantity?' · '+x(e.quantity):'')+'</div>':'') +
-      (e.message?'<div class="emsg">'+x(e.message)+'</div>':'') +
+      (e.product?'<div class="eprod">📦 '+x(e.product)+(e.quantity?' · '+x(e.quantity):'')+'</div>':'')+
+      (e.message?'<div class="emsg">'+x(e.message)+'</div>':'')+
       '<div class="efoot">' +
-        '<select onchange="updEnq(\'' + e.id + '\',this.value)" style="background:#0a1520;border:1px solid var(--bdr);color:var(--txt);padding:4px 8px;border-radius:4px;font-size:.73rem;">' +
-          ['new','read','done'].map(s=>'<option value="'+s+'"'+(e.status===s?' selected':'')+'>'+s+'</option>').join('') +
-        '</select>' +
-        (e.email?'<a href="mailto:'+x(e.email)+'" class="btn btn-ghost btn-sm">Reply</a>':'') +
-        (e.phone?'<a href="https://wa.me/'+e.phone.replace(/\D/g,'')+'" target="_blank" class="btn btn-grn btn-sm">WhatsApp</a>':'') +
-        '<button class="btn btn-red btn-sm" onclick="delEnq(\'' + e.id + '\')">Delete</button>' +
+        '<select onchange="updEnq(\''+e.id+'\',this.value)" style="background:#0a1520;border:1px solid var(--bdr);color:var(--txt);padding:4px 8px;border-radius:4px;font-size:.73rem;">'+
+          ['new','read','done'].map(s=>'<option value="'+s+'"'+(e.status===s?' selected':'')+'>'+s+'</option>').join('')+
+        '</select>'+
+        (e.email?'<a href="mailto:'+x(e.email)+'" class="btn btn-ghost btn-sm">Reply</a>':'')+
+        (e.phone?'<a href="https://wa.me/'+e.phone.replace(/\D/g,'')+'" target="_blank" class="btn btn-grn btn-sm">WhatsApp</a>':'')+
+        '<button class="btn btn-red btn-sm" onclick="delEnq(\''+e.id+'\')">Delete</button>'+
       '</div></div>'
   ).join('');
 }
 
-async function updEnq(id, status) {
+async function updEnq(id,status) {
   try {
-    await api('admin/update-enquiry', {id, status});
-    var d = await api('admin/data', {}); D.enquiries=d.enquiries||[];
-    renderEnqs(); renderDash(); toast('Updated.', 'ok');
-  } catch(e) { toast(e.message,'err'); }
+    await api('admin/update-enquiry',{id,status});
+    var d=await api('admin/data',{}); D.enquiries=Array.isArray(d.enquiries)?d.enquiries:[];
+    renderEnqs(); renderDash(); toast('Updated.','ok');
+  } catch(e){toast(e.message,'err');}
 }
 
 async function delEnq(id) {
   if (!confirm('Delete enquiry?')) return;
   try {
-    await api('admin/delete-enquiry', {id});
-    var d = await api('admin/data', {}); D.enquiries=d.enquiries||[];
-    renderEnqs(); renderDash(); toast('Deleted.', 'ok');
-  } catch(e) { toast(e.message,'err'); }
+    await api('admin/delete-enquiry',{id});
+    var d=await api('admin/data',{}); D.enquiries=Array.isArray(d.enquiries)?d.enquiries:[];
+    renderEnqs(); renderDash(); toast('Deleted.','ok');
+  } catch(e){toast(e.message,'err');}
 }
 
 // ─── SETTINGS ─────────────────────────────────────────────────
 function renderSetts() {
-  var s = D.settings;
-  var groups = [
-    { title:'🏢 Company', keys:[
-      {k:'company',      l:'Company Name'},
-      {k:'proprietor',   l:'Proprietor'},
-      {k:'tagline',      l:'Tagline'},
-      {k:'about_short',  l:'About (Short)',  ta:true},
-      {k:'about_long',   l:'About (Long)',   ta:true},
+  var s=D.settings;
+  var groups=[
+    {title:'🏢 Company',keys:[
+      {k:'company',l:'Company Name'},{k:'proprietor',l:'Proprietor'},
+      {k:'tagline',l:'Tagline'},{k:'about_short',l:'About Short',ta:true},{k:'about_long',l:'About Long',ta:true}
     ]},
-    { title:'📞 Contact', keys:[
-      {k:'phone1',   l:'Phone 1'},
-      {k:'phone2',   l:'Phone 2'},
-      {k:'whatsapp', l:'WhatsApp (country code + number)'},
-      {k:'email1',   l:'Email 1'},
-      {k:'email2',   l:'Email 2'},
-      {k:'address',  l:'Address', ta:true},
+    {title:'📞 Contact',keys:[
+      {k:'phone1',l:'Phone 1'},{k:'phone2',l:'Phone 2'},
+      {k:'whatsapp',l:'WhatsApp (with country code)'},{k:'email1',l:'Email 1'},
+      {k:'email2',l:'Email 2'},{k:'address',l:'Address',ta:true}
     ]},
-    { title:'✉️ Web3Forms', keys:[
-      {k:'w3f_enquiry', l:'Enquiry Form Key'},
-      {k:'w3f_contact', l:'Contact Form Key'},
+    {title:'✉️ Web3Forms',keys:[
+      {k:'w3f_enquiry',l:'Enquiry Form Key'},{k:'w3f_contact',l:'Contact Form Key'}
     ]},
-    { title:'🔒 Change Password', keys:[
-      {k:'admin_password', l:'New Password', type:'password', ph:'Leave blank to keep current'},
+    {title:'🔒 Change Password',keys:[
+      {k:'admin_password',l:'New Password',type:'password',ph:'Leave blank to keep current'}
     ]},
   ];
-  document.getElementById('sgroups').innerHTML = groups.map((g,i) =>
+  document.getElementById('sgroups').innerHTML=groups.map((g,i)=>
     '<div class="sgroup">' +
-      '<div class="sghead" onclick="tsg(' + i + ')">' +
-        '<h4>' + g.title + '</h4><span id="sa' + i + '">▼</span>' +
+      '<div class="sghead" onclick="tsg('+i+')">' +
+        '<h4>'+g.title+'</h4><span id="sa'+i+'">▼</span>' +
       '</div>' +
-      '<div class="sgbody" id="sg' + i + '">' +
-        g.keys.map(f =>
-          '<div class="fg"><label>' + f.l + '</label>' +
-          (f.ta ? '<textarea id="sf-'+f.k+'" rows="3">'+x(s[f.k]||'')+'</textarea>'
-                : '<input type="'+(f.type||'text')+'" id="sf-'+f.k+'" value="'+x(f.type==='password'?'':s[f.k]||'')+'" placeholder="'+(f.ph||'')+'">') +
+      '<div class="sgbody" id="sg'+i+'">' +
+        g.keys.map(f=>
+          '<div class="fg"><label>'+f.l+'</label>'+
+          (f.ta?'<textarea id="sf-'+f.k+'" rows="3">'+x(s[f.k]||'')+'</textarea>'
+               :'<input type="'+(f.type||'text')+'" id="sf-'+f.k+'" value="'+x(f.type==='password'?'':s[f.k]||'')+'" placeholder="'+(f.ph||'')+'">')+
           '</div>'
-        ).join('') +
-        '<button class="btn btn-gold btn-sm" onclick="saveSG(' + i + ',' + JSON.stringify(g.keys.map(f=>f.k)) + ')">Save</button>' +
+        ).join('')+
+        '<button class="btn btn-gold btn-sm" onclick="saveSG('+i+','+JSON.stringify(g.keys.map(f=>f.k))+')">Save</button>'+
       '</div></div>'
   ).join('');
 }
 
-function tsg(i) {
-  var b = document.getElementById('sg'+i), a = document.getElementById('sa'+i);
-  b.classList.toggle('on'); a.textContent = b.classList.contains('on') ? '▲' : '▼';
+function tsg(i){
+  var b=document.getElementById('sg'+i),a=document.getElementById('sa'+i);
+  b.classList.toggle('on'); a.textContent=b.classList.contains('on')?'▲':'▼';
 }
 
-async function saveSG(i, keys) {
-  var s = Object.assign({}, D.settings);
-  keys.forEach(k => { var v = gv('sf-'+k); if(v) s[k] = v; });
-  try {
-    await api('admin/save-settings', {settings: s});
-    D.settings = s; toast('Saved!', 'ok');
-  } catch(e) { toast(e.message,'err'); }
+async function saveSG(i,keys){
+  var s=Object.assign({},D.settings);
+  keys.forEach(k=>{var v=gv('sf-'+k);if(v)s[k]=v;});
+  try{
+    await api('admin/save-settings',{settings:s});
+    D.settings=s; toast('Saved!','ok');
+  }catch(e){toast(e.message,'err');}
+}
+
+// ─── IMG PREVIEW ──────────────────────────────────────────────
+function prevImg(inputId, previewId) {
+  var url = document.getElementById(inputId).value.trim();
+  var box = document.getElementById(previewId);
+  if (!box) return;
+  if (!url) { box.innerHTML='<span>Paste image URL to preview</span>'; return; }
+  box.innerHTML='<img src="'+x(url)+'" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentNode.innerHTML=\'<span>Could not load image</span>\'">';
 }
 
 // ─── MODAL ────────────────────────────────────────────────────
-function om() { document.getElementById('mbg').classList.add('on'); }
-function cm() { document.getElementById('mbg').classList.remove('on'); }
+function om(){document.getElementById('mbg').classList.add('on');}
+function cm(){document.getElementById('mbg').classList.remove('on');}
 
 // ─── TOAST ────────────────────────────────────────────────────
 var _tt;
-function toast(msg, type) {
-  var el = document.getElementById('toast');
-  el.textContent = msg; el.className = 'on ' + (type||'');
-  clearTimeout(_tt); _tt = setTimeout(() => el.classList.remove('on'), 3000);
+function toast(msg,type){
+  var el=document.getElementById('toast');
+  el.textContent=msg; el.className='on '+(type||'');
+  clearTimeout(_tt); _tt=setTimeout(()=>el.classList.remove('on'),3000);
 }
 
 // ─── HELPERS ──────────────────────────────────────────────────
-function x(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function gv(id) { var e=document.getElementById(id); return e?e.value.trim():''; }
-function ebadge(s) { return s==='new'?'bg-blue':s==='done'?'bg-grn':'bg-gold'; }
+function x(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function gv(id){var e=document.getElementById(id);return e?e.value.trim():'';}
+function ebadge(s){return s==='new'?'bg-blue':s==='done'?'bg-grn':'bg-gold';}
 </script>
 </body>
 </html>
