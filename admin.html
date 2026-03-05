@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Memane International — Admin</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#0D1B2A;--card:#1A2B3C;--border:#2A3D50;
+  --gold:#C9A84C;--red:#9B1C31;--green:#22c55e;
+  --txt:#E2E8F0;--mut:#64748B;--white:#fff;
+}
+body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;}
+a{color:inherit;text-decoration:none;}
+button{cursor:pointer;}
+input,select,textarea{font-family:inherit;}
+
+/* ── LOGIN ── */
+#login-screen{
+  display:flex;align-items:center;justify-content:center;
+  min-height:100vh;padding:20px;
+}
+.login-box{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:40px;width:100%;max-width:380px;
+}
+.login-logo{text-align:center;margin-bottom:28px;}
+.login-logo h1{font-size:1.3rem;color:var(--white);margin-bottom:4px;}
+.login-logo p{font-size:.8rem;color:var(--mut);}
+.login-logo .badge{
+  display:inline-block;background:var(--gold);color:#000;
+  font-size:.6rem;font-weight:700;padding:3px 8px;border-radius:3px;
+  letter-spacing:1px;margin-bottom:12px;
+}
+.form-group{margin-bottom:16px;}
+.form-group label{display:block;font-size:.75rem;font-weight:600;color:var(--mut);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+.form-group input{
+  width:100%;background:#0a1520;border:1px solid var(--border);
+  color:var(--txt);padding:11px 14px;border-radius:6px;font-size:.9rem;
+  transition:border .2s;
+}
+.form-group input:focus{outline:none;border-color:var(--gold);}
+.btn-login{
+  width:100%;background:var(--gold);color:#000;border:none;
+  padding:12px;border-radius:6px;font-size:.9rem;font-weight:700;
+  transition:opacity .2s;margin-top:4px;
+}
+.btn-login:hover{opacity:.9;}
+.login-err{
+  background:rgba(155,28,49,.15);border:1px solid var(--red);
+  color:#fca5a5;padding:10px 12px;border-radius:6px;
+  font-size:.82rem;margin-top:12px;display:none;
+}
+
+/* ── APP ── */
+#app{display:none;min-height:100vh;}
+
+/* SIDEBAR */
+#sidebar{
+  position:fixed;top:0;left:0;bottom:0;width:220px;
+  background:var(--card);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;z-index:100;
+}
+.sb-logo{
+  padding:20px 16px;border-bottom:1px solid var(--border);
+}
+.sb-logo h2{font-size:.9rem;color:var(--white);}
+.sb-logo span{font-size:.65rem;color:var(--mut);}
+.sb-nav{flex:1;padding:12px 0;overflow-y:auto;}
+.sb-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 18px;font-size:.83rem;color:var(--mut);
+  transition:all .15s;cursor:pointer;border-left:3px solid transparent;
+}
+.sb-item:hover{color:var(--txt);background:rgba(255,255,255,.04);}
+.sb-item.active{color:var(--gold);background:rgba(201,168,76,.08);border-left-color:var(--gold);}
+.sb-item .ic{font-size:1rem;width:20px;text-align:center;}
+.sb-foot{padding:16px;border-top:1px solid var(--border);}
+.btn-logout{
+  width:100%;background:rgba(155,28,49,.2);color:#fca5a5;
+  border:1px solid var(--red);padding:8px;border-radius:5px;
+  font-size:.8rem;font-weight:600;transition:background .2s;
+}
+.btn-logout:hover{background:rgba(155,28,49,.4);}
+
+/* MAIN */
+#main{margin-left:220px;padding:28px;min-height:100vh;}
+.page{display:none;}
+.page.on{display:block;}
+.page-title{font-size:1.25rem;color:var(--white);font-weight:700;margin-bottom:6px;}
+.page-sub{font-size:.8rem;color:var(--mut);margin-bottom:24px;}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:18px;}
+.stat-num{font-size:1.6rem;font-weight:700;color:var(--gold);}
+.stat-lbl{font-size:.73rem;color:var(--mut);margin-top:3px;}
+
+/* TABLES */
+.tbl-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;}
+th{text-align:left;padding:10px 12px;font-size:.72rem;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);}
+td{padding:10px 12px;font-size:.82rem;border-bottom:1px solid rgba(42,61,80,.5);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(255,255,255,.02);}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:5px;font-size:.78rem;font-weight:600;border:none;transition:all .15s;}
+.btn-gold{background:var(--gold);color:#000;}
+.btn-gold:hover{opacity:.88;}
+.btn-ghost{background:rgba(255,255,255,.06);color:var(--txt);border:1px solid var(--border);}
+.btn-ghost:hover{background:rgba(255,255,255,.1);}
+.btn-danger{background:rgba(155,28,49,.2);color:#fca5a5;border:1px solid var(--red);}
+.btn-danger:hover{background:rgba(155,28,49,.4);}
+.btn-sm{padding:5px 10px;font-size:.72rem;}
+.btn-green{background:rgba(34,197,94,.15);color:#86efac;border:1px solid #22c55e;}
+
+/* BADGE */
+.badge{display:inline-block;padding:3px 8px;border-radius:3px;font-size:.67rem;font-weight:700;}
+.badge-green{background:rgba(34,197,94,.15);color:#86efac;}
+.badge-red{background:rgba(155,28,49,.2);color:#fca5a5;}
+.badge-gold{background:rgba(201,168,76,.15);color:var(--gold);}
+.badge-blue{background:rgba(59,130,246,.15);color:#93c5fd;}
+
+/* FILTER TABS */
+.tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
+.tab{padding:6px 14px;border-radius:4px;font-size:.77rem;font-weight:600;border:1px solid var(--border);color:var(--mut);background:none;transition:all .15s;}
+.tab.active,.tab:hover{background:var(--gold);color:#000;border-color:var(--gold);}
+
+/* SEARCH */
+.search-row{display:flex;gap:10px;align-items:center;margin-bottom:16px;}
+.search-input{background:#0a1520;border:1px solid var(--border);color:var(--txt);padding:8px 12px;border-radius:5px;font-size:.82rem;width:240px;}
+.search-input:focus{outline:none;border-color:var(--gold);}
+
+/* MODAL */
+#modal-bg{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);
+  z-index:200;align-items:center;justify-content:center;padding:20px;
+}
+#modal-bg.open{display:flex;}
+.modal{
+  background:var(--card);border:1px solid var(--border);border-radius:10px;
+  width:100%;max-width:560px;max-height:90vh;overflow-y:auto;
+}
+.modal-head{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 20px;border-bottom:1px solid var(--border);
+}
+.modal-head h3{font-size:.95rem;color:var(--white);}
+.modal-close{background:none;border:none;color:var(--mut);font-size:1.2rem;padding:2px 6px;}
+.modal-close:hover{color:var(--txt);}
+.modal-body{padding:20px;}
+.modal-foot{padding:14px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;}
+
+/* FORM */
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:14px;}
+.fg label{font-size:.72rem;font-weight:600;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;}
+.fg input,.fg select,.fg textarea{
+  background:#0a1520;border:1px solid var(--border);
+  color:var(--txt);padding:9px 11px;border-radius:5px;font-size:.83rem;
+}
+.fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--gold);}
+.fg select option{background:#0a1520;}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+
+/* SETTINGS ACCORDION */
+.acc-item{border:1px solid var(--border);border-radius:8px;margin-bottom:10px;overflow:hidden;}
+.acc-head{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 18px;cursor:pointer;background:rgba(255,255,255,.02);
+}
+.acc-head:hover{background:rgba(255,255,255,.04);}
+.acc-head h4{font-size:.87rem;font-weight:600;color:var(--txt);}
+.acc-head .arr{font-size:.8rem;color:var(--mut);transition:transform .2s;}
+.acc-body{display:none;padding:18px;border-top:1px solid var(--border);}
+.acc-body.open{display:block;}
+.arr.open{transform:rotate(180deg);}
+
+/* ENQUIRY CARDS */
+.enq-grid{display:grid;gap:14px;}
+.enq-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;}
+.enq-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
+.enq-name{font-weight:700;font-size:.9rem;color:var(--white);}
+.enq-meta{font-size:.76rem;color:var(--mut);margin-top:2px;}
+.enq-product{font-size:.8rem;color:var(--gold);margin-bottom:6px;}
+.enq-msg{font-size:.8rem;color:var(--mut);line-height:1.6;margin-bottom:12px;}
+.enq-foot{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+
+/* TOAST */
+#toast{
+  position:fixed;bottom:24px;right:24px;z-index:999;
+  background:#1e3a5f;border:1px solid #2d5a8e;border-radius:6px;
+  padding:12px 18px;font-size:.82rem;color:var(--txt);
+  transform:translateY(80px);opacity:0;transition:all .3s;pointer-events:none;
+}
+#toast.show{transform:translateY(0);opacity:1;}
+#toast.ok{border-color:var(--green);background:rgba(34,197,94,.1);color:#86efac;}
+#toast.err{border-color:var(--red);background:rgba(155,28,49,.15);color:#fca5a5;}
+
+/* LOADING */
+.loader{text-align:center;padding:40px;color:var(--mut);font-size:.85rem;}
+.spinner{display:inline-block;width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;margin-right:8px;vertical-align:middle;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  #sidebar{width:100%;height:auto;position:relative;flex-direction:row;flex-wrap:wrap;}
+  #main{margin-left:0;}
+  .stat-grid{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="badge">ADMIN PANEL</div>
+      <h1>Memane International</h1>
+      <p>Sign in to manage your website</p>
+    </div>
+    <div class="fg">
+      <label>Password</label>
+      <input type="password" id="pw-input" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="btn-login" onclick="doLogin()" id="login-btn">Sign In</button>
+    <div class="login-err" id="login-err">Incorrect password. Please try again.</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <!-- Sidebar -->
+  <div id="sidebar">
+    <div class="sb-logo">
+      <h2>MI Admin</h2>
+      <span>Memane International</span>
+    </div>
+    <nav class="sb-nav">
+      <div class="sb-item active" onclick="goPage('dashboard')" id="nav-dashboard"><span class="ic">📊</span> Dashboard</div>
+      <div class="sb-item" onclick="goPage('products')" id="nav-products"><span class="ic">📦</span> Products</div>
+      <div class="sb-item" onclick="goPage('categories')" id="nav-categories"><span class="ic">🗂️</span> Categories</div>
+      <div class="sb-item" onclick="goPage('enquiries')" id="nav-enquiries"><span class="ic">✉️</span> Enquiries</div>
+      <div class="sb-item" onclick="goPage('settings')" id="nav-settings"><span class="ic">⚙️</span> Settings</div>
+      <div class="sb-item" onclick="goPage('backup')" id="nav-backup"><span class="ic">💾</span> Backup</div>
+    </nav>
+    <div class="sb-foot">
+      <button class="btn-logout" onclick="doLogout()">Sign Out</button>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div id="main">
+
+    <!-- DASHBOARD -->
+    <div class="page on" id="pg-dashboard">
+      <div class="page-title">Dashboard</div>
+      <div class="page-sub">Overview of your website data</div>
+      <div class="stat-grid" id="stats-grid">
+        <div class="stat-card"><div class="stat-num" id="st-prods">—</div><div class="stat-lbl">Total Products</div></div>
+        <div class="stat-card"><div class="stat-num" id="st-active">—</div><div class="stat-lbl">Active Products</div></div>
+        <div class="stat-card"><div class="stat-num" id="st-cats">—</div><div class="stat-lbl">Categories</div></div>
+        <div class="stat-card"><div class="stat-num" id="st-enqs">—</div><div class="stat-lbl">Enquiries</div></div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:.9rem;color:var(--white);margin-bottom:14px;">Recent Enquiries</h3>
+        <div id="dash-enqs"><div class="loader">Loading...</div></div>
+      </div>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div class="page" id="pg-products">
+      <div class="page-title">Products</div>
+      <div class="page-sub">Manage your product catalogue</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <div class="search-row" style="margin:0;">
+          <input class="search-input" id="prod-search" placeholder="Search products..." oninput="renderProducts()">
+        </div>
+        <button class="btn btn-gold" onclick="openProductModal()">+ Add Product</button>
+      </div>
+      <div class="tabs" id="prod-cat-tabs"></div>
+      <div class="card">
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Product</th><th>Category</th><th>MOQ</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="prod-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORIES -->
+    <div class="page" id="pg-categories">
+      <div class="page-title">Categories</div>
+      <div class="page-sub">Manage product categories</div>
+      <div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
+        <button class="btn btn-gold" onclick="openCatModal()">+ Add Category</button>
+      </div>
+      <div class="card">
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Icon</th><th>Name</th><th>Subtitle</th><th>Products</th><th>Actions</th></tr></thead>
+            <tbody id="cat-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENQUIRIES -->
+    <div class="page" id="pg-enquiries">
+      <div class="page-title">Enquiries</div>
+      <div class="page-sub">Customer trade enquiries</div>
+      <div class="tabs">
+        <button class="tab active" onclick="filterEnq('all',this)">All</button>
+        <button class="tab" onclick="filterEnq('new',this)">New</button>
+        <button class="tab" onclick="filterEnq('read',this)">Read</button>
+        <button class="tab" onclick="filterEnq('done',this)">Done</button>
+      </div>
+      <div class="enq-grid" id="enq-grid"></div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="page" id="pg-settings">
+      <div class="page-title">Settings</div>
+      <div class="page-sub">Manage company information and website content</div>
+      <div id="settings-acc"></div>
+    </div>
+
+    <!-- BACKUP -->
+    <div class="page" id="pg-backup">
+      <div class="page-title">Backup & Restore</div>
+      <div class="page-sub">Export or import your website data</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="card">
+          <h3 style="font-size:.9rem;color:var(--white);margin-bottom:10px;">📤 Export Data</h3>
+          <p style="font-size:.8rem;color:var(--mut);margin-bottom:16px;">Download a JSON backup of all your products, categories, enquiries and settings.</p>
+          <button class="btn btn-gold" onclick="doExport()">Download Backup</button>
+        </div>
+        <div class="card">
+          <h3 style="font-size:.9rem;color:var(--white);margin-bottom:10px;">📥 Import Data</h3>
+          <p style="font-size:.8rem;color:var(--mut);margin-bottom:16px;">Restore data from a previously exported JSON backup file.</p>
+          <input type="file" id="import-file" accept=".json" style="display:none" onchange="doImport(this)">
+          <button class="btn btn-ghost" onclick="document.getElementById('import-file').click()">Choose File & Import</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="modal-bg" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modal-title">Modal</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-foot" id="modal-foot"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+var TOKEN = sessionStorage.getItem('mi_token') || '';
+var DATA = { settings:{}, categories:[], products:{}, enquiries:[] };
+var ENQ_FILTER = 'all';
+var PROD_CAT_FILTER = 'all';
+
+// ═══════════════════════════════════════════
+// API
+// ═══════════════════════════════════════════
+async function api(path, body) {
+  var opts = { headers: { 'Content-Type': 'application/json' } };
+  if (TOKEN) opts.headers['Authorization'] = 'Bearer ' + TOKEN;
+  if (body) { opts.method = 'POST'; opts.body = JSON.stringify(body); }
+  var r = await fetch('/api/' + path, opts);
+  var d = await r.json();
+  if (!r.ok) throw new Error(d.error || 'Request failed');
+  return d;
+}
+
+// ═══════════════════════════════════════════
+// LOGIN / LOGOUT
+// ═══════════════════════════════════════════
+async function doLogin() {
+  var pw = document.getElementById('pw-input').value.trim();
+  var btn = document.getElementById('login-btn');
+  var err = document.getElementById('login-err');
+  if (!pw) return;
+  btn.textContent = 'Signing in...'; btn.disabled = true; err.style.display = 'none';
+  try {
+    var d = await api('login', { password: pw });
+    TOKEN = d.token;
+    sessionStorage.setItem('mi_token', TOKEN);
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    loadAll();
+  } catch(e) {
+    err.style.display = 'block';
+    btn.textContent = 'Sign In'; btn.disabled = false;
+  }
+}
+
+function doLogout() {
+  TOKEN = ''; sessionStorage.removeItem('mi_token');
+  location.reload();
+}
+
+// Auto-login if token exists
+if (TOKEN) {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+}
+
+// ═══════════════════════════════════════════
+// LOAD ALL DATA
+// ═══════════════════════════════════════════
+async function loadAll() {
+  try {
+    var d = await api('admin/data');
+    DATA.settings   = d.settings   || {};
+    DATA.categories = d.categories || [];
+    DATA.products   = d.products   || {};
+    DATA.enquiries  = d.enquiries  || [];
+    renderDashboard();
+    renderProducts();
+    renderCategories();
+    renderEnquiries();
+    renderSettings();
+  } catch(e) {
+    if (e.message.includes('401') || e.message.includes('Unauthorized')) {
+      TOKEN = ''; sessionStorage.removeItem('mi_token'); location.reload();
+    } else {
+      toast('Failed to load data: ' + e.message, 'err');
+    }
+  }
+}
+
+if (TOKEN) loadAll();
+
+// ═══════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════
+function goPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.sb-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('pg-' + id).classList.add('on');
+  document.getElementById('nav-' + id).classList.add('active');
+}
+
+// ═══════════════════════════════════════════
+// DASHBOARD
+// ═══════════════════════════════════════════
+function renderDashboard() {
+  var allProds = Object.values(DATA.products).flat();
+  document.getElementById('st-prods').textContent  = allProds.length;
+  document.getElementById('st-active').textContent = allProds.filter(p=>p.active!==false).length;
+  document.getElementById('st-cats').textContent   = DATA.categories.length;
+  document.getElementById('st-enqs').textContent   = DATA.enquiries.length;
+  var recent = (DATA.enquiries || []).slice(-5).reverse();
+  document.getElementById('dash-enqs').innerHTML = recent.length ? recent.map(e =>
+    '<div style="padding:10px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">' +
+    '<div><div style="font-size:.85rem;font-weight:600;color:var(--white);">' + esc(e.name) + '</div>' +
+    '<div style="font-size:.75rem;color:var(--mut);">' + esc(e.product||'General') + '</div></div>' +
+    '<span class="badge ' + (e.status==='new'?'badge-blue':e.status==='done'?'badge-green':'badge-gold') + '">' + (e.status||'new') + '</span>' +
+    '</div>'
+  ).join('') : '<div style="color:var(--mut);font-size:.83rem;">No enquiries yet.</div>';
+}
+
+// ═══════════════════════════════════════════
+// PRODUCTS
+// ═══════════════════════════════════════════
+function renderProducts() {
+  // Category filter tabs
+  var tabsEl = document.getElementById('prod-cat-tabs');
+  if (tabsEl && DATA.categories.length) {
+    tabsEl.innerHTML = '<button class="tab' + (PROD_CAT_FILTER==='all'?' active':'') + '" onclick="setProdCat(\'all\',this)">All</button>' +
+      DATA.categories.map(c =>
+        '<button class="tab' + (PROD_CAT_FILTER===c.id?' active':'') + '" onclick="setProdCat(\'' + c.id + '\',this)">' + c.ic + ' ' + esc(c.name) + '</button>'
+      ).join('');
+  }
+
+  var q = (document.getElementById('prod-search')||{value:''}).value.toLowerCase();
+  var rows = '';
+  DATA.categories.forEach(cat => {
+    if (PROD_CAT_FILTER !== 'all' && PROD_CAT_FILTER !== cat.id) return;
+    var prods = (DATA.products[cat.id] || []);
+    prods.forEach((p, i) => {
+      if (q && !p.n.toLowerCase().includes(q)) return;
+      rows += '<tr>' +
+        '<td>' + esc(p.n) + '</td>' +
+        '<td>' + esc(cat.ic + ' ' + cat.name) + '</td>' +
+        '<td style="font-size:.75rem;color:var(--mut);">' + esc(p.mx||'—') + '</td>' +
+        '<td><span class="badge ' + (p.active===false?'badge-red':'badge-green') + '">' + (p.active===false?'Inactive':'Active') + '</span></td>' +
+        '<td style="display:flex;gap:6px;">' +
+          '<button class="btn btn-ghost btn-sm" onclick="openProductModal(\'' + cat.id + '\',' + i + ')">Edit</button>' +
+          '<button class="btn btn-sm ' + (p.active===false?'badge-green btn-green':'btn-danger') + '" onclick="toggleProduct(\'' + cat.id + '\',' + i + ')">' + (p.active===false?'Enable':'Disable') + '</button>' +
+          '<button class="btn btn-danger btn-sm" onclick="deleteProduct(\'' + cat.id + '\',' + i + ')">Del</button>' +
+        '</td>' +
+      '</tr>';
+    });
+  });
+  var tb = document.getElementById('prod-tbody');
+  if (tb) tb.innerHTML = rows || '<tr><td colspan="5" style="text-align:center;color:var(--mut);padding:24px;">No products found.</td></tr>';
+}
+
+function setProdCat(id, btn) {
+  PROD_CAT_FILTER = id;
+  document.querySelectorAll('#prod-cat-tabs .tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts();
+}
+
+function openProductModal(catId, idx) {
+  var editing = catId !== undefined && idx !== undefined;
+  var p = editing ? (DATA.products[catId]||[])[idx] : {};
+  document.getElementById('modal-title').textContent = editing ? 'Edit Product' : 'Add Product';
+  document.getElementById('modal-body').innerHTML =
+    '<div class="fg-row">' +
+      '<div class="fg" style="grid-column:1/-1"><label>Product Name *</label><input id="mp-n" value="' + esc(p.n||'') + '" placeholder="e.g. 1121 Golden Sella Basmati Rice"></div>' +
+    '</div>' +
+    '<div class="fg"><label>Category *</label><select id="mp-cat">' +
+      DATA.categories.map(c => '<option value="' + c.id + '"' + (c.id===catId?' selected':'') + '>' + c.ic + ' ' + esc(c.name) + '</option>').join('') +
+    '</select></div>' +
+    '<div class="fg-row">' +
+      '<div class="fg"><label>MOQ (India)</label><input id="mp-mi" value="' + esc(p.mi||'') + '" placeholder="1-10 MT"></div>' +
+      '<div class="fg"><label>MOQ (Export)</label><input id="mp-mx" value="' + esc(p.mx||'') + '" placeholder="25 MT / 1 FCL"></div>' +
+    '</div>' +
+    '<div class="fg-row">' +
+      '<div class="fg"><label>Form</label><input id="mp-f" value="' + esc(p.f||'') + '" placeholder="Raw / Parboiled / Powder"></div>' +
+      '<div class="fg"><label>Grade</label><input id="mp-g" value="' + esc(p.g||'') + '" placeholder="A Grade / Premium"></div>' +
+    '</div>' +
+    '<div class="fg-row">' +
+      '<div class="fg"><label>Origin</label><input id="mp-o" value="' + esc(p.o||'') + '" placeholder="Punjab, Haryana"></div>' +
+      '<div class="fg"><label>Shelf Life</label><input id="mp-sh" value="' + esc(p.sh||'') + '" placeholder="24 months"></div>' +
+    '</div>' +
+    '<div class="fg"><label>Packaging</label><input id="mp-pk" value="' + esc(p.pk||'') + '" placeholder="5kg, 25kg, 50kg PP Bags"></div>' +
+    '<div class="fg"><label>Certifications</label><input id="mp-c" value="' + esc(p.c||'') + '" placeholder="APEDA, FSSAI, Halal"></div>' +
+    '<div class="fg"><label>Storage</label><input id="mp-st" value="' + esc(p.st||'') + '" placeholder="Cool, Dry Place"></div>' +
+    '<div class="fg"><label>Image URL</label><input id="mp-img" value="' + esc(p.img||'') + '" placeholder="https://images.unsplash.com/..."></div>' +
+    '<div class="fg"><label>Description</label><textarea id="mp-d" rows="3">' + esc(p.d||'') + '</textarea></div>' +
+    '<div class="fg"><label>Status</label><select id="mp-active"><option value="1"' + (p.active!==false?' selected':'') + '>Active</option><option value="0"' + (p.active===false?' selected':'') + '>Inactive</option></select></div>';
+  document.getElementById('modal-foot').innerHTML =
+    '<button class="btn btn-ghost" onclick="closeModal()">Cancel</button>' +
+    '<button class="btn btn-gold" onclick="saveProduct(\'' + (editing?catId:'') + '\',' + (editing?idx:-1) + ')">Save Product</button>';
+  openModal();
+}
+
+async function saveProduct(oldCatId, oldIdx) {
+  var n   = document.getElementById('mp-n').value.trim();
+  var cat = document.getElementById('mp-cat').value;
+  if (!n || !cat) return toast('Name and category are required.', 'err');
+  var p = {
+    n, mi: v('mp-mi'), mx: v('mp-mx'), f: v('mp-f'), g: v('mp-g'),
+    o: v('mp-o'), pk: v('mp-pk'), c: v('mp-c'), sh: v('mp-sh'), st: v('mp-st'),
+    d: v('mp-d'), img: v('mp-img'),
+    active: document.getElementById('mp-active').value === '1'
+  };
+  try {
+    await api('admin/save-product', { catId: cat, oldCatId: oldCatId||null, oldIdx: oldIdx>=0?oldIdx:null, product: p });
+    var d = await api('admin/data');
+    DATA.products = d.products || {};
+    renderProducts(); renderDashboard(); closeModal();
+    toast('Product saved!', 'ok');
+  } catch(e) { toast(e.message, 'err'); }
+}
+
+async function deleteProduct(catId, idx) {
+  if (!confirm('Delete this product?')) return;
+  try {
+    await api('admin/delete-product', { catId, idx });
+    var d = await api('admin/data'); DATA.products = d.products||{};
+    renderProducts(); renderDashboard(); toast('Product deleted.', 'ok');
+  } catch(e) { toast(e.message, 'err'); }
+}
+
+async function toggleProduct(catId, idx) {
+  try {
+    await api('admin/toggle-product', { catId, idx });
+    var d = await api('admin/data'); DATA.products = d.products||{};
+    renderProducts(); renderDashboard(); toast('Product updated.', 'ok');
+  } catch(e) { toast(e.message, 'err'); }
+}
+
+// ═══════════════════════════════════════════
+// CATEGORIES
+// ═══════════════════════════════════════════
+function renderCategories() {
+  var rows = DATA.categories.map((c, i) => {
+    var cnt = (DATA.products[c.id]||[]).length;
+    return '<tr>' +
+      '<td style="font-size:1.4rem;">' + (c.ic||'📦') + '</td>' +
+      '<td style="font-weight:600;">' + esc(c.name) + '</td>' +
+      '<td style="font-size:.78rem;color:var(--mut);">' + esc(c.sub||'') + '</td>' +
+      '<td><span class="badge badge-gold">' + cnt + '</span></td>' +
+      '<td style="display:flex;gap:6px;">' +
+        '<button class="btn btn-ghost btn-sm" onclick="openCatModal(' + i + ')">Edit</button>' +
+        '<button class="btn btn-danger btn-sm" onclick="deleteCat(' + i + ')">Del</button>' +
+      '</td>' +
+    '</tr>';
+  }).join('');
+  var tb = document.getElementById('cat-tbody');
+  if (tb) tb.innerHTML = rows || '<tr><td colspan="5" style="text-align:center;color:var(--mut);padding:24px;">No categories.</td></tr>';
+}
+
+function openCatModal(idx) {
+  var editing = idx !== undefined;
+  var c = editing ? DATA.categories[idx] : {};
+  document.getElementById('modal-title').textContent = editing ? 'Edit Category' : 'Add Category';
+  document.getElementById('modal-body').innerHTML =
+    '<div class="fg-row">' +
+      '<div class="fg"><label>Icon (Emoji) *</label><input id="mc-ic" value="' + esc(c.ic||'') + '" placeholder="🌾"></div>' +
+      '<div class="fg"><label>Category ID *</label><input id="mc-id" value="' + esc(c.id||'') + '" placeholder="basmati" ' + (editing?'readonly':'') + '></div>' +
+    '</div>' +
+    '<div class="fg"><label>Category Name *</label><input id="mc-name" value="' + esc(c.name||'') + '" placeholder="Basmati Rice"></div>' +
+    '<div class="fg"><label>Subtitle</label><input id="mc-sub" value="' + esc(c.sub||'') + '" placeholder="Premium aromatic long-grain varieties"></div>' +
+    '<div class="fg"><label>Image URL</label><input id="mc-img" value="' + esc(c.img||'') + '" placeholder="https://images.unsplash.com/..."></div>';
+  document.getElementById('modal-foot').innerHTML =
+    '<button class="btn btn-ghost" onclick="closeModal()">Cancel</button>' +
+    '<button class="btn btn-gold" onclick="saveCat(' + (editing?idx:-1) + ')">Save Category</button>';
+  openModal();
+}
+
+async function saveCat(idx) {
+  var ic   = document.getElementById('mc-ic').value.trim();
+  var id   = document.getElementById('mc-id').value.trim().toLowerCase().replace(/\s+/g,'');
+  var name = document.getElementById('mc-name').value.trim();
+  var sub  = document.getElementById('mc-sub').value.trim();
+  var img  = document.getElementById('mc-img').value.trim();
+  if (!ic||!id||!name) return toast('Icon, ID and Name are required.','err');
+  try {
+    await api('admin/save-category', { idx: idx>=0?idx:null, category: {ic,id,name,sub,img} });
+    var d = await api('admin/data'); DATA.categories = d.categories||[];
+    renderCategories(); renderProducts(); closeModal(); toast('Category saved!','ok');
+  } catch(e) { toast(e.message,'err'); }
+}
+
+async function deleteCat(idx) {
+  if (!confirm('Delete this category? Products inside will also be removed.')) return;
+  try {
+    await api('admin/delete-category', { idx });
+    var d = await api('admin/data'); DATA.categories=d.categories||[]; DATA.products=d.products||{};
+    renderCategories(); renderProducts(); renderDashboard(); toast('Category deleted.','ok');
+  } catch(e) { toast(e.message,'err'); }
+}
+
+// ═══════════════════════════════════════════
+// ENQUIRIES
+// ═══════════════════════════════════════════
+function filterEnq(f, btn) {
+  ENQ_FILTER = f;
+  document.querySelectorAll('#pg-enquiries .tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderEnquiries();
+}
+
+function renderEnquiries() {
+  var list = (DATA.enquiries||[]).slice().reverse();
+  if (ENQ_FILTER !== 'all') list = list.filter(e=>(e.status||'new')===ENQ_FILTER);
+  var grid = document.getElementById('enq-grid');
+  if (!grid) return;
+  if (!list.length) { grid.innerHTML = '<div class="card" style="text-align:center;color:var(--mut);padding:32px;">No enquiries found.</div>'; return; }
+  grid.innerHTML = list.map(e =>
+    '<div class="enq-card">' +
+      '<div class="enq-head">' +
+        '<div><div class="enq-name">' + esc(e.name) + '</div>' +
+        '<div class="enq-meta">' + esc(e.email||'') + (e.phone?' · '+esc(e.phone):'') + ' · ' + new Date(e.date||Date.now()).toLocaleDateString() + '</div></div>' +
+        '<span class="badge ' + (e.status==='new'?'badge-blue':e.status==='done'?'badge-green':'badge-gold') + '">' + (e.status||'new') + '</span>' +
+      '</div>' +
+      (e.product?'<div class="enq-product">📦 ' + esc(e.product) + (e.quantity?' · '+esc(e.quantity):'') + '</div>':'') +
+      (e.message?'<div class="enq-msg">' + esc(e.message) + '</div>':'') +
+      '<div class="enq-foot">' +
+        '<select onchange="updateEnqStatus(\'' + e.id + '\',this.value)" style="background:#0a1520;border:1px solid var(--border);color:var(--txt);padding:5px 8px;border-radius:4px;font-size:.75rem;">' +
+          ['new','read','done'].map(s=>'<option value="'+s+'"'+(e.status===s?' selected':'')+'>'+s+'</option>').join('') +
+        '</select>' +
+        (e.email?'<a href="mailto:' + esc(e.email) + '?subject=Re: ' + encodeURIComponent(e.product||'Your Enquiry') + '" class="btn btn-ghost btn-sm">Reply</a>':'') +
+        (e.phone?'<a href="https://wa.me/' + esc(e.phone.replace(/\D/g,'')) + '" target="_blank" class="btn btn-green btn-sm">WhatsApp</a>':'') +
+        '<button class="btn btn-danger btn-sm" onclick="deleteEnq(\'' + e.id + '\')">Delete</button>' +
+      '</div>' +
+    '</div>'
+  ).join('');
+}
+
+async function updateEnqStatus(id, status) {
+  try {
+    await api('admin/update-enquiry', { id, status });
+    var d = await api('admin/data'); DATA.enquiries = d.enquiries||[];
+    renderEnquiries(); renderDashboard(); toast('Status updated.','ok');
+  } catch(e) { toast(e.message,'err'); }
+}
+
+async function deleteEnq(id) {
+  if (!confirm('Delete this enquiry?')) return;
+  try {
+    await api('admin/delete-enquiry', { id });
+    var d = await api('admin/data'); DATA.enquiries = d.enquiries||[];
+    renderEnquiries(); renderDashboard(); toast('Enquiry deleted.','ok');
+  } catch(e) { toast(e.message,'err'); }
+}
+
+// ═══════════════════════════════════════════
+// SETTINGS
+// ═══════════════════════════════════════════
+function renderSettings() {
+  var s = DATA.settings || {};
+  var sections = [
+    { title: '🏢 Company Information', fields: [
+      { id:'company_name',      label:'Company Name',         val: s.company_name||'' },
+      { id:'proprietor',        label:'Proprietor Name',      val: s.proprietor||'' },
+      { id:'tagline',           label:'Tagline',              val: s.tagline||'' },
+      { id:'about_short',       label:'About (Short)',        val: s.about_short||'',       ta:true },
+      { id:'about_long',        label:'About (Long)',         val: s.about_long||'',        ta:true },
+      { id:'certifications',    label:'Certifications (comma separated)', val: s.certifications||'' },
+    ]},
+    { title: '📞 Contact Information', fields: [
+      { id:'phone1',   label:'Phone 1',   val: s.phone1||'' },
+      { id:'phone2',   label:'Phone 2',   val: s.phone2||'' },
+      { id:'whatsapp', label:'WhatsApp (with country code)', val: s.whatsapp||'' },
+      { id:'email1',   label:'Email 1',   val: s.email1||'' },
+      { id:'email2',   label:'Email 2',   val: s.email2||'' },
+      { id:'address',  label:'Address',   val: s.address||'',  ta:true },
+    ]},
+    { title: '✉️ Web3Forms Keys', fields: [
+      { id:'web3forms_enquiry', label:'Enquiry Form Key', val: s.web3forms_enquiry||'' },
+      { id:'web3forms_contact', label:'Contact Form Key', val: s.web3forms_contact||'' },
+    ]},
+    { title: '🔒 Change Password', fields: [
+      { id:'new_password', label:'New Password', val:'', type:'password', placeholder:'Leave blank to keep current' },
+    ]},
+  ];
+  var html = sections.map((sec, si) =>
+    '<div class="acc-item">' +
+      '<div class="acc-head" onclick="toggleAcc(' + si + ')">' +
+        '<h4>' + sec.title + '</h4>' +
+        '<span class="arr" id="arr-' + si + '">▼</span>' +
+      '</div>' +
+      '<div class="acc-body" id="acc-' + si + '">' +
+        sec.fields.map(f =>
+          '<div class="fg"><label>' + esc(f.label) + '</label>' +
+          (f.ta
+            ? '<textarea id="sf-' + f.id + '" rows="3">' + esc(f.val) + '</textarea>'
+            : '<input type="' + (f.type||'text') + '" id="sf-' + f.id + '" value="' + esc(f.val) + '" placeholder="' + esc(f.placeholder||'') + '">') +
+          '</div>'
+        ).join('') +
+        '<button class="btn btn-gold btn-sm" onclick="saveSection(' + si + ')">Save Section</button>' +
+      '</div>' +
+    '</div>'
+  ).join('');
+  var el = document.getElementById('settings-acc');
+  if (el) el.innerHTML = html;
+}
+
+function toggleAcc(i) {
+  var body = document.getElementById('acc-' + i);
+  var arr  = document.getElementById('arr-' + i);
+  body.classList.toggle('open');
+  arr.classList.toggle('open');
+}
+
+async function saveSection(si) {
+  var s = DATA.settings || {};
+  var groups = [
+    ['company_name','proprietor','tagline','about_short','about_long','certifications'],
+    ['phone1','phone2','whatsapp','email1','email2','address'],
+    ['web3forms_enquiry','web3forms_contact'],
+    ['new_password'],
+  ];
+  groups[si].forEach(id => {
+    var el = document.getElementById('sf-' + id);
+    if (el && el.value.trim()) s[id] = el.value.trim();
+  });
+  try {
+    await api('admin/save-settings', { settings: s });
+    DATA.settings = s;
+    toast('Settings saved!','ok');
+  } catch(e) { toast(e.message,'err'); }
+}
+
+// ═══════════════════════════════════════════
+// BACKUP
+// ═══════════════════════════════════════════
+function doExport() {
+  var blob = new Blob([JSON.stringify(DATA, null, 2)], {type:'application/json'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'memane-backup-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  toast('Backup downloaded!','ok');
+}
+
+async function doImport(input) {
+  var file = input.files[0]; if (!file) return;
+  try {
+    var text = await file.text();
+    var d = JSON.parse(text);
+    if (d.settings)    await api('admin/save-settings',  { settings:   d.settings });
+    if (d.categories)  await api('admin/save-category',  { replace:    d.categories });
+    toast('Import started — reloading...','ok');
+    setTimeout(() => loadAll(), 1500);
+  } catch(e) { toast('Import failed: '+e.message,'err'); }
+}
+
+// ═══════════════════════════════════════════
+// MODAL
+// ═══════════════════════════════════════════
+function openModal()  { document.getElementById('modal-bg').classList.add('open'); }
+function closeModal() { document.getElementById('modal-bg').classList.remove('open'); }
+
+// ═══════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════
+var _toastTimer;
+function toast(msg, type) {
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'show ' + (type||'');
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => { el.classList.remove('show'); }, 3000);
+}
+
+// ═══════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function v(id) { var el=document.getElementById(id); return el?el.value.trim():''; }
+</script>
+</body>
+</html>

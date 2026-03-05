@@ -1,8 +1,7 @@
 /*
-  X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: camera=(), microphone=(), geolocation=()
 
-/mi-portal.html
-  Cache-Control: no-store
+/admin.html
+  Cache-Control: no-store, no-cache
+  X-Frame-Options: DENY
