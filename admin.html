@@ -1156,7 +1156,32 @@ function renderSetts(){
         ).join('')+
         '<button class="mi-btn mi-btn-primary mi-btn-sm" onclick="saveSG('+JSON.stringify(g.keys.map(f=>f.k))+')">Save</button>' +
       '</div></div>'
-  ).join('');
+  ).join('') +
+
+  // Data Tools section
+  '<div class="mi-acc" style="margin-top:20px;border-color:rgba(201,168,76,.3)">' +
+    '<div class="mi-acc-head" onclick="toggleAcc(\'ac-tools\')" style="background:rgba(201,168,76,.06)">' +
+      '<span class="mi-acc-title" style="color:var(--mi-gold)">🔧 Data Tools</span>' +
+      '<span class="mi-acc-arrow" id="ac-tools-arr">▼</span>' +
+    '</div>' +
+    '<div class="mi-acc-body" id="ac-tools">' +
+      '<div style="background:var(--mi-red-dim);border:1px solid rgba(192,57,43,.3);border-radius:8px;padding:14px;margin-bottom:14px">' +
+        '<div style="font-size:13px;font-weight:700;color:#E57373;margin-bottom:6px">⚠️ Reset Products to Defaults</div>' +
+        '<div style="font-size:12px;color:var(--mi-txt2);margin-bottom:12px">This will overwrite ALL products and categories with the latest 109 default products. Use this if products are missing or outdated after a deployment.</div>' +
+        '<button class="mi-btn mi-btn-danger" onclick="resetProducts()">🔄 Reset All 109 Products</button>' +
+      '</div>' +
+    '</div></div>';
+}
+
+async function resetProducts() {
+  if (!confirm('This will reset ALL products to the default 109 products list. Any custom products you added will be removed. Continue?')) return;
+  try {
+    var d = await api('admin/reset-products', {});
+    toast(d.msg || 'Products reset!', 'ok');
+    var r = await api('admin/data', {});
+    S.data.products = r.products||[]; S.data.categories = r.categories||[];
+    renderProds(); renderCats(); renderDash();
+  } catch(e) { toast(e.message, 'err'); }
 }
 
 function toggleAcc(id){
