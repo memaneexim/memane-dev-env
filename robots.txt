@@ -1,5 +1,30 @@
+# ============================================================
+# robots.txt — Memane International
+# https://memaneinternational.in
+# ============================================================
+
 User-agent: *
 Allow: /
-Disallow: /mi-portal.html
+Allow: /sitemap.xml
 
+# Block admin panel from indexing
+Disallow: /admin.html
+Disallow: /mi-portal.html
+Disallow: /api/
+Disallow: /functions/
+
+# Crawl delay
+Crawl-delay: 5
+
+# Sitemap
 Sitemap: https://memaneinternational.in/sitemap.xml
+
+# Block bad scrapers
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
