@@ -120,9 +120,22 @@ img{max-width:100%;height:auto;display:block;}
 ul{list-style:none;}
 button{cursor:pointer;}
 
-/* PAGE SYSTEM */
+/* PAGE SYSTEM — CRITICAL */
 .pg{display:none;min-height:90vh;}
 .pg.on{display:block;}
+
+/* ── MARQUEE TICKER ── */
+.mi-ticker{display:flex;align-items:center;gap:28px;white-space:nowrap;animation:ticker 30s linear infinite;will-change:transform;}
+.mi-ticker span{font-size:.75rem;font-weight:600;color:rgba(255,255,255,.75);letter-spacing:.3px;flex-shrink:0;}
+@keyframes ticker{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+/* ── CERT BADGES ── */
+.cert-badge{background:#fff;border:1px solid var(--bdr);border-radius:10px;padding:16px 20px;text-align:center;min-width:110px;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+.cert-badge:hover{box-shadow:var(--shd);transform:translateY(-2px);}
+.cert-icon{font-size:1.6rem;margin-bottom:5px;}
+.cert-name{font-size:.78rem;font-weight:700;color:var(--navy);margin-bottom:2px;}
+.cert-sub{font-size:.66rem;color:var(--mut);}
+@media(max-width:768px){.mi-ticker{animation-duration:18s;} .cert-badge{min-width:90px;padding:12px 14px;}}
+@media(max-width:768px){section div[style*="grid-template-columns:1fr 1fr"]{display:block!important;} section div[style*="grid-template-columns:1fr 1fr"] > div:first-child{margin-bottom:16px;}}
 
 /* SPLASH */
 #splash{position:fixed;inset:0;z-index:9999;background:var(--ndk);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;transition:opacity .8s;}
@@ -193,72 +206,98 @@ button{cursor:pointer;}
 .fade.in{opacity:1;transform:none;}
 
 /* ── HERO ── */
-.hero{position:relative;min-height:560px;display:flex;align-items:center;overflow:hidden;}
-.hero-bg{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1494412651409-8963ce7935a7?w=1600&q=80');background-size:cover;background-position:center;filter:brightness(.35);}
-.hero-ov{position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,18,45,.92) 0%,rgba(26,43,95,.75) 100%);}
-.hero-in{max-width:1280px;margin:0 auto;padding:70px 32px;display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;position:relative;z-index:1;}
-.hero-bdg{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.3);color:var(--glt);padding:7px 14px;border-radius:20px;font-size:.72rem;font-weight:600;letter-spacing:.5px;margin-bottom:18px;}
-.hero h1{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:700;color:#fff;line-height:1.25;margin-bottom:16px;}
-.hero h1 em{color:var(--gold);font-style:normal;}
-.hero-sub{color:rgba(255,255,255,.78);font-size:.95rem;line-height:1.75;margin-bottom:28px;}
-.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px;}
-.hero-trust{display:flex;flex-wrap:wrap;gap:7px;}
-.hero-trust span{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.8);padding:5px 12px;border-radius:3px;font-size:.7rem;font-weight:600;}
-.hero-right{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
-.hcard{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:16px 12px;text-align:center;cursor:pointer;transition:all .2s;}
-.hcard:hover{background:rgba(255,255,255,.13);transform:translateY(-2px);}
-.hcard-i{font-size:2rem;margin-bottom:6px;}
-.hcard h4{color:#fff;font-size:.78rem;font-weight:600;margin-bottom:2px;}
-.hcard p{color:rgba(255,255,255,.5);font-size:.65rem;}
+.hero{position:relative;min-height:620px;display:flex;align-items:center;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1586201375761-83865001e31c?w=1800&q=85');background-size:cover;background-position:center top;filter:brightness(.28) saturate(1.2);}
+.hero-ov{position:absolute;inset:0;background:linear-gradient(125deg,rgba(6,12,35,.97) 0%,rgba(26,43,95,.82) 55%,rgba(155,28,49,.4) 100%);}
+.hero-in{max-width:1280px;margin:0 auto;padding:80px 32px;display:grid;grid-template-columns:1.1fr 0.9fr;gap:60px;align-items:center;position:relative;z-index:1;}
+.hero-bdg{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,.18);border:1px solid rgba(201,168,76,.4);color:var(--glt);padding:8px 16px;border-radius:30px;font-size:.71rem;font-weight:700;letter-spacing:.8px;margin-bottom:22px;text-transform:uppercase;}
+.hero h1{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:#fff;line-height:1.2;margin-bottom:18px;}
+.hero h1 em{color:var(--gold);font-style:italic;}
+.hero-sub{color:rgba(255,255,255,.75);font-size:.95rem;line-height:1.8;margin-bottom:32px;max-width:500px;}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px;}
+.hero-trust{display:flex;flex-wrap:wrap;gap:8px;}
+.hero-trust span{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.85);padding:6px 13px;border-radius:4px;font-size:.68rem;font-weight:600;}
+.hero-right{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.hcard{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:18px 14px;text-align:center;cursor:pointer;transition:all .25s;backdrop-filter:blur(4px);}
+.hcard:hover{background:rgba(255,255,255,.14);border-color:rgba(201,168,76,.4);transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,.3);}
+.hcard-i{font-size:2.2rem;margin-bottom:8px;}
+.hcard h4{color:#fff;font-size:.8rem;font-weight:700;margin-bottom:3px;}
+.hcard p{color:rgba(255,255,255,.5);font-size:.67rem;}
 
-/* STATS */
-.sbar{background:var(--red);padding:20px 0;}
-.sbar-in{max-width:1280px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
-.stat{text-align:center;}
-.stat-n{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:#fff;}
-.stat-l{font-size:.7rem;color:rgba(255,255,255,.75);letter-spacing:.5px;margin-top:2px;}
+/* STATS BAR */
+.sbar{background:linear-gradient(90deg,var(--red) 0%,#8B1020 100%);padding:0;}
+.sbar-in{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);}
+.stat{text-align:center;padding:24px 16px;border-right:1px solid rgba(255,255,255,.12);position:relative;}
+.stat:last-child{border-right:none;}
+.stat-n{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:#fff;line-height:1;}
+.stat-l{font-size:.68rem;color:rgba(255,255,255,.7);letter-spacing:.8px;text-transform:uppercase;margin-top:5px;}
 
 /* CAT GRID */
 .cgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:32px;}
-.ccard{background:#fff;border:1px solid var(--bdr);border-radius:10px;overflow:hidden;cursor:pointer;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.04);}
-.ccard:hover{box-shadow:0 8px 30px rgba(0,0,0,.12);transform:translateY(-3px);}
-.ccard-img{height:155px;overflow:hidden;position:relative;}
-.ccard-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
-.ccard:hover .ccard-img img{transform:scale(1.06);}
-.ccard-bdg{position:absolute;top:10px;right:10px;background:var(--red);color:#fff;font-size:.6rem;font-weight:700;padding:3px 8px;border-radius:3px;}
-.ccard-body{padding:14px;}
-.cc-ic{font-size:1.2rem;margin-bottom:5px;}
-.ccard-body h3{font-size:.86rem;font-weight:700;color:var(--navy);margin-bottom:3px;line-height:1.3;}
-.ccard-body p{font-size:.71rem;color:var(--mut);}
-.ccard-lnk{margin-top:9px;font-size:.71rem;font-weight:700;color:var(--red);}
+.ccard{background:#fff;border:1px solid var(--bdr);border-radius:12px;overflow:hidden;cursor:pointer;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,.05);}
+.ccard:hover{box-shadow:0 12px 40px rgba(0,0,0,.14);transform:translateY(-4px);}
+.ccard-img{height:170px;overflow:hidden;position:relative;}
+.ccard-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
+.ccard:hover .ccard-img img{transform:scale(1.08);}
+.ccard-bdg{position:absolute;top:10px;right:10px;background:var(--red);color:#fff;font-size:.6rem;font-weight:700;padding:4px 9px;border-radius:4px;letter-spacing:.3px;}
+.ccard-body{padding:15px 15px 13px;}
+.cc-ic{font-size:1.3rem;margin-bottom:5px;}
+.ccard-body h3{font-size:.88rem;font-weight:700;color:var(--navy);margin-bottom:3px;line-height:1.3;}
+.ccard-body p{font-size:.72rem;color:var(--mut);line-height:1.5;}
+.ccard-lnk{margin-top:10px;font-size:.72rem;font-weight:700;color:var(--red);display:flex;align-items:center;gap:4px;}
+
+/* FEATURED PRODUCTS ROW */
+.fprow{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:28px;}
+.fpcard{background:#fff;border:1px solid var(--bdr);border-radius:10px;overflow:hidden;cursor:pointer;transition:all .25s;text-align:center;}
+.fpcard:hover{box-shadow:0 8px 24px rgba(0,0,0,.1);transform:translateY(-3px);}
+.fpcard-img{height:120px;overflow:hidden;}
+.fpcard-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
+.fpcard:hover .fpcard-img img{transform:scale(1.07);}
+.fpcard-body{padding:10px 10px 12px;}
+.fpcard-body h4{font-size:.73rem;font-weight:700;color:var(--navy);line-height:1.3;margin-bottom:4px;}
+.fpcard-body .moq{font-size:.63rem;color:var(--mut);}
+.fpcard-body .lnk{font-size:.63rem;font-weight:700;color:var(--red);margin-top:5px;}
 
 /* ABOUT STRIP */
-.astrip{background:#fff;padding:60px 0;}
-.astrip-in{display:grid;grid-template-columns:1fr 1.3fr;gap:56px;align-items:center;}
+.astrip{background:#fff;padding:70px 0;}
+.astrip-in{display:grid;grid-template-columns:1fr 1.3fr;gap:60px;align-items:center;}
 .aimg{position:relative;}
-.aimg img{width:100%;border-radius:12px;box-shadow:var(--shd);height:360px;object-fit:cover;}
-.aimg-bdg{position:absolute;bottom:-14px;right:-14px;background:var(--red);color:#fff;padding:16px 20px;border-radius:8px;text-align:center;box-shadow:var(--shd);}
-.aimg-bdg strong{display:block;font-family:'Playfair Display',serif;font-size:1.5rem;}
+.aimg img{width:100%;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.15);height:400px;object-fit:cover;}
+.aimg-bdg{position:absolute;bottom:-16px;right:-16px;background:var(--red);color:#fff;padding:18px 22px;border-radius:10px;text-align:center;box-shadow:0 10px 30px rgba(155,28,49,.4);}
+.aimg-bdg strong{display:block;font-family:'Playfair Display',serif;font-size:1.6rem;}
 .aimg-bdg span{font-size:.62rem;opacity:.85;letter-spacing:.5px;}
 .certs{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px;}
-.chip{background:rgba(155,28,49,.07);border:1px solid rgba(155,28,49,.2);color:var(--red);padding:5px 12px;font-size:.68rem;font-weight:700;letter-spacing:.5px;border-radius:3px;}
+.chip{background:rgba(155,28,49,.07);border:1px solid rgba(155,28,49,.22);color:var(--red);padding:5px 13px;font-size:.7rem;font-weight:700;letter-spacing:.5px;border-radius:4px;}
 
 /* WHY US */
-.wgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px;}
-.wc{background:#fff;border:1px solid var(--bdr);border-radius:10px;padding:24px;transition:all .25s;}
-.wc:hover{box-shadow:var(--shd);transform:translateY(-2px);}
-.wi{font-size:2rem;margin-bottom:10px;}
-.wc h3{font-size:.9rem;font-weight:700;color:var(--navy);margin-bottom:6px;}
-.wc p{font-size:.8rem;color:var(--mut);line-height:1.65;}
+.wgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:32px;}
+.wc{background:#fff;border:1px solid var(--bdr);border-radius:14px;padding:28px 24px;transition:all .3s;position:relative;overflow:hidden;}
+.wc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),var(--gold));opacity:0;transition:opacity .3s;}
+.wc:hover{box-shadow:0 12px 40px rgba(0,0,0,.1);transform:translateY(-3px);}
+.wc:hover::before{opacity:1;}
+.wi{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:14px;background:rgba(155,28,49,.08);}
+.wc h3{font-size:.92rem;font-weight:700;color:var(--navy);margin-bottom:7px;}
+.wc p{font-size:.8rem;color:var(--mut);line-height:1.7;}
+
+/* TRUST LOGOS / CERTIFICATIONS STRIP */
+.trustbar{background:var(--off);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:28px 0;}
+.trustbar-in{max-width:1200px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+.trustbar-label{font-size:.72rem;font-weight:700;color:var(--mut);letter-spacing:1px;text-transform:uppercase;white-space:nowrap;}
+.trust-chips{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.tcert{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--bdr);border-radius:8px;padding:10px 16px;box-shadow:0 2px 6px rgba(0,0,0,.04);}
+.tcert-icon{font-size:1.4rem;}
+.tcert-text strong{display:block;font-size:.73rem;font-weight:700;color:var(--navy);}
+.tcert-text span{font-size:.62rem;color:var(--mut);}
 
 /* CTA */
-.cta{background:linear-gradient(135deg,var(--ndk),var(--navy));padding:60px 0;text-align:center;}
-.cta h2{font-family:'Playfair Display',serif;font-size:2rem;color:#fff;margin-bottom:10px;}
-.cta p{color:rgba(255,255,255,.72);margin-bottom:28px;}
-.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.cta{background:linear-gradient(135deg,var(--ndk) 0%,#1a2b5f 60%,rgba(155,28,49,.6) 100%);padding:70px 0;text-align:center;position:relative;overflow:hidden;}
+.cta::before{content:'';position:absolute;width:400px;height:400px;background:rgba(201,168,76,.05);border-radius:50%;top:-100px;right:-100px;}
+.cta h2{font-family:'Playfair Display',serif;font-size:2.2rem;color:#fff;margin-bottom:12px;position:relative;}
+.cta p{color:rgba(255,255,255,.72);margin-bottom:32px;font-size:.95rem;position:relative;}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;}
 
 /* PAGE HERO */
-.ph{background:linear-gradient(135deg,var(--ndk),var(--navy));padding:42px 0;}
+.ph{background:linear-gradient(135deg,var(--ndk),var(--navy));padding:46px 0;}
 .ph-in{max-width:1280px;margin:0 auto;padding:0 32px;}
 .bc{display:flex;align-items:center;gap:6px;font-size:.74rem;color:rgba(255,255,255,.5);margin-bottom:12px;flex-wrap:wrap;}
 .bc a{color:rgba(255,255,255,.5);transition:color .2s;}.bc a:hover{color:var(--gold);}
@@ -426,9 +465,9 @@ footer{background:var(--ndk);padding:48px 0 0;}
 #waf:hover{transform:scale(1.1);}
 
 /* RESPONSIVE */
-@media(max-width:1024px){.cgrid{grid-template-columns:repeat(3,1fr);}.ftmain{grid-template-columns:1fr 1fr;}.vgrid{grid-template-columns:repeat(2,1fr);}.astrip-in{grid-template-columns:1fr;}.pd-top{grid-template-columns:1fr;}.pd-dgrid{grid-template-columns:repeat(2,1fr);}.ctgrid{grid-template-columns:1fr;}}
-@media(max-width:768px){.tb{flex-direction:column;gap:5px;text-align:center;}.navi{padding:0 18px;}.nl,.ncta{display:none;}.hbg{display:block;}.con{padding:0 18px;}.hero-in{grid-template-columns:1fr;padding:40px 18px;}.hero h1{font-size:1.85rem;}.hero-right{display:none;}.sbar-in{grid-template-columns:repeat(2,1fr);padding:0 18px;}.cgrid{grid-template-columns:repeat(2,1fr);}.wgrid{grid-template-columns:1fr;}.pgrid{grid-template-columns:repeat(2,1fr);}.ftmain{grid-template-columns:1fr;padding:0 18px;gap:24px;}.fbot{padding:15px 18px;flex-direction:column;text-align:center;}.pdwrap{padding:16px 18px;}.eg{grid-template-columns:1fr;}.cfgrid{grid-template-columns:1fr;}.fbar-in{padding:0 18px;}.ph-in{padding:0 18px;}.vgrid{grid-template-columns:1fr 1fr;}.clst{grid-template-columns:1fr;}}
-@media(max-width:480px){.cgrid{grid-template-columns:1fr 1fr;}.sbar-in{grid-template-columns:1fr 1fr;}.hero h1{font-size:1.6rem;}}
+@media(max-width:1024px){.cgrid{grid-template-columns:repeat(3,1fr);}.fprow{grid-template-columns:repeat(3,1fr);}.ftmain{grid-template-columns:1fr 1fr;}.vgrid{grid-template-columns:repeat(2,1fr);}.astrip-in{grid-template-columns:1fr;}.pd-top{grid-template-columns:1fr;}.pd-dgrid{grid-template-columns:repeat(2,1fr);}.ctgrid{grid-template-columns:1fr;}.trustbar-in{justify-content:center;}}
+@media(max-width:768px){.tb{flex-direction:column;gap:5px;text-align:center;}.navi{padding:0 18px;}.nl,.ncta{display:none;}.hbg{display:block;}.con{padding:0 18px;}.hero-in{grid-template-columns:1fr;padding:48px 18px 40px;}.hero h1{font-size:1.9rem;}.hero-right{grid-template-columns:repeat(3,1fr);gap:8px;}.sbar-in{grid-template-columns:repeat(2,1fr);}.cgrid{grid-template-columns:repeat(2,1fr);}.fprow{grid-template-columns:repeat(2,1fr);}.wgrid{grid-template-columns:1fr;}.pgrid{grid-template-columns:repeat(2,1fr);}.ftmain{grid-template-columns:1fr;padding:0 18px;gap:24px;}.fbot{padding:15px 18px;flex-direction:column;text-align:center;}.pdwrap{padding:16px 18px;}.eg{grid-template-columns:1fr;}.cfgrid{grid-template-columns:1fr;}.fbar-in{padding:0 18px;}.ph-in{padding:0 18px;}.vgrid{grid-template-columns:1fr 1fr;}.clst{grid-template-columns:1fr;}.trustbar-in{flex-direction:column;align-items:flex-start;}.trust-chips{width:100%;}}
+@media(max-width:480px){.cgrid{grid-template-columns:1fr 1fr;}.fprow{grid-template-columns:1fr 1fr;}.sbar-in{grid-template-columns:1fr 1fr;}.hero h1{font-size:1.65rem;}.hero-right{display:none;}}
 </style>
 </head>
 <body>
@@ -488,42 +527,86 @@ footer{background:var(--ndk);padding:48px 0 0;}
 ════════════════════════════════════════════════════ -->
 <div id="pg-home" class="pg">
 
+  <!-- ══════════════ HERO ══════════════ -->
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="hero-ov"></div>
-    <div class="hero-in">
+    <!-- floating grain texture -->
+    <div style="position:absolute;inset:0;opacity:.04;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22/></filter><rect width=%22200%22 height=%22200%22 filter=%22url(%23n)%22 opacity=%221%22/></svg>');z-index:1;"></div>
+    <div class="hero-in" style="position:relative;z-index:2;">
       <div>
         <div class="hero-bdg fade">🇮🇳 APEDA (RCMC Registered) · FSSAI · Pune, India</div>
-        <h1 class="fade">Your Global <em>Import &amp; Export</em><br>Partner from India</h1>
-        <p class="hero-sub fade">Your trusted partner for global import &amp; export — Rice, Spices, Fresh Produce, Dairy, Frozen Foods, Minerals, Engineering Goods &amp; more. Quality sourcing from India to the world.</p>
+        <h1 class="fade">Premium Indian Agri<br><em>Exports to the World</em></h1>
+        <p class="hero-sub fade">Rice, Spices, Fresh Produce, Dairy, Frozen Seafood &amp; more — sourced directly from Indian farms. 109 products. 17 categories. Export-ready.</p>
         <div class="hero-btns fade">
-          <button class="btn-w" onclick="goPage('catalogue')">📦 Explore Products</button>
-          <button class="btn-o" onclick="goPage('contact')">Get a Quote</button>
+          <button class="btn-w" onclick="goPage('catalogue')">📦 Browse 109 Products</button>
+          <button class="btn-o" onclick="goPage('contact')">✉ Get a Free Quote</button>
         </div>
         <div class="hero-trust fade">
-          <span>✅ APEDA Certified</span><span>✅ FSSAI Licensed</span><span>✅ FIEO Member</span><span>📦 120+ Products</span><span>🌍 Global Trade</span>
+          <span>✅ APEDA Certified</span>
+          <span>✅ FSSAI Licensed</span>
+          <span>✅ FIEO Member</span>
+          <span>🛡 Halal Available</span>
+          <span>📜 Full Documentation</span>
         </div>
       </div>
       <div class="hero-right">
-        <div class="hcard fade" onclick="goCat('basmati')"><div class="hcard-i">🌾</div><h4>Premium Rice</h4><p>Basmati &amp; Non-Basmati</p></div>
-        <div class="hcard fade" onclick="goCat('wholespices')"><div class="hcard-i">🌶️</div><h4>Spices &amp; Herbs</h4><p>Whole &amp; Ground</p></div>
-        <div class="hcard fade" onclick="goCat('freshfruits')"><div class="hcard-i">🍎</div><h4>Fresh Fruits</h4><p>A-Grade Export</p></div>
-        <div class="hcard fade" onclick="goCat('freshveg')"><div class="hcard-i">🥦</div><h4>Fresh Vegetables</h4><p>Farm to Export</p></div>
-        <div class="hcard fade" onclick="goCat('dairy')"><div class="hcard-i">🥛</div><h4>Dairy Products</h4><p>Ghee, Paneer &amp; More</p></div>
-        <div class="hcard fade" onclick="goPage('catalogue')"><div class="hcard-i">📦</div><h4>17 Categories</h4><p>120+ Products</p></div>
+        <div class="hcard fade" onclick="goCat('basmati')"><div class="hcard-i">🌾</div><h4>Basmati Rice</h4><p>10 varieties</p></div>
+        <div class="hcard fade" onclick="goCat('wholespices')"><div class="hcard-i">🌶️</div><h4>Whole Spices</h4><p>9 varieties</p></div>
+        <div class="hcard fade" onclick="goCat('freshfruits')"><div class="hcard-i">🍎</div><h4>Fresh Fruits</h4><p>9 varieties</p></div>
+        <div class="hcard fade" onclick="goCat('freshveg')"><div class="hcard-i">🥦</div><h4>Fresh Veg</h4><p>11 varieties</p></div>
+        <div class="hcard fade" onclick="goCat('seafood')"><div class="hcard-i">🦐</div><h4>Frozen Seafood</h4><p>6 varieties</p></div>
+        <div class="hcard fade" onclick="goPage('catalogue')" style="background:rgba(201,168,76,.15);border-color:rgba(201,168,76,.3)"><div class="hcard-i">📦</div><h4>17 Categories</h4><p>View All →</p></div>
       </div>
     </div>
   </section>
 
+  <!-- ══════════════ ANIMATED STATS BAR ══════════════ -->
   <div class="sbar">
     <div class="sbar-in">
-      <div class="stat"><div class="stat-n">🌍 Global</div><div class="stat-l">Import &amp; Export</div></div>
-      <div class="stat"><div class="stat-n">📦 120+</div><div class="stat-l">Products Listed</div></div>
-      <div class="stat"><div class="stat-n">✅ APEDA</div><div class="stat-l">RCMC Registered</div></div>
-      <div class="stat"><div class="stat-n">🤝 Ready</div><div class="stat-l">To Serve You</div></div>
+      <div class="stat"><div class="stat-n" id="st-prod">109</div><div class="stat-l">Products Listed</div></div>
+      <div class="stat"><div class="stat-n" id="st-cat">17</div><div class="stat-l">Product Categories</div></div>
+      <div class="stat"><div class="stat-n">APEDA</div><div class="stat-l">RCMC Registered</div></div>
+      <div class="stat"><div class="stat-n">Halal ✓</div><div class="stat-l">Certified Options</div></div>
     </div>
   </div>
 
+  <!-- ══════════════ MARQUEE TRUST TICKER ══════════════ -->
+  <div style="background:var(--navy);overflow:hidden;padding:12px 0;border-bottom:2px solid rgba(201,168,76,.2);">
+    <div class="mi-ticker">
+      <span>🌾 Basmati Rice Export</span>
+      <span style="color:var(--gold)">✦</span>
+      <span>🌶️ Indian Spices</span>
+      <span style="color:var(--gold)">✦</span>
+      <span>🍎 Fresh Fruits &amp; Vegetables</span>
+      <span style="color:var(--gold)">✦</span>
+      <span>🥛 Dairy Products</span>
+      <span style="color:var(--gold)">✦</span>
+      <span>🦐 Frozen Seafood</span>
+      <span style="color:var(--gold)">✦</span>
+      <span>🍗 Halal Chicken</span>
+      <span style="color:var(--gold)">✦</span>
+      <span>🍬 White Sugar ICUMSA</span>
+      <span style="color:var(--gold)">✦</span>
+      <span>🌱 Sesame Seeds</span>
+      <span style="color:var(--gold)">✦</span>
+      <span>📜 APEDA · FSSAI · FIEO · Phytosanitary</span>
+      <span style="color:var(--gold)">✦</span>
+      <!-- duplicate for seamless loop -->
+      <span>🌾 Basmati Rice Export</span>
+      <span style="color:var(--gold)">✦</span>
+      <span>🌶️ Indian Spices</span>
+      <span style="color:var(--gold)">✦</span>
+      <span>🍎 Fresh Fruits &amp; Vegetables</span>
+      <span style="color:var(--gold)">✦</span>
+      <span>🥛 Dairy Products</span>
+      <span style="color:var(--gold)">✦</span>
+      <span>🦐 Frozen Seafood</span>
+      <span style="color:var(--gold)">✦</span>
+    </div>
+  </div>
+
+  <!-- ══════════════ PRODUCT CATEGORIES ══════════════ -->
   <section class="sec">
     <div class="con">
       <div class="ctr fade" style="margin-bottom:32px;">
@@ -538,19 +621,34 @@ footer{background:var(--ndk);padding:48px 0 0;}
     </div>
   </section>
 
+  <!-- ══════════════ FEATURED PRODUCTS ══════════════ -->
+  <section style="padding:50px 0;background:var(--navy);">
+    <div class="con">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:10px;">
+        <div>
+          <div class="stag" style="color:var(--gold);">Top Sellers</div>
+          <h2 class="sh" style="color:#fff;">Most Requested <span style="color:var(--gold);">Products</span></h2>
+        </div>
+        <button class="btn-o" onclick="goPage('catalogue')" style="font-size:.8rem;">Browse All 109 →</button>
+      </div>
+      <div class="fprow" id="feat-prods"></div>
+    </div>
+  </section>
+
+  <!-- ══════════════ ABOUT STRIP ══════════════ -->
   <section class="astrip">
     <div class="con">
       <div class="astrip-in">
         <div class="aimg fade">
-          <img src="https://images.unsplash.com/photo-1521791055366-0d553872952f?w=800&q=80" alt="Memane International Team" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=800&q=80" alt="Premium Indian Basmati Rice Export" loading="lazy">
           <div class="aimg-bdg"><strong>APEDA</strong><span>RCMC Registered</span></div>
         </div>
         <div class="fade">
           <div class="stag">Who We Are</div>
-          <h2 class="sh">India's Trusted<br><span>Import &amp; Export Partner</span></h2>
+          <h2 class="sh">India's Trusted<br><span>Agri Export Partner</span></h2>
           <div class="div"></div>
-          <p style="color:var(--mut);line-height:1.8;margin-bottom:12px;">Memane International is an India-based import–export company engaged in the global trade of food products, commodities, minerals, and engineering goods. We are a startup with strong supplier links across India providing A-grade export quality products.</p>
-          <p style="color:var(--mut);line-height:1.8;margin-bottom:20px;">Headquartered in Pune, Maharashtra — our objective is delivering <strong style="color:var(--navy);">reliable global trade solutions from India.</strong></p>
+          <p style="color:var(--mut);line-height:1.8;margin-bottom:12px;">Memane International is an APEDA (RCMC) registered export company from Pune, Maharashtra, India. We supply 109 export-quality food products across 17 categories — sourced directly from certified Indian farms, mills and processors.</p>
+          <p style="color:var(--mut);line-height:1.8;margin-bottom:20px;">Our goal is simple: give international buyers reliable access to the best of India's agricultural output — with full export documentation, competitive pricing, and dedicated service.</p>
           <div class="certs">
             <span class="chip">APEDA (RCMC)</span><span class="chip">FSSAI</span><span class="chip">FIEO Member</span><span class="chip">Phytosanitary</span>
           </div>
@@ -563,50 +661,87 @@ footer{background:var(--ndk);padding:48px 0 0;}
     </div>
   </section>
 
+  <!-- ══════════════ WHY CHOOSE US ══════════════ -->
   <section class="sec" style="background:var(--off);">
     <div class="con">
-      <div class="ctr fade"><div class="stag">Our Advantage</div><h2 class="sh">Why Choose Memane <span>International</span></h2></div>
+      <div class="ctr fade"><div class="stag">Our Advantage</div><h2 class="sh">Why Buyers Choose <span>Memane</span></h2></div>
       <div class="wgrid">
-        <div class="wc fade"><div class="wi">🌾</div><h3>Direct Farm Sourcing</h3><p>We source directly from certified farms, mills and cooperatives — cutting unnecessary middlemen for better quality and pricing.</p></div>
-        <div class="wc fade"><div class="wi">✅</div><h3>Quality Certified</h3><p>APEDA, FSSAI, FIEO certified. Every commodity is lab-tested for purity, moisture and safety before export.</p></div>
-        <div class="wc fade"><div class="wi">📦</div><h3>Custom Packaging</h3><p>Private label and custom pack sizes available — retail, wholesale and bulk formats for every market.</p></div>
-        <div class="wc fade"><div class="wi">📋</div><h3>Full Documentation</h3><p>COO, Phytosanitary, Bill of Lading, COA, Fumigation Certificates — we handle the complete paperwork stack.</p></div>
-        <div class="wc fade"><div class="wi">⚡</div><h3>Timely Delivery</h3><p>FCL, LCL and bulk shipping from Nhava Sheva, Chennai, Mundra and Vizag. On time, every time.</p></div>
-        <div class="wc fade"><div class="wi">💬</div><h3>Dedicated Support</h3><p>Dedicated account manager for every client. 24-hour response to all trade inquiries.</p></div>
+        <div class="wc fade"><div class="wi">🌾</div><h3>Direct Farm Sourcing</h3><p>We source directly from certified farms and mills — cutting middlemen for better quality and pricing.</p></div>
+        <div class="wc fade"><div class="wi">✅</div><h3>Quality Certified</h3><p>APEDA, FSSAI, FIEO certified. Every batch is lab-tested for purity, moisture, and food safety before export.</p></div>
+        <div class="wc fade"><div class="wi">📦</div><h3>Custom Packaging</h3><p>Private label and custom pack sizes — retail, wholesale and bulk formats tailored to your market.</p></div>
+        <div class="wc fade"><div class="wi">📋</div><h3>Full Documentation</h3><p>COO, Phytosanitary, Bill of Lading, COA, Fumigation Certificates — complete paperwork handled.</p></div>
+        <div class="wc fade"><div class="wi">⚡</div><h3>Timely Shipment</h3><p>FCL, LCL and bulk shipping from Nhava Sheva, Chennai, Mundra and Vizag. Consistent lead times.</p></div>
+        <div class="wc fade"><div class="wi">💬</div><h3>Dedicated Support</h3><p>Dedicated account manager. 24-hour response guarantee to all trade enquiries worldwide.</p></div>
       </div>
     </div>
   </section>
 
+  <!-- ══════════════ MARKETS + CATALOGUE CTA ══════════════ -->
   <section style="padding:60px 0;background:#fff;">
     <div class="con">
-      <div class="ctr fade" style="margin-bottom:32px;"><div class="stag">Our Markets</div><h2 class="sh">We Export <span>Worldwide</span></h2></div>
-      <div style="position:relative;border-radius:12px;overflow:hidden;height:340px;">
-        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=80" alt="World Map Export Markets" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
-        <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(10,18,45,.85),rgba(10,18,45,.5));display:flex;align-items:center;">
-          <div style="padding:40px;max-width:500px;">
-            <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:#fff;margin-bottom:14px;">17 Categories. 120+ Products. Consistent Quality.</h3>
-            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;">
-              <span style="background:rgba(255,255,255,.12);color:#fff;padding:5px 11px;border-radius:3px;font-size:.75rem;font-weight:600;">🌍 Middle East</span>
-              <span style="background:rgba(255,255,255,.12);color:#fff;padding:5px 11px;border-radius:3px;font-size:.75rem;font-weight:600;">🌍 Africa</span>
-              <span style="background:rgba(255,255,255,.12);color:#fff;padding:5px 11px;border-radius:3px;font-size:.75rem;font-weight:600;">🌏 Southeast Asia</span>
-              <span style="background:rgba(255,255,255,.12);color:#fff;padding:5px 11px;border-radius:3px;font-size:.75rem;font-weight:600;">🌍 Europe</span>
-              <span style="background:rgba(255,255,255,.12);color:#fff;padding:5px 11px;border-radius:3px;font-size:.75rem;font-weight:600;">🌎 Americas</span>
-              <span style="background:rgba(255,255,255,.12);color:#fff;padding:5px 11px;border-radius:3px;font-size:.75rem;font-weight:600;">🌏 Australia</span>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:stretch;">
+
+        <!-- Markets -->
+        <div class="fade" style="position:relative;border-radius:14px;overflow:hidden;min-height:280px;">
+          <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80" alt="Global Export Markets" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" loading="lazy">
+          <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,18,45,.9),rgba(26,43,95,.7));"></div>
+          <div style="position:relative;z-index:1;padding:32px;">
+            <div class="stag" style="color:var(--gold);">Our Markets</div>
+            <h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;color:#fff;margin:10px 0 16px;">We Export Worldwide</h3>
+            <div style="display:flex;flex-wrap:wrap;gap:7px;">
+              <span style="background:rgba(255,255,255,.12);color:#fff;padding:5px 11px;border-radius:3px;font-size:.72rem;font-weight:600;">🌍 Middle East</span>
+              <span style="background:rgba(255,255,255,.12);color:#fff;padding:5px 11px;border-radius:3px;font-size:.72rem;font-weight:600;">🌍 Africa</span>
+              <span style="background:rgba(255,255,255,.12);color:#fff;padding:5px 11px;border-radius:3px;font-size:.72rem;font-weight:600;">🌏 Southeast Asia</span>
+              <span style="background:rgba(255,255,255,.12);color:#fff;padding:5px 11px;border-radius:3px;font-size:.72rem;font-weight:600;">🌍 Europe</span>
+              <span style="background:rgba(255,255,255,.12);color:#fff;padding:5px 11px;border-radius:3px;font-size:.72rem;font-weight:600;">🌎 Americas</span>
+              <span style="background:rgba(255,255,255,.12);color:#fff;padding:5px 11px;border-radius:3px;font-size:.72rem;font-weight:600;">🌏 Australia</span>
             </div>
-            <button class="btn-w" onclick="goPage('contact')">Start Trading →</button>
+            <div style="margin-top:20px;">
+              <button class="btn-w" onclick="goPage('contact')" style="font-size:.8rem;">Start Trading →</button>
+            </div>
           </div>
         </div>
+
+        <!-- Catalogue Download CTA -->
+        <div class="fade" style="background:linear-gradient(135deg,var(--red),var(--rdk));border-radius:14px;padding:36px;display:flex;flex-direction:column;justify-content:center;">
+          <div style="font-size:3rem;margin-bottom:12px;">📋</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;color:#fff;margin-bottom:10px;">Download Our Product Catalogue</h3>
+          <p style="color:rgba(255,255,255,.82);font-size:.86rem;line-height:1.7;margin-bottom:22px;">Get the complete Memane International product catalogue with all 109 products, specifications, certifications, MOQ details and packing options.</p>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <button class="btn-w" onclick="goPage('flipbook')" style="justify-content:center;font-size:.85rem;">📖 View Online Catalogue</button>
+            <button onclick="openWA('Hi, please share the Memane International product catalogue PDF. Thank you.')" style="background:var(--grn);color:#fff;border:none;padding:11px 20px;border-radius:5px;font-size:.85rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">💬 Request PDF on WhatsApp</button>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
+  <!-- ══════════════ CERTIFICATION BADGES ══════════════ -->
+  <section style="padding:40px 0;background:var(--off);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);">
+    <div class="con">
+      <div class="ctr fade" style="margin-bottom:24px;">
+        <p style="font-size:.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--mut);font-weight:700;">Certifications &amp; Memberships</p>
+      </div>
+      <div style="display:flex;justify-content:center;flex-wrap:wrap;gap:16px;">
+        <div class="cert-badge fade"><div class="cert-icon">🏛</div><div class="cert-name">APEDA</div><div class="cert-sub">RCMC Registered</div></div>
+        <div class="cert-badge fade"><div class="cert-icon">🛡</div><div class="cert-name">FSSAI</div><div class="cert-sub">Food Safety</div></div>
+        <div class="cert-badge fade"><div class="cert-icon">🌐</div><div class="cert-name">FIEO</div><div class="cert-sub">Member</div></div>
+        <div class="cert-badge fade"><div class="cert-icon">🌿</div><div class="cert-name">Phytosanitary</div><div class="cert-sub">Certified</div></div>
+        <div class="cert-badge fade"><div class="cert-icon">☪️</div><div class="cert-name">Halal</div><div class="cert-sub">Options Available</div></div>
+        <div class="cert-badge fade"><div class="cert-icon">📜</div><div class="cert-name">COO</div><div class="cert-sub">Certificate of Origin</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ FINAL CTA ══════════════ -->
   <div class="cta">
     <div class="con" style="max-width:640px;margin:0 auto;">
-      <h2 class="fade">Ready to Trade? Let's Talk.</h2>
-      <p class="fade">Contact us today for bulk pricing, samples and complete export documentation.</p>
+      <h2 class="fade">Ready to Source from India?</h2>
+      <p class="fade">Send us your product requirements. We respond within 24 hours with pricing, samples availability and full export documentation.</p>
       <div class="cta-btns">
-        <button class="btn-w fade" onclick="goPage('contact')">Request a Quote →</button>
-        <button class="btn-wa fade" onclick="openWA()">💬 WhatsApp Us</button>
+        <button class="btn-w fade" onclick="goPage('contact')">✉ Request a Quote</button>
+        <button class="btn-wa fade" onclick="openWA()">💬 WhatsApp Now</button>
       </div>
     </div>
   </div>
@@ -912,20 +1047,23 @@ footer{background:var(--ndk);padding:48px 0 0;}
       <li><a onclick="openWA()" style="color:var(--grn);">💬 WhatsApp Now</a></li>
     </ul></div>
   </div>
-  <div class="fbot">
-    <p>© 2025 Memane International. All Rights Reserved. | Pune, Maharashtra, India</p>
-    <p>Reliable Global Sourcing from India — APEDA (RCMC Registered)</p>
-    <p style="margin-top:8px;font-size:.72rem;">
-      <a onclick="goPage('privacy')" style="color:rgba(255,255,255,.45);text-decoration:underline;cursor:pointer;margin-right:14px;">Privacy Policy</a>
-      <a onclick="goPage('terms')" style="color:rgba(255,255,255,.45);text-decoration:underline;cursor:pointer;margin-right:14px;">Terms of Service</a>
-      <a onclick="goPage('contact')" style="color:rgba(255,255,255,.45);text-decoration:underline;cursor:pointer;">Contact Us</a>
-    </p>
+  <!-- Legal links bar -->
+  <div style="border-top:1px solid rgba(255,255,255,.08);padding:14px 32px;max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;">
+    <a onclick="goPage('privacy')" style="color:rgba(255,255,255,.55);font-size:.73rem;padding:5px 12px;border:1px solid rgba(255,255,255,.1);border-radius:4px;cursor:pointer;transition:all .2s;" onmouseover="this.style.color='var(--gold)';this.style.borderColor='rgba(201,168,76,.3)'" onmouseout="this.style.color='rgba(255,255,255,.55)';this.style.borderColor='rgba(255,255,255,.1)'">🔒 Privacy Policy</a>
+    <a onclick="goPage('terms')" style="color:rgba(255,255,255,.55);font-size:.73rem;padding:5px 12px;border:1px solid rgba(255,255,255,.1);border-radius:4px;cursor:pointer;transition:all .2s;" onmouseover="this.style.color='var(--gold)';this.style.borderColor='rgba(201,168,76,.3)'" onmouseout="this.style.color='rgba(255,255,255,.55)';this.style.borderColor='rgba(255,255,255,.1)'">📋 Terms of Service</a>
+    <a onclick="goPage('contact')" style="color:rgba(255,255,255,.55);font-size:.73rem;padding:5px 12px;border:1px solid rgba(255,255,255,.1);border-radius:4px;cursor:pointer;transition:all .2s;" onmouseover="this.style.color='var(--gold)';this.style.borderColor='rgba(201,168,76,.3)'" onmouseout="this.style.color='rgba(255,255,255,.55)';this.style.borderColor='rgba(255,255,255,.1)'">✉ Contact</a>
+    <a href="mailto:info@memaneinternational.in" style="color:rgba(255,255,255,.55);font-size:.73rem;padding:5px 12px;border:1px solid rgba(255,255,255,.1);border-radius:4px;transition:all .2s;" onmouseover="this.style.color='var(--gold)';this.style.borderColor='rgba(201,168,76,.3)'" onmouseout="this.style.color='rgba(255,255,255,.55)';this.style.borderColor='rgba(255,255,255,.1)'">📧 Email Us</a>
+    <a onclick="openWA()" style="color:#25D366;font-size:.73rem;padding:5px 12px;border:1px solid rgba(37,211,102,.2);border-radius:4px;cursor:pointer;">💬 WhatsApp</a>
+  </div>
+  <div class="fbot" style="border-top:1px solid rgba(255,255,255,.05);text-align:center;justify-content:center;flex-direction:column;gap:4px;">
+    <p>© 2025 Memane International. All Rights Reserved.</p>
+    <p>Pune, Maharashtra, India · APEDA (RCMC Registered) · Reliable Global Sourcing from India</p>
   </div>
 </footer>
 </template>
 
 <!-- ═══════ COOKIE CONSENT BANNER ═══════ -->
-<div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9800;background:#1A2B5F;border-top:3px solid #C9A84C;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+<div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9800;background:#1A2B5F;border-top:3px solid #C9A84C;padding:14px 20px;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
   <div style="flex:1;min-width:200px;">
     <p style="color:#fff;font-size:.8rem;line-height:1.5;margin:0;">🍪 We use essential cookies to make this website work. We don't track you for advertising. <a onclick="goPage('privacy')" style="color:#C9A84C;text-decoration:underline;cursor:pointer;">Learn more</a></p>
   </div>
@@ -1395,10 +1533,30 @@ function buildHomeCats(){
     var cnt=(PRODS[cat.id]||[]).length;
     var s=img(cat.id);
     return '<div class="ccard fade" onclick="goCat(\''+cat.id+'\')">'
-      +'<div class="ccard-img">'+(s?'<img src="'+s+'" alt="'+cat.name+'" loading="lazy" onerror="this.parentNode.innerHTML=\'<div style=height:155px;background:linear-gradient(135deg,var(--ndk),var(--nlt));display:flex;align-items:center;justify-content:center;font-size:3rem>'+cat.ic+'</div>\'">'
-        :'<div style="height:155px;background:linear-gradient(135deg,var(--ndk),var(--nlt));display:flex;align-items:center;justify-content:center;font-size:3rem;">'+cat.ic+'</div>')
+      +'<div class="ccard-img">'+(s?'<img src="'+s+'" alt="'+cat.name+'" loading="lazy" onerror="this.parentNode.innerHTML=\'<div style=height:170px;background:linear-gradient(135deg,var(--ndk),var(--nlt));display:flex;align-items:center;justify-content:center;font-size:3rem>'+cat.ic+'</div>\'">'
+        :'<div style="height:170px;background:linear-gradient(135deg,var(--ndk),var(--nlt));display:flex;align-items:center;justify-content:center;font-size:3rem;">'+cat.ic+'</div>')
         +'<span class="ccard-bdg">'+cnt+' Products</span></div>'
       +'<div class="ccard-body"><div class="cc-ic">'+cat.ic+'</div><h3>'+cat.name+'</h3><p>'+cat.sub+'</p><div class="ccard-lnk">Explore →</div></div></div>';
+  }).join('');
+  buildFeaturedProds();
+}
+
+function buildFeaturedProds(){
+  var el=document.getElementById('feat-prods'); if(!el||el.dataset.built) return; el.dataset.built=1;
+  // Pick one top product from each of 5 key categories
+  var picks=[
+    {cid:'basmati',idx:0},{cid:'wholespices',idx:0},{cid:'freshfruits',idx:0},
+    {cid:'freshveg',idx:0},{cid:'seafood',idx:0},{cid:'pulses',idx:0},
+    {cid:'dairy',idx:0},{cid:'chicken',idx:0},{cid:'sugar',idx:0},{cid:'sesame',idx:0}
+  ];
+  el.innerHTML=picks.map(function(pick){
+    var cat=getCat(pick.cid); var prods=PRODS[pick.cid]||[]; var p=prods[pick.idx];
+    if(!cat||!p) return '';
+    var s=img(p.n)||img(pick.cid);
+    return '<div class="fpcard fade" onclick="goProd(\''+pick.cid+'\','+pick.idx+')">'
+      +'<div class="fpcard-img">'+(s?'<img src="'+s+'" alt="'+p.n+'" loading="lazy" onerror="this.style.display=\'none\'">':'')+'</div>'
+      +'<div class="fpcard-body"><h4>'+p.n+'</h4><div class="moq" style="font-size:.62rem;color:var(--mut);">MOQ: '+p.mx+'</div><div class="lnk" style="font-size:.65rem;font-weight:700;color:var(--red);margin-top:5px;">View Details →</div></div>'
+      +'</div>';
   }).join('');
 }
 
