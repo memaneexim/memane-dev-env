@@ -451,6 +451,52 @@ img{max-width:100%;}
     </div>
     <button class="mi-btn mi-btn-primary mi-btn-block" id="l-btn" onclick="doLogin()">Sign In →</button>
     <div class="mi-alert mi-alert-danger" id="l-err"></div>
+    <div style="text-align:center;margin-top:14px;">
+      <a onclick="showScr('scr-forgot')" style="font-size:12px;color:var(--mi-txt2);cursor:pointer;text-decoration:underline;">Forgot Password?</a>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN: Forgot Password -->
+<div id="scr-forgot" class="auth-page" style="display:none;">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="pill">Password Reset</div>
+      <h1>Forgot Password?</h1>
+      <p>Enter your username and we'll send a reset link to your registered email</p>
+    </div>
+    <div class="mi-field">
+      <label class="mi-label">Username</label>
+      <input class="mi-input" id="fp-user" placeholder="Enter your username" autocomplete="username" onkeydown="if(event.key==='Enter')doForgotPassword()">
+    </div>
+    <button class="mi-btn mi-btn-primary mi-btn-block" id="fp-btn" onclick="doForgotPassword()">Send Reset Link →</button>
+    <div class="mi-alert mi-alert-danger" id="fp-err" style="display:none;"></div>
+    <div class="mi-alert" id="fp-ok" style="display:none;background:rgba(39,174,96,.1);border:1px solid rgba(39,174,96,.3);color:#27AE60;"></div>
+    <div style="text-align:center;margin-top:14px;">
+      <a onclick="showScr('scr-login')" style="font-size:12px;color:var(--mi-txt2);cursor:pointer;text-decoration:underline;">← Back to Login</a>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN: Reset Password (via email link token) -->
+<div id="scr-reset" class="auth-page" style="display:none;">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="pill" style="background:rgba(39,174,96,.15);color:#27AE60;border-color:rgba(39,174,96,.3);">🔐 Set New Password</div>
+      <h1>Reset Password</h1>
+      <p>Choose a strong new password for your admin account</p>
+    </div>
+    <div class="mi-field">
+      <label class="mi-label">New Password</label>
+      <input class="mi-input" type="password" id="rp-new" placeholder="Min 8 characters" onkeydown="if(event.key==='Enter')$$('rp-confirm').focus()">
+    </div>
+    <div class="mi-field">
+      <label class="mi-label">Confirm New Password</label>
+      <input class="mi-input" type="password" id="rp-confirm" placeholder="Repeat new password" onkeydown="if(event.key==='Enter')doResetPassword()">
+    </div>
+    <button class="mi-btn mi-btn-primary mi-btn-block" id="rp-btn" onclick="doResetPassword()">Set New Password →</button>
+    <div class="mi-alert mi-alert-danger" id="rp-err" style="display:none;"></div>
+    <div class="mi-alert" id="rp-ok" style="display:none;background:rgba(39,174,96,.1);border:1px solid rgba(39,174,96,.3);color:#27AE60;"></div>
   </div>
 </div>
 
@@ -717,7 +763,7 @@ function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')
 function gv(id){ var e=$$(id); return e ? e.value.trim() : ''; }
 
 function showScr(id) {
-  ['scr-login','scr-setup','scr-totp'].forEach(s => {
+  ['scr-login','scr-setup','scr-totp','scr-forgot','scr-reset'].forEach(s => {
     $$(s).style.display = s === id ? 'flex' : 'none';
   });
 }
@@ -795,6 +841,83 @@ function saveSession(d) {
 
 function backToLogin() { showScr('scr-login'); }
 
+// ── FORGOT PASSWORD ────────────────────────────────────────────
+async function doForgotPassword() {
+  var user = ($$('fp-user').value||'').trim();
+  var err = $$('fp-err'), ok = $$('fp-ok'), btn = $$('fp-btn');
+  err.style.display='none'; ok.style.display='none';
+  if(!user){ err.textContent='Please enter your username.'; err.style.display='block'; return; }
+  btn.disabled=true; btn.textContent='Sending...';
+  try {
+    var d = await fetch('/api/admin/forgot-password',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({username:user})
+    }).then(r=>r.json());
+    ok.textContent = d.msg || 'Reset link sent! Check your email.';
+    ok.style.display='block';
+    $$('fp-user').value='';
+  } catch(e) {
+    err.textContent = e.message||'Something went wrong. Please try again.';
+    err.style.display='block';
+  }
+  btn.disabled=false; btn.textContent='Send Reset Link →';
+}
+
+// ── RESET PASSWORD (via email link token) ─────────────────────
+async function doResetPassword() {
+  var newPass = ($$('rp-new').value||'');
+  var confirm = ($$('rp-confirm').value||'');
+  var err = $$('rp-err'), ok = $$('rp-ok'), btn = $$('rp-btn');
+  err.style.display='none'; ok.style.display='none';
+  if(!newPass||newPass.length<8){ err.textContent='Password must be at least 8 characters.'; err.style.display='block'; return; }
+  if(newPass!==confirm){ err.textContent='Passwords do not match.'; err.style.display='block'; return; }
+  var params = new URLSearchParams(window.location.search);
+  var token = params.get('reset');
+  if(!token){ err.textContent='Invalid reset link. Please request a new one.'; err.style.display='block'; return; }
+  btn.disabled=true; btn.textContent='Resetting...';
+  try {
+    var d = await fetch('/api/admin/reset-password',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({token:token, newPassword:newPass})
+    }).then(r=>r.json());
+    if(!d.ok){ err.textContent=d.msg||'Reset failed.'; err.style.display='block'; btn.disabled=false; btn.textContent='Set New Password →'; return; }
+    ok.textContent = '✅ ' + (d.msg||'Password reset! Redirecting to login...');
+    ok.style.display='block';
+    btn.style.display='none';
+    // Remove token from URL and go to login after 2s
+    setTimeout(function(){
+      window.history.replaceState({},'',window.location.pathname);
+      showScr('scr-login');
+    }, 2500);
+  } catch(e) {
+    err.textContent = e.message||'Something went wrong.';
+    err.style.display='block';
+    btn.disabled=false; btn.textContent='Set New Password →';
+  }
+}
+
+// ── CHANGE PASSWORD (logged in) ────────────────────────────────
+async function doChangePassword() {
+  var cur  = ($$('cp-cur').value||'');
+  var nw   = ($$('cp-new').value||'');
+  var conf = ($$('cp-conf').value||'');
+  var err  = $$('cp-err'), ok = $$('cp-ok');
+  err.style.display='none'; ok.style.display='none';
+  if(!cur){ err.textContent='Please enter your current password.'; err.style.display='block'; return; }
+  if(nw.length<8){ err.textContent='New password must be at least 8 characters.'; err.style.display='block'; return; }
+  if(nw!==conf){ err.textContent='New passwords do not match.'; err.style.display='block'; return; }
+  try {
+    var d = await api('admin/change-password', {currentPassword:cur, newPassword:nw});
+    if(!d.ok){ err.textContent=d.msg||'Failed to change password.'; err.style.display='block'; return; }
+    ok.textContent = '✅ ' + (d.msg||'Password changed! Confirmation email sent.');
+    ok.style.display='block';
+    $$('cp-cur').value=''; $$('cp-new').value=''; $$('cp-conf').value='';
+  } catch(e) {
+    err.textContent = e.message||'Something went wrong.';
+    err.style.display='block';
+  }
+}
+
 async function doLogout() {
   try { await api('admin/logout', {}); } catch(e) {}
   sessionStorage.clear();
@@ -804,7 +927,7 @@ async function doLogout() {
 // ── APP INIT ─────────────────────────────────────────────────
 async function loadApp() {
   // Hide auth, show app
-  ['scr-login','scr-setup','scr-totp'].forEach(s => $$(s).style.display = 'none');
+  ['scr-login','scr-setup','scr-totp','scr-forgot','scr-reset'].forEach(s => $$(s).style.display = 'none');
   $$('app').style.display = 'flex';
 
   // Set top bar
@@ -1158,6 +1281,24 @@ function renderSetts(){
       '</div></div>'
   ).join('') +
 
+  // Change Password section
+  '<div class="mi-acc" style="margin-top:20px;">' +
+    '<div class="mi-acc-head" onclick="toggleAcc(\'ac-chpass\')">' +
+      '<span class="mi-acc-title">🔐 Change Password</span>' +
+      '<span class="mi-acc-arrow" id="ac-chpass-arr">▼</span>' +
+    '</div>' +
+    '<div class="mi-acc-body" id="ac-chpass">' +
+      '<div class="mi-field"><label class="mi-label">Current Password</label><input class="mi-input" type="password" id="cp-cur" placeholder="Enter current password"></div>' +
+      '<div class="mi-field"><label class="mi-label">New Password</label><input class="mi-input" type="password" id="cp-new" placeholder="Min 8 characters"></div>' +
+      '<div class="mi-field"><label class="mi-label">Confirm New Password</label><input class="mi-input" type="password" id="cp-conf" placeholder="Repeat new password"></div>' +
+      '<div class="mi-alert mi-alert-danger" id="cp-err" style="display:none;margin-bottom:10px;"></div>' +
+      '<div class="mi-alert" id="cp-ok" style="display:none;background:rgba(39,174,96,.1);border:1px solid rgba(39,174,96,.3);color:#27AE60;margin-bottom:10px;"></div>' +
+      '<button class="mi-btn mi-btn-primary" onclick="doChangePassword()">🔐 Update Password</button>' +
+      '<div style="margin-top:10px;padding:10px;background:rgba(201,168,76,.07);border-radius:6px;border:1px solid rgba(201,168,76,.2);">' +
+        '<div style="font-size:11px;color:var(--mi-txt2);">✉ A confirmation email will be sent to your registered email address after the password is changed.</div>' +
+      '</div>' +
+    '</div></div>' +
+
   // Data Tools section
   '<div class="mi-acc" style="margin-top:20px;border-color:rgba(201,168,76,.3)">' +
     '<div class="mi-acc-head" onclick="toggleAcc(\'ac-tools\')" style="background:rgba(201,168,76,.06)">' +
@@ -1231,6 +1372,8 @@ function openAdminModal(id){
   $$('modal-title').textContent = id ? 'Edit Admin' : 'Add Admin';
   $$('modal-body').innerHTML =
     '<div class="mi-field"><label class="mi-label">Username *</label><input class="mi-input" id="am-user" value="'+esc(a.username||'')+'"></div>' +
+    '<div class="mi-field"><label class="mi-label">Email Address * <span style="font-size:11px;color:var(--mi-txt2);font-weight:400;">(for password reset emails)</span></label><input class="mi-input" type="email" id="am-email" value="'+esc(a.email||'')+'" placeholder="admin@example.com"></div>' +
+    '<div class="mi-field"><label class="mi-label">Full Name</label><input class="mi-input" id="am-name" value="'+esc(a.name||'')+'" placeholder="e.g. Tejas Memane"></div>' +
     '<div class="mi-field"><label class="mi-label">New Password '+(id?'(leave blank to keep)':'*')+'</label><input class="mi-input" type="password" id="am-pass" placeholder="'+(id?'Leave blank to keep current':'Enter password')+'"></div>' +
     '<div class="mi-field"><label class="mi-label">Role</label><select class="mi-select" id="am-role">' +
       ['superadmin','editor','viewer'].map(r=>'<option value="'+r+'"'+(r===a.role?' selected':'')+'>'+r+'</option>').join('') +
@@ -1243,9 +1386,11 @@ function openAdminModal(id){
 
 async function saveAdmin(id){
   var username=gv('am-user'), password=gv('am-pass'), role=gv('am-role');
+  var email=gv('am-email'), name=gv('am-name');
   if (!username) return toast('Username required','err');
   if (!id && !password) return toast('Password required for new admin','err');
-  var body = {username, role};
+  if (!email) return toast('Email address is required for password resets','err');
+  var body = {username, role, email, name};
   if (id) body.id = id;
   if (password) body.password = password;
   try {
@@ -1295,6 +1440,20 @@ function toast(msg, type){
   wrap.appendChild(el);
   setTimeout(()=>{ el.style.opacity='0'; el.style.transition='opacity .3s'; setTimeout(()=>el.remove(), 350); }, 3000);
 }
+
+// ── AUTO DETECT RESET TOKEN IN URL ────────────────────────────
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  if(params.get('reset')){
+    // Hide all auth screens, show reset screen
+    ['scr-login','scr-setup','scr-totp','scr-forgot'].forEach(function(s){
+      var el = document.getElementById(s);
+      if(el) el.style.display='none';
+    });
+    var resetScr = document.getElementById('scr-reset');
+    if(resetScr) resetScr.style.display='flex';
+  }
+})();
 </script>
 </body>
 </html>
