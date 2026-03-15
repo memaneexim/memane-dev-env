@@ -147,6 +147,22 @@ async function setKV(env,key,data){await env.KV.put(key,JSON.stringify(data));}
 function b32dec(s){const a='ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';let bits=0,val=0;const out=[];for(const c of s.toUpperCase().replace(/=+$/,'')){val=(val<<5)|a.indexOf(c);bits+=5;if(bits>=8){out.push((val>>>(bits-8))&255);bits-=8;}}return new Uint8Array(out);}
 async function genTOTP(secret,w=0){const epoch=Math.floor(Date.now()/1000);const ctr=Math.floor(epoch/30)+w;const key=await crypto.subtle.importKey('raw',b32dec(secret),{name:'HMAC',hash:'SHA-1'},false,['sign']);const data=new DataView(new ArrayBuffer(8));data.setUint32(4,ctr,false);const sig=new Uint8Array(await crypto.subtle.sign('HMAC',key,data.buffer));const off=sig[19]&0xf;const code=(((sig[off]&0x7f)<<24)|(sig[off+1]<<16)|(sig[off+2]<<8)|sig[off+3])%1000000;return code.toString().padStart(6,'0');}
 async function verifyTOTP(secret,token){for(const w of[-1,0,1])if(await genTOTP(secret,w)===token)return true;return false;}
+async function sendEmail(toEmail,toName,subject,htmlBody){
+  try{
+    const res=await fetch('https://api.mailchannels.net/tx/v1/send',{
+      method:'POST',
+      headers:{'content-type':'application/json'},
+      body:JSON.stringify({
+        personalizations:[{to:[{email:toEmail,name:toName}]}],
+        from:{email:'noreply@memaneinternational.in',name:'Memane International'},
+        subject:subject,
+        content:[{type:'text/html',value:htmlBody}]
+      })
+    });
+    return res.status===202;
+  }catch(e){return false;}
+}
+
 function genSecret(){const c='ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';return Array.from(crypto.getRandomValues(new Uint8Array(20))).map(b=>c[b%32]).join('');}
 
 async function seedIfEmpty(env){
@@ -227,8 +243,101 @@ export async function onRequest(context){
     if(path==='admin/save-enquiries'){await setKV(env,'enquiries',body.enquiries);return json({ok:true});}
     if(path==='admin/totp-setup'){const secret=genSecret();const s=await getKV(env,'settings',DEFAULT_SETTINGS);const otpauth=`otpauth://totp/${encodeURIComponent(s.company||'Memane')}:${encodeURIComponent(session.username)}?secret=${secret}&issuer=${encodeURIComponent(s.company||'Memane')}`;await env.KV.put('totp-pending:'+token,secret,{expirationTtl:600});return json({ok:true,secret,otpauth});}
     if(path==='admin/totp-confirm'){const secret=await env.KV.get('totp-pending:'+token);if(!secret)return json({ok:false,msg:'Setup expired'});if(!(await verifyTOTP(secret,body.code)))return json({ok:false,msg:'Invalid code'});const admins=await getKV(env,'admins',[]);const idx=admins.findIndex(a=>a.username===session.username);if(idx>=0){admins[idx].totp_secret=secret;admins[idx].totp_enabled=true;await setKV(env,'admins',admins);}await env.KV.delete('totp-pending:'+token);return json({ok:true});}
+    // ── SAVE SINGLE ADMIN (with email + name) ──────────────────────
+    if(path==='admin/save-admin'){
+      if(session.role!=='superadmin')return json({ok:false,msg:'Superadmin only'},403);
+      const {id,username,password,role,email,name}=body;
+      if(!username)return json({ok:false,msg:'Username required'},400);
+      if(!email)return json({ok:false,msg:'Email required for password resets'},400);
+      const admins=await getKV(env,'admins',[]);
+      if(id){
+        // Edit existing
+        const idx=admins.findIndex(a=>a.id===id);
+        if(idx<0)return json({ok:false,msg:'Admin not found'},404);
+        admins[idx].username=username;
+        admins[idx].role=role||admins[idx].role;
+        admins[idx].email=email;
+        admins[idx].name=name||admins[idx].name;
+        if(password)admins[idx].password=password;
+        await setKV(env,'admins',admins);
+        return json({ok:true,msg:'Admin updated'});
+      } else {
+        // Add new
+        if(!password)return json({ok:false,msg:'Password required for new admin'},400);
+        if(admins.find(a=>a.username===username))return json({ok:false,msg:'Username already exists'},409);
+        admins.push({id:'adm_'+Date.now(),username,password,role:role||'editor',email,name:name||username,totp_secret:null,totp_enabled:false,created:Date.now()});
+        await setKV(env,'admins',admins);
+        return json({ok:true,msg:'Admin added'});
+      }
+    }
     if(path==='admin/save-admins'){if(session.role!=='superadmin')return json({ok:false,msg:'Superadmin only'},403);await setKV(env,'admins',body.admins);return json({ok:true});}
+
+    // ── CHANGE PASSWORD (logged-in admin changes own password) ──────────
+    if(path==='admin/change-password'){
+      const {currentPassword,newPassword}=body;
+      if(!currentPassword||!newPassword)return json({ok:false,msg:'Both fields required'},400);
+      if(newPassword.length<8)return json({ok:false,msg:'New password must be at least 8 characters'},400);
+      const admins=await getKV(env,'admins',[]);
+      const idx=admins.findIndex(a=>a.username===session.username);
+      if(idx<0)return json({ok:false,msg:'Admin not found'},404);
+      if(admins[idx].password!==currentPassword)return json({ok:false,msg:'Current password is incorrect'},401);
+      admins[idx].password=newPassword;
+      admins[idx].password_changed=Date.now();
+      await setKV(env,'admins',admins);
+      const s=await getKV(env,'settings',DEFAULT_SETTINGS);
+      const adminEmail=admins[idx].email||s.email1||'info@memaneinternational.in';
+      await sendEmail(adminEmail,admins[idx].name||session.username,'Admin Password Changed — Memane International',
+        `<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;"><div style="background:#1A2B5F;padding:24px;text-align:center;"><h2 style="color:#fff;margin:0;">Memane International</h2><p style="color:#C9A84C;margin:4px 0 0;font-size:13px;">Admin Security Alert</p></div><div style="padding:28px;background:#f9f9f9;border:1px solid #e0e0e0;"><p>Hi <strong>${admins[idx].name||session.username}</strong>,</p><p>Your admin password was successfully changed on <strong>${new Date().toUTCString()}</strong>.</p><p style="color:#c0392b;"><strong>If you did not make this change, contact the system administrator immediately.</strong></p><hr style="border:none;border-top:1px solid #e0e0e0;margin:20px 0;"><p style="color:#999;font-size:12px;">— Memane International Admin System · memaneinternational.in</p></div></div>`
+      );
+      return json({ok:true,msg:'Password changed successfully. A confirmation email has been sent.'});
+    }
+
     return err('Unknown route');
   }
+
+  // ── FORGOT PASSWORD — request reset email (public, no auth) ──────────
+  if(request.method==='POST'&&path==='admin/forgot-password'){
+    const {username}=body;
+    if(!username)return json({ok:false,msg:'Username required'},400);
+    const admins=await getKV(env,'admins',[]);
+    const admin=admins.find(a=>a.username===username);
+    const s=await getKV(env,'settings',DEFAULT_SETTINGS);
+    if(admin){
+      const adminEmail=admin.email||s.email1||'info@memaneinternational.in';
+      const tokenBytes=new Uint8Array(32);
+      crypto.getRandomValues(tokenBytes);
+      const resetToken=Array.from(tokenBytes).map(b=>b.toString(16).padStart(2,'0')).join('');
+      await env.KV.put(`pwreset:${resetToken}`,JSON.stringify({username:admin.username,created:Date.now()}),{expirationTtl:3600});
+      const resetLink=`https://memaneinternational.in/admin.html?reset=${resetToken}`;
+      await sendEmail(adminEmail,admin.name||admin.username,'Reset Your Admin Password — Memane International',
+        `<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;"><div style="background:#1A2B5F;padding:24px;text-align:center;"><h2 style="color:#fff;margin:0;">Memane International</h2><p style="color:#C9A84C;margin:4px 0 0;font-size:13px;">Password Reset Request</p></div><div style="padding:28px;background:#f9f9f9;border:1px solid #e0e0e0;"><p>Hi <strong>${admin.name||admin.username}</strong>,</p><p>We received a request to reset the password for your Memane International admin account.</p><div style="text-align:center;margin:28px 0;"><a href="${resetLink}" style="background:#9B1C31;color:#fff;padding:14px 32px;text-decoration:none;border-radius:6px;font-weight:bold;font-size:15px;display:inline-block;">Reset My Password</a></div><p style="color:#666;font-size:13px;">Or copy this link: <a href="${resetLink}">${resetLink}</a></p><p style="color:#666;font-size:13px;">⏱ This link expires in <strong>1 hour</strong>.</p><p style="color:#666;font-size:13px;">If you did not request this, you can safely ignore this email.</p><hr style="border:none;border-top:1px solid #e0e0e0;margin:20px 0;"><p style="color:#999;font-size:12px;">— Memane International Admin System · memaneinternational.in · Pune, India</p></div></div>`
+      );
+    }
+    return json({ok:true,msg:'If that username exists, a reset link has been sent to the registered email.'});
+  }
+
+  // ── RESET PASSWORD — use token from email link (public) ──────────────
+  if(request.method==='POST'&&path==='admin/reset-password'){
+    const {token:resetToken,newPassword}=body;
+    if(!resetToken||!newPassword)return json({ok:false,msg:'Token and new password required'},400);
+    if(newPassword.length<8)return json({ok:false,msg:'Password must be at least 8 characters'},400);
+    const stored=await env.KV.get(`pwreset:${resetToken}`);
+    if(!stored)return json({ok:false,msg:'This reset link has expired or already been used. Please request a new one.'},400);
+    const {username}=JSON.parse(stored);
+    const admins=await getKV(env,'admins',[]);
+    const idx=admins.findIndex(a=>a.username===username);
+    if(idx<0)return json({ok:false,msg:'Account not found'},404);
+    admins[idx].password=newPassword;
+    admins[idx].password_changed=Date.now();
+    await setKV(env,'admins',admins);
+    await env.KV.delete(`pwreset:${resetToken}`);
+    const s=await getKV(env,'settings',DEFAULT_SETTINGS);
+    const adminEmail=admins[idx].email||s.email1||'info@memaneinternational.in';
+    await sendEmail(adminEmail,admins[idx].name||username,'Password Reset Successful — Memane International',
+      `<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;"><div style="background:#1A2B5F;padding:24px;text-align:center;"><h2 style="color:#fff;margin:0;">Memane International</h2><p style="color:#27AE60;margin:4px 0 0;font-size:13px;">✅ Password Reset Successful</p></div><div style="padding:28px;background:#f9f9f9;border:1px solid #e0e0e0;"><p>Hi <strong>${admins[idx].name||username}</strong>,</p><p>Your admin password has been successfully reset on <strong>${new Date().toUTCString()}</strong>.</p><p><a href="https://memaneinternational.in/admin.html" style="color:#9B1C31;font-weight:bold;">Click here to log in</a> with your new password.</p><p style="color:#c0392b;font-size:13px;"><strong>If you did not make this change, contact the system administrator immediately.</strong></p><hr style="border:none;border-top:1px solid #e0e0e0;margin:20px 0;"><p style="color:#999;font-size:12px;">— Memane International Admin System · memaneinternational.in</p></div></div>`
+    );
+    return json({ok:true,msg:'Password reset successfully. You can now log in with your new password.'});
+  }
+
   return err('Method not allowed',405);
 }
