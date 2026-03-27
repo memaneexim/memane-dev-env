@@ -226,12 +226,14 @@ export async function onRequest(context){
     const admin=admins.find(a=>a.username===body.username&&a.password===body.password);
     if(!admin)return json({ok:false,msg:'Wrong username or password'},401);
     if(admin.totp_enabled&&admin.totp_secret){
-      if(!body.totp)return json({ok:true,requireTotp:true});
-      if(!(await verifyTOTP(admin.totp_secret,body.totp)))return json({ok:false,msg:'Invalid TOTP code'},401);
+      // Store tmp token for TOTP verification
+      const tmpToken=await generateToken();
+      await env.KV.put('tmp:'+tmpToken,JSON.stringify({username:admin.username}),{expirationTtl:300});
+      return json({ok:true,requireTotp:true,tmp_token:tmpToken});
     }
-    const token=await generateToken();
-    await env.KV.put('auth:'+token,JSON.stringify({role:admin.role,username:admin.username,id:admin.id,name:admin.name}),{expirationTtl:86400});
-    return json({ok:true,token,requireTotp:false,role:admin.role,name:admin.name});
+    const authToken=await generateToken();
+    await env.KV.put('auth:'+authToken,JSON.stringify({role:admin.role,username:admin.username,id:admin.id,name:admin.name}),{expirationTtl:86400});
+    return json({ok:true,token:authToken,requireTotp:false,role:admin.role,username:admin.username,name:admin.name});
   }
 
   // PROTECTED ADMIN ROUTES
@@ -300,7 +302,115 @@ export async function onRequest(context){
       return json({ok:true,msg:'Password changed successfully. A confirmation email has been sent.'});
     }
 
+
+    // ── PRODUCT CRUD ─────────────────────────────────────────────────────
+    if(path==='admin/save-product'){
+      const prods=await getKV(env,'products',DEFAULT_PRODUCTS);
+      const p=body;
+      if(!p.id)p.id='p'+Date.now();
+      if(!p.active===undefined)p.active=true;
+      const idx=prods.findIndex(x=>x.id===p.id);
+      if(idx>=0)prods[idx]=p; else prods.push(p);
+      await setKV(env,'products',prods);
+      return json({ok:true,msg:'Product saved'});
+    }
+    if(path==='admin/toggle-product'){
+      const prods=await getKV(env,'products',DEFAULT_PRODUCTS);
+      const idx=prods.findIndex(x=>x.id===body.id);
+      if(idx<0)return json({ok:false,msg:'Product not found'},404);
+      prods[idx].active=!prods[idx].active;
+      await setKV(env,'products',prods);
+      return json({ok:true,active:prods[idx].active});
+    }
+    if(path==='admin/delete-product'){
+      const prods=await getKV(env,'products',DEFAULT_PRODUCTS);
+      const filtered=prods.filter(x=>x.id!==body.id);
+      await setKV(env,'products',filtered);
+      return json({ok:true,msg:'Product deleted'});
+    }
+
+    // ── CATEGORY CRUD ────────────────────────────────────────────────────
+    if(path==='admin/save-category'){
+      const cats=await getKV(env,'categories',DEFAULT_CATEGORIES);
+      const c=body;
+      if(!c.id)c.id='cat'+Date.now();
+      const idx=cats.findIndex(x=>x.id===c.id);
+      if(idx>=0)cats[idx]=c; else cats.push(c);
+      await setKV(env,'categories',cats);
+      return json({ok:true,msg:'Category saved'});
+    }
+    if(path==='admin/delete-category'){
+      const cats=await getKV(env,'categories',DEFAULT_CATEGORIES);
+      await setKV(env,'categories',cats.filter(x=>x.id!==body.id));
+      return json({ok:true,msg:'Category deleted'});
+    }
+
+    // ── ENQUIRY MANAGEMENT ───────────────────────────────────────────────
+    if(path==='admin/update-enquiry'){
+      const enqs=await getKV(env,'enquiries',[]);
+      const idx=enqs.findIndex(x=>x.id===body.id);
+      if(idx>=0){Object.assign(enqs[idx],body);await setKV(env,'enquiries',enqs);}
+      return json({ok:true});
+    }
+    if(path==='admin/delete-enquiry'){
+      const enqs=await getKV(env,'enquiries',[]);
+      await setKV(env,'enquiries',enqs.filter(x=>x.id!==body.id));
+      return json({ok:true,msg:'Enquiry deleted'});
+    }
+
+    // ── RESET PRODUCTS TO DEFAULT ─────────────────────────────────────────
+    if(path==='admin/reset-products'){
+      if(session.role!=='superadmin')return json({ok:false,msg:'Superadmin only'},403);
+      await setKV(env,'products',DEFAULT_PRODUCTS);
+      await setKV(env,'categories',DEFAULT_CATEGORIES);
+      return json({ok:true,msg:'Products and categories reset to defaults ('+DEFAULT_PRODUCTS.length+' products, '+DEFAULT_CATEGORIES.length+' categories)'});
+    }
+
+    // ── LOGOUT ───────────────────────────────────────────────────────────
+    if(path==='admin/logout'){
+      await env.KV.delete('auth:'+token);
+      return json({ok:true,msg:'Logged out'});
+    }
+
+    // ── DELETE ADMIN ─────────────────────────────────────────────────────
+    if(path==='admin/delete-admin'){
+      if(session.role!=='superadmin')return json({ok:false,msg:'Superadmin only'},403);
+      if(body.id===session.id)return json({ok:false,msg:'Cannot delete yourself'},400);
+      const admins=await getKV(env,'admins',[]);
+      await setKV(env,'admins',admins.filter(a=>a.id!==body.id));
+      return json({ok:true,msg:'Admin deleted'});
+    }
+
+    // ── RESET ADMIN TOTP ─────────────────────────────────────────────────
+    if(path==='admin/reset-totp'){
+      if(session.role!=='superadmin')return json({ok:false,msg:'Superadmin only'},403);
+      const admins=await getKV(env,'admins',[]);
+      const idx=admins.findIndex(a=>a.id===body.id);
+      if(idx<0)return json({ok:false,msg:'Admin not found'},404);
+      admins[idx].totp_secret=null;admins[idx].totp_enabled=false;
+      await setKV(env,'admins',admins);
+      return json({ok:true,msg:'2FA reset'});
+    }
+
     return err('Unknown route');
+  }
+
+  // ── TOTP LOGIN VERIFY (public — uses tmp_token) ───────────────────────
+  if(request.method==='POST'&&path==='login/totp'){
+    const body=await request.json().catch(()=>({}));
+    const {tmp_token,code}=body;
+    if(!tmp_token||!code)return json({ok:false,msg:'Missing token or code'},400);
+    const stored=await env.KV.get('tmp:'+tmp_token);
+    if(!stored)return json({ok:false,msg:'Session expired. Please login again.'},401);
+    const {username}=JSON.parse(stored);
+    const admins=await getKV(env,'admins',[]);
+    const admin=admins.find(a=>a.username===username);
+    if(!admin)return json({ok:false,msg:'Admin not found'},404);
+    if(!(await verifyTOTP(admin.totp_secret,code)))return json({ok:false,msg:'Invalid code. Try again.'},401);
+    await env.KV.delete('tmp:'+tmp_token);
+    const authToken=await generateToken();
+    await env.KV.put('auth:'+authToken,JSON.stringify({role:admin.role,username:admin.username,id:admin.id,name:admin.name}),{expirationTtl:86400});
+    return json({ok:true,token:authToken,role:admin.role,username:admin.username,name:admin.name});
   }
 
   // ── FORGOT PASSWORD — request reset email (public, no auth) ──────────
