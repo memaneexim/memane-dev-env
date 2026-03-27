@@ -10,26 +10,33 @@ echo.
 
 cd /d "C:\Users\Tejas\Downloads\Edge\MI-GIT"
 
-git remote set-url origin https://memaneexim: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@github.com/memaneexim/memane-prod-env.git
+:: REMEMBER TO UPDATE THIS WITH YOUR NEW GENERATED TOKEN!
+git remote set-url origin https://memaneexim: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@github.com/memaneexim/memane-prod-env.git
 
 git checkout test 2>nul
 
-echo  [INFO] Changed files:
+echo  [SYNC] Checking GitHub for updates...
+:: This pulls updates and automatically accepts the merge message so you don't get stuck in Vim
+git pull origin test --no-edit
+echo.
+
+echo  [INFO] Checking local files...
 git status --short
 echo.
 
 git add -A
 
+:: Check if there are uncommitted files. If yes, commit them. If no, skip committing and just push.
 git status --porcelain > "%TEMP%\gitstatus.txt"
 for %%A in ("%TEMP%\gitstatus.txt") do set FSIZE=%%~zA
-if "%FSIZE%"=="0" (
-    echo  [INFO] Koi change nahi - already up to date.
-    pause
-    exit
+
+if NOT "%FSIZE%"=="0" (
+    git commit -m "Update %date% %time%"
+) else (
+    echo  [INFO] No new local edits to commit. Checking for pending pushes...
 )
 
-git commit -m "Update %date% %time%"
-
+echo.
 echo  [PUSH] Push ho raha hai...
 git push origin test
 
