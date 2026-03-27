@@ -1173,18 +1173,13 @@ function openCat(id) {
     '<div class="mi-grid2">' +
       '<div class="mi-field">' +
         '<label class="mi-label">Icon (Emoji) *</label>' +
-        '<input class="mi-input" id="mc-icon" value="'+esc(c.icon||'')+'" placeholder="e.g. 🌾" style="font-size:1.4rem;text-align:center;">' +
-        '<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;">' +
-          ['🌾','🍚','🫘','🌶️','🧂','🍎','🥦','🥛','🥫','🍞','🫙','🌱','🦐','🍗','🥩','🍬','⚙️','🔩','💎','🪨','🧲','🛢️','🌿','🐟','🧀','🥚','🌰','🫚','🍵','☕'].map(function(e){
-            return '<span onclick="$$(\'mc-icon\').value=\''+e+\'\'" style="cursor:pointer;font-size:1.3rem;padding:3px;border-radius:4px;background:var(--mi-surface2)" title="'+e+'">'+e+'</span>';
-          }).join('') +
-        '</div>' +
-        '<div style="font-size:11px;color:var(--mi-txt2);margin-top:4px;">👆 Click any emoji above to select</div>' +
+        '<input class="mi-input" id="mc-icon" value="'+esc(c.icon||'')+'" placeholder="e.g. 🌾" style="font-size:1.4rem;text-align:center;letter-spacing:4px;">' +
+        '<div style="font-size:11px;color:var(--mi-txt2);margin-top:4px;">Copy any emoji from: <a href="https://emojipedia.org" target="_blank" style="color:var(--mi-gold)">emojipedia.org</a> and paste here</div>' +
       '</div>' +
       '<div class="mi-field">' +
-        '<label class="mi-label">ID * (no spaces, lowercase)</label>' +
+        '<label class="mi-label">ID * (lowercase, no spaces)</label>' +
         '<input class="mi-input" id="mc-id" value="'+esc(c.id||'')+'" placeholder="e.g. metals"'+(id?' readonly style="opacity:.5"':'')+' oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9]/g,\'\')">' +
-        '<div style="font-size:11px;color:var(--mi-txt2);margin-top:4px;">Only letters & numbers, no spaces (e.g. metals, dryfruits)</div>' +
+        '<div style="font-size:11px;color:var(--mi-txt2);margin-top:4px;">Unique key — only letters & numbers (e.g. metals, dryfruits, hardware)</div>' +
       '</div>' +
     '</div>' +
     '<div class="mi-field"><label class="mi-label">Name *</label><input class="mi-input" id="mc-name" value="'+esc(c.name||'')+'"></div>' +
@@ -1200,10 +1195,15 @@ function openCat(id) {
 }
 
 async function saveCat(id) {
-  var icon=($$('mc-icon').value||'').trim(),cid=($$('mc-id').value||'').toLowerCase().replace(/\s+/g,''),name=($$('mc-name').value||'').trim();
-  if (!icon){ toast('Please enter an emoji icon (e.g. 🌾)','err'); $$('mc-icon').focus(); return; }
-  if (!cid){ toast('Please enter a category ID (e.g. metals)','err'); $$('mc-id').focus(); return; }
-  if (!name){ toast('Please enter a category name','err'); $$('mc-name').focus(); return; }
+  var iconEl=document.getElementById('mc-icon');
+  var cidEl=document.getElementById('mc-id');
+  var nameEl=document.getElementById('mc-name');
+  var icon=(iconEl?iconEl.value:'').trim();
+  var cid=(cidEl?cidEl.value:'').trim().toLowerCase().replace(/\s+/g,'');
+  var name=(nameEl?nameEl.value:'').trim();
+  if (!icon){ toast('Emoji icon required (e.g. 🌾)','err'); return; }
+  if (!cid){ toast('Category ID required (e.g. metals)','err'); return; }
+  if (!name){ toast('Category name required','err'); return; }
   var c = {icon, id:cid, name, sub:gv('mc-sub'), img:gv('mc-img')};
   try {
     await api('admin/save-category', c);
@@ -1355,22 +1355,20 @@ function toggleAcc(id){
 }
 
 async function saveSG(keys){
-  // Find the Save button that was clicked and show loading
-  var btns = document.querySelectorAll('.mi-btn-primary');
+  var allBtns = document.querySelectorAll('button');
   var saveBtn = null;
-  btns.forEach(b=>{ if(b.textContent.trim()==='Save') saveBtn=b; });
+  allBtns.forEach(function(b){ if(b.textContent.trim()==='Save') saveBtn=b; });
   if(saveBtn){ saveBtn.disabled=true; saveBtn.textContent='Saving...'; }
-  
   var s = Object.assign({}, S.data.settings);
-  keys.forEach(k=>{
-    var el=$$('sf-'+k);
-    if(el){ var v=el.value.trim(); if(v||el.type==='checkbox') s[k]=v; }
+  keys.forEach(function(k){
+    var el = document.getElementById('sf-'+k);
+    if(el) s[k] = el.value;
   });
   try {
-    await api('admin/save-settings',{settings:s});
-    S.data.settings=s;
-    toast('✅ Settings saved successfully!','ok');
-  } catch(e){
+    await api('admin/save-settings', {settings:s});
+    S.data.settings = s;
+    toast('✅ Saved successfully!','ok');
+  } catch(e) {
     toast('❌ '+e.message,'err');
   }
   if(saveBtn){ saveBtn.disabled=false; saveBtn.textContent='Save'; }
@@ -1411,8 +1409,8 @@ function openAdminModal(id){
     '<div class="mi-field"><label class="mi-label">Username *</label><input class="mi-input" id="am-user" value="'+esc(a.username||'')+'"></div>' +
     '<div class="mi-field"><label class="mi-label">Email Address * <span style="font-size:11px;color:var(--mi-txt2);font-weight:400;">(for password reset emails)</span></label><input class="mi-input" type="email" id="am-email" value="'+esc(a.email||'')+'" placeholder="admin@example.com"></div>' +
     '<div class="mi-field"><label class="mi-label">Full Name</label><input class="mi-input" id="am-name" value="'+esc(a.name||'')+'" placeholder="e.g. Tejas Memane"></div>' +
-    '<div class="mi-field"><label class="mi-label">New Password '+(id?'(leave blank to keep)':'*')+'</label><input class="mi-input" type="password" id="am-pass" placeholder="'+(id?'Leave blank to keep current':'Min 8 characters')+'"></div>' +
-    (!id ? '<div class="mi-field"><label class="mi-label">Confirm Password *</label><input class="mi-input" type="password" id="am-conf" placeholder="Repeat password"></div>' : '') +
+    '<div class="mi-field"><label class="mi-label">New Password '+(id?'(leave blank to keep)':'*')+'</label><input class="mi-input" type="password" id="am-pass" placeholder="'+(id?'Leave blank to keep':'Min 8 characters')+'"></div>' +
+    (id?'':'<div class="mi-field"><label class="mi-label">Confirm Password *</label><input class="mi-input" type="password" id="am-conf" placeholder="Repeat password above"></div>') +
     '<div class="mi-field"><label class="mi-label">Role</label><select class="mi-select" id="am-role">' +
       ['superadmin','editor','viewer'].map(r=>'<option value="'+r+'"'+(r===a.role?' selected':'')+'>'+r+'</option>').join('') +
     '</select></div>';
@@ -1426,13 +1424,14 @@ async function saveAdmin(id){
   var username=gv('am-user'), password=gv('am-pass'), role=gv('am-role');
   var email=gv('am-email'), name=gv('am-name');
   if (!username) return toast('Username required','err');
-  if (!id && !password) return toast('Password required for new admin','err');
-  if (!id && password.length < 8) return toast('Password must be at least 8 characters','err');
-  if (!id) {
-    var conf = gv('am-conf');
-    if (password !== conf) return toast('Passwords do not match','err');
+  if (!id && !password) return toast('Password required','err');
+  if (!id && password && password.length < 8) return toast('Password must be at least 8 characters','err');
+  if (!id && password) {
+    var confEl = document.getElementById('am-conf');
+    var conf = confEl ? confEl.value : '';
+    if (password !== conf) return toast('Passwords do not match — please re-enter','err');
   }
-  if (!email) return toast('Email address is required for password resets','err');
+  if (!email) return toast('Email required for password resets','err');
   var body = {username, role, email, name};
   if (id) body.id = id;
   if (password) body.password = password;
