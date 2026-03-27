@@ -787,16 +787,23 @@ async function doLogin() {
   btn.textContent = 'Signing in...'; btn.disabled = true; err.style.display = 'none';
   try {
     var d = await api('login', {username: user, password: pass});
-    S.tmpTok = d.tmp_token;
-    if (d.totp_setup) {
-      // First time — show QR
+    S.tmpTok = d.tmp_token || d.token;
+    // Worker returns requireTotp (our API) or totp_setup/totp_required (old API)
+    if (d.totp_setup || (d.requireTotp && !d.token)) {
+      // First time TOTP setup — show QR
       showScr('scr-setup');
-      $$('totp-secret-show').textContent = d.secret;
-      $$('qrcode-box').innerHTML = '';
-      new QRCode($$('qrcode-box'), {text: d.totp_uri, width:180, height:180, colorDark:'#000', colorLight:'#fff'});
-    } else if (d.totp_required) {
+      if ($$('totp-secret-show')) $$('totp-secret-show').textContent = d.secret || '';
+      if ($$('qrcode-box')) {
+        $$('qrcode-box').innerHTML = '';
+        if (d.totp_uri || d.otpauth) new QRCode($$('qrcode-box'), {text: d.totp_uri||d.otpauth, width:180, height:180, colorDark:'#000', colorLight:'#fff'});
+      }
+    } else if (d.totp_required || d.requireTotp) {
       showScr('scr-totp');
-      setTimeout(() => $$('t-code').focus(), 100);
+      setTimeout(() => $$('t-code') && $$('t-code').focus(), 100);
+    } else if (d.ok && d.token) {
+      // Direct login success — no TOTP needed
+      saveSession(d);
+      loadApp();
     }
   } catch(e) {
     err.textContent = e.message; err.style.display = 'block';
@@ -833,10 +840,12 @@ async function doTotpLogin() {
 }
 
 function saveSession(d) {
-  S.tok = d.token; S.role = d.role; S.user = d.username;
+  S.tok = d.token;
+  S.role = d.role || 'superadmin';
+  S.user = d.username || d.name || 'admin';
   sessionStorage.setItem('mi_tok', d.token);
-  sessionStorage.setItem('mi_role', d.role);
-  sessionStorage.setItem('mi_user', d.username);
+  sessionStorage.setItem('mi_role', S.role);
+  sessionStorage.setItem('mi_user', S.user);
 }
 
 function backToLogin() { showScr('scr-login'); }
