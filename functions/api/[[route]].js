@@ -142,8 +142,14 @@ const DEFAULT_PRODUCTS=[
 // ── AUTH & TOTP HELPERS ──────────────────────────────────────
 async function generateToken(){const a=new Uint8Array(32);crypto.getRandomValues(a);return Array.from(a).map(b=>b.toString(16).padStart(2,'0')).join('');}
 async function validateToken(env,token){if(!token)return null;const s=await env.KV.get('auth:'+token);return s?JSON.parse(s):null;}
-async function getKV(env,key,fallback){const v=await env.KV.get(key);if(v)return JSON.parse(v);return fallback;}
-async function setKV(env,key,data){await env.KV.put(key,JSON.stringify(data));}
+async function getKV(env,key,fallback){
+  try{if(!env||!env.KV)return fallback;const v=await env.KV.get(key);if(v)return JSON.parse(v);return fallback;}
+  catch(e){return fallback;}
+}
+async function setKV(env,key,data){
+  if(!env||!env.KV)throw new Error('KV namespace not bound');
+  await env.KV.put(key,JSON.stringify(data));
+}
 function b32dec(s){const a='ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';let bits=0,val=0;const out=[];for(const c of s.toUpperCase().replace(/=+$/,'')){val=(val<<5)|a.indexOf(c);bits+=5;if(bits>=8){out.push((val>>>(bits-8))&255);bits-=8;}}return new Uint8Array(out);}
 async function genTOTP(secret,w=0){const epoch=Math.floor(Date.now()/1000);const ctr=Math.floor(epoch/30)+w;const key=await crypto.subtle.importKey('raw',b32dec(secret),{name:'HMAC',hash:'SHA-1'},false,['sign']);const data=new DataView(new ArrayBuffer(8));data.setUint32(4,ctr,false);const sig=new Uint8Array(await crypto.subtle.sign('HMAC',key,data.buffer));const off=sig[19]&0xf;const code=(((sig[off]&0x7f)<<24)|(sig[off+1]<<16)|(sig[off+2]<<8)|sig[off+3])%1000000;return code.toString().padStart(6,'0');}
 async function verifyTOTP(secret,token){for(const w of[-1,0,1])if(await genTOTP(secret,w)===token)return true;return false;}
@@ -181,7 +187,9 @@ export async function onRequest(context){
   const url=new URL(request.url);
   const path=url.pathname.replace('/api/','').replace(/\/$/,'');
   if(request.method==='OPTIONS')return new Response(null,{headers:CORS});
-  await seedIfEmpty(env);
+  // Safety check — if KV not bound return proper JSON error
+  if(!env||!env.KV)return json({ok:false,msg:'KV not configured. Please bind KV namespace in Cloudflare Pages settings.'},503);
+  try{ await seedIfEmpty(env); }catch(e){ return json({ok:false,msg:'KV init error: '+e.message},503); }
 
   // PUBLIC: GET all data
   if(request.method==='GET'&&path==='data'){
