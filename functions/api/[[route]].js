@@ -256,26 +256,25 @@ export async function onRequest(context){
       return json({ok:true,token:authToken,role:admin.role,username:admin.username,name:admin.name});
     }
 
-    // PUBLIC: Forgot Password
+    // PUBLIC: Forgot Password (by EMAIL — secure)
     if(path==='admin/forgot-password'){
       const body=await request.json().catch(()=>({}));
-      const{username}=body;
-      if(!username)return json({ok:false,msg:'Username required'},400);
+      const{email}=body;
+      if(!email)return json({ok:false,msg:'Email address required'},400);
       const admins=await getKV(env,'admins',[]);
-      const admin=admins.find(a=>a.username===username);
-      const s=await getKV(env,'settings',DEFAULT_SETTINGS);
+      const admin=admins.find(a=>a.email&&a.email.toLowerCase()===email.toLowerCase());
       if(admin){
-        const adminEmail=admin.email||s.email1||'info@memaneinternational.in';
         const tokenBytes=new Uint8Array(32);
         crypto.getRandomValues(tokenBytes);
         const resetToken=Array.from(tokenBytes).map(b=>b.toString(16).padStart(2,'0')).join('');
         await env.KV.put(`pwreset:${resetToken}`,JSON.stringify({username:admin.username,created:Date.now()}),{expirationTtl:3600});
         const resetLink=`https://memaneinternational.in/admin.html?reset=${resetToken}`;
-        await sendEmail(adminEmail,admin.name||admin.username,'Reset Your Admin Password — Memane International',
-          `<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;"><div style="background:#1A2B5F;padding:24px;text-align:center;"><h2 style="color:#fff;margin:0;">Memane International</h2><p style="color:#C9A84C;margin:4px 0 0;font-size:13px;">Password Reset Request</p></div><div style="padding:28px;background:#f9f9f9;border:1px solid #e0e0e0;"><p>Hi <strong>${admin.name||admin.username}</strong>,</p><p>We received a request to reset the password for your Memane International admin account.</p><div style="text-align:center;margin:28px 0;"><a href="${resetLink}" style="background:#9B1C31;color:#fff;padding:14px 32px;text-decoration:none;border-radius:6px;font-weight:bold;font-size:15px;display:inline-block;">Reset My Password</a></div><p style="color:#666;font-size:13px;">Link expires in 1 hour.</p><hr style="border:none;border-top:1px solid #e0e0e0;margin:20px 0;"><p style="color:#999;font-size:12px;">— Memane International Admin System</p></div></div>`
+        const sent=await sendEmail(admin.email,admin.name||admin.username,'Account Recovery — Memane International',
+          `<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;"><div style="background:#1A2B5F;padding:24px;text-align:center;"><h2 style="color:#fff;margin:0;">Memane International</h2><p style="color:#C9A84C;margin:4px 0 0;font-size:13px;">Account Recovery Request</p></div><div style="padding:28px;background:#f9f9f9;border:1px solid #e0e0e0;"><p>Hi <strong>${admin.name||admin.username}</strong>,</p><p>We received an account recovery request for this email.</p><div style="background:#fff;padding:16px;border-left:4px solid #1A2B5F;margin:20px 0;"><p style="margin:0;font-size:16px;"><strong>Your Username:</strong> ${admin.username}</p></div><p>Click below to reset your password:</p><div style="text-align:center;margin:28px 0;"><a href="${resetLink}" style="background:#9B1C31;color:#fff;padding:14px 32px;text-decoration:none;border-radius:6px;font-weight:bold;font-size:15px;display:inline-block;">Reset My Password</a></div><p style="color:#666;font-size:13px;">Or copy: <a href="${resetLink}">${resetLink}</a></p><p style="color:#666;font-size:13px;">⏱ Expires in 1 hour.</p><hr style="border:none;border-top:1px solid #e0e0e0;margin:20px 0;"><p style="color:#999;font-size:12px;">— Memane International Admin System · memaneinternational.in</p></div></div>`
         );
+        if(!sent)console.log('Email send failed for:',admin.email);
       }
-      return json({ok:true,msg:'If that username exists, a reset link has been sent to the registered email.'});
+      return json({ok:true,msg:'If that email is registered, your username and a reset link have been sent.'});
     }
 
     // PUBLIC: Reset Password (token from email)

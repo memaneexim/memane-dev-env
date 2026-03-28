@@ -461,15 +461,15 @@ img{max-width:100%;}
 <div id="scr-forgot" class="auth-page" style="display:none;">
   <div class="auth-card">
     <div class="auth-logo">
-      <div class="pill">Password Reset</div>
+      <div class="pill">Account Recovery</div>
       <h1>Forgot Password?</h1>
-      <p>Enter your username and we'll send a reset link to your registered email</p>
+      <p>Enter your <strong>registered email</strong> — we'll send your username and a password reset link</p>
     </div>
     <div class="mi-field">
-      <label class="mi-label">Username</label>
-      <input class="mi-input" id="fp-user" placeholder="Enter your username" autocomplete="username" onkeydown="if(event.key==='Enter')doForgotPassword()">
+      <label class="mi-label">Registered Email Address</label>
+      <input class="mi-input" type="email" id="fp-email" placeholder="admin@example.com" autocomplete="email" onkeydown="if(event.key==='Enter')doForgotPassword()">
     </div>
-    <button class="mi-btn mi-btn-primary mi-btn-block" id="fp-btn" onclick="doForgotPassword()">Send Reset Link →</button>
+    <button class="mi-btn mi-btn-primary mi-btn-block" id="fp-btn" onclick="doForgotPassword()">Send Recovery Email →</button>
     <div class="mi-alert mi-alert-danger" id="fp-err" style="display:none;"></div>
     <div class="mi-alert" id="fp-ok" style="display:none;background:rgba(39,174,96,.1);border:1px solid rgba(39,174,96,.3);color:#27AE60;"></div>
     <div style="text-align:center;margin-top:14px;">
@@ -852,24 +852,24 @@ function backToLogin() { showScr('scr-login'); }
 
 // ── FORGOT PASSWORD ────────────────────────────────────────────
 async function doForgotPassword() {
-  var user = ($$('fp-user').value||'').trim();
+  var emailVal = ($$('fp-email')?$$('fp-email').value:'').trim();
   var err = $$('fp-err'), ok = $$('fp-ok'), btn = $$('fp-btn');
   err.style.display='none'; ok.style.display='none';
-  if(!user){ err.textContent='Please enter your username.'; err.style.display='block'; return; }
+  if(!emailVal){ err.textContent='Please enter your registered email address.'; err.style.display='block'; return; }
   btn.disabled=true; btn.textContent='Sending...';
   try {
     var d = await fetch('/api/admin/forgot-password',{
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({username:user})
+      body: JSON.stringify({email:emailVal})
     }).then(r=>r.json());
-    ok.textContent = d.msg || 'Reset link sent! Check your email.';
+    ok.textContent = d.msg || 'Recovery email sent! Check your inbox.';
     ok.style.display='block';
-    $$('fp-user').value='';
+    if($$('fp-email')) $$('fp-email').value='';
   } catch(e) {
     err.textContent = e.message||'Something went wrong. Please try again.';
     err.style.display='block';
   }
-  btn.disabled=false; btn.textContent='Send Reset Link →';
+  btn.disabled=false; btn.textContent='Send Recovery Email →';
 }
 
 // ── RESET PASSWORD (via email link token) ─────────────────────
