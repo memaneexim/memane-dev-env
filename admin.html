@@ -429,11 +429,6 @@ img{max-width:100%;}
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════════════
-     AUTH SCREENS
-     ═══════════════════════════════════════════════════════════ -->
-
-<!-- SCREEN 1: Login -->
 <div id="scr-login" class="auth-page">
   <div class="auth-card">
     <div class="auth-logo">
@@ -457,7 +452,6 @@ img{max-width:100%;}
   </div>
 </div>
 
-<!-- SCREEN: Forgot Password -->
 <div id="scr-forgot" class="auth-page" style="display:none;">
   <div class="auth-card">
     <div class="auth-logo">
@@ -478,7 +472,6 @@ img{max-width:100%;}
   </div>
 </div>
 
-<!-- SCREEN: Reset Password (via email link token) -->
 <div id="scr-reset" class="auth-page" style="display:none;">
   <div class="auth-card">
     <div class="auth-logo">
@@ -500,7 +493,6 @@ img{max-width:100%;}
   </div>
 </div>
 
-<!-- SCREEN 2: TOTP Setup (first time) -->
 <div id="scr-setup" class="auth-page" style="display:none;">
   <div class="auth-card wide">
     <div class="auth-logo">
@@ -530,7 +522,6 @@ img{max-width:100%;}
   </div>
 </div>
 
-<!-- SCREEN 3: TOTP Verify (normal login) -->
 <div id="scr-totp" class="auth-page" style="display:none;">
   <div class="auth-card">
     <div class="auth-logo">
@@ -551,12 +542,8 @@ img{max-width:100%;}
 </div>
 
 
-<!-- ═══════════════════════════════════════════════════════════
-     APP SHELL
-     ═══════════════════════════════════════════════════════════ -->
 <div id="app">
 
-  <!-- TOPBAR -->
   <header class="mi-topbar">
     <div class="mi-topbar-brand">
       <img src="/uploads/logo.jpeg" alt="MI" onerror="this.style.display='none'">
@@ -572,7 +559,6 @@ img{max-width:100%;}
     </div>
   </header>
 
-  <!-- NAVBAR -->
   <nav class="mi-navbar">
     <div class="mi-navitem active" id="nav-dash"  onclick="nav('dash',this)">📊 Dashboard</div>
     <div class="mi-navitem"        id="nav-prods" onclick="nav('prods',this)">📦 Products</div>
@@ -582,10 +568,8 @@ img{max-width:100%;}
     <div class="mi-navitem"        id="nav-admins" onclick="nav('admins',this)">👥 Admins</div>
   </nav>
 
-  <!-- CONTENT -->
   <main class="mi-content">
 
-    <!-- ── DASHBOARD ──────────────────────────────────────── -->
     <div class="mi-page active" id="pg-dash">
       <div class="mi-page-header">
         <div class="mi-page-title">Dashboard</div>
@@ -644,7 +628,6 @@ img{max-width:100%;}
       </div>
     </div>
 
-    <!-- ── PRODUCTS ───────────────────────────────────────── -->
     <div class="mi-page" id="pg-prods">
       <div class="mi-page-header">
         <div class="mi-page-title">Products</div>
@@ -665,7 +648,6 @@ img{max-width:100%;}
       </div>
     </div>
 
-    <!-- ── CATEGORIES ─────────────────────────────────────── -->
     <div class="mi-page" id="pg-cats">
       <div class="mi-page-header">
         <div class="mi-page-title">Categories</div>
@@ -685,7 +667,6 @@ img{max-width:100%;}
       </div>
     </div>
 
-    <!-- ── ENQUIRIES ──────────────────────────────────────── -->
     <div class="mi-page" id="pg-enqs">
       <div class="mi-page-header">
         <div class="mi-page-title">Enquiries</div>
@@ -700,7 +681,6 @@ img{max-width:100%;}
       <div id="e-grid"></div>
     </div>
 
-    <!-- ── SETTINGS ───────────────────────────────────────── -->
     <div class="mi-page" id="pg-setts">
       <div class="mi-page-header">
         <div class="mi-page-title">Settings</div>
@@ -709,7 +689,6 @@ img{max-width:100%;}
       <div id="setts-body"></div>
     </div>
 
-    <!-- ── ADMINS ─────────────────────────────────────────── -->
     <div class="mi-page" id="pg-admins">
       <div class="mi-page-header">
         <div class="mi-page-title">Admin Users</div>
@@ -725,7 +704,6 @@ img{max-width:100%;}
   </main>
 </div>
 
-<!-- ── MODAL ──────────────────────────────────────────────── -->
 <div class="mi-modal-bg" id="modal-bg" onclick="if(event.target===this)closeModal()">
   <div class="mi-modal">
     <div class="mi-modal-head">
@@ -737,7 +715,6 @@ img{max-width:100%;}
   </div>
 </div>
 
-<!-- ── TOASTS ─────────────────────────────────────────────── -->
 <div id="mi-toasts"></div>
 
 
@@ -1283,10 +1260,7 @@ function renderSetts(){
       {k:'phone1',l:'Phone 1'},{k:'phone2',l:'Phone 2'},
       {k:'whatsapp',l:'WhatsApp (with country code)'},{k:'email1',l:'Email 1'},
       {k:'email2',l:'Email 2'},{k:'address',l:'Address',ta:true},
-    ]},
-    {title:'✉️ Web3Forms Keys', keys:[
-      {k:'w3f_enquiry',l:'Enquiry Form Key'},{k:'w3f_contact',l:'Contact Form Key'},
-    ]},
+    ]}
   ];
   $$('setts-body').innerHTML = groups.map((g,i)=>
     '<div class="mi-acc">' +
