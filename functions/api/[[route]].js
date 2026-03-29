@@ -311,7 +311,7 @@ Rule 2: If we don't have it, politely say we focus on our current catalog but th
 Rule 3: Keep your answers VERY short, friendly, and human-like (1-3 sentences max).
 Rule 4: USE PLAIN TEXT ONLY. Do not use bolding or markdown.`;
 
-      try {
+try {
         const aiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${env.GEMINI_API_KEY}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -321,13 +321,18 @@ Rule 4: USE PLAIN TEXT ONLY. Do not use bolding or markdown.`;
         });
         
         const aiData = await aiRes.json();
-        const botReply = aiData.candidates[0].content.parts[0].text;
         
+        // THIS WILL PRINT GOOGLE'S EXACT ERROR IF THEY REJECT IT
+        if (aiData.error) {
+           return json({ok:false, msg: 'Google says: ' + aiData.error.message}, 500);
+        }
+        
+        const botReply = aiData.candidates[0].content.parts[0].text;
         return json({ok:true, reply: botReply});
+        
       } catch(e) {
-        return json({ok:false, msg:'Gemini API failed to respond.'}, 500);
+        return json({ok:false, msg:'Code crash: ' + e.message}, 500);
       }
-    }
     
     // PUBLIC: Login
     if(path==='login'){
