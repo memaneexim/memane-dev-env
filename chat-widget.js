@@ -33,32 +33,32 @@
   styleSheet.innerText = styles;
   document.head.appendChild(styleSheet);
 
-  // High-res futuristic AI Core Avatar
-  const avatarUrl = "https://images.unsplash.com/photo-1614729939124-03290b56c9ce?w=200&h=200&fit=crop";
+  // 100% Bulletproof Local Image Link
+  const avatarUrl = "/uploads/kim.jpg";
 
   // 2. Inject the HTML into the page
   const chatHTML = `
-    <div id="ai-chat-btn" onclick="toggleNovaChat()">
-      <img src="${avatarUrl}" class="ai-btn-avatar" alt="KIM AI">
+    <div id="ai-chat-btn" onclick="toggleKIMChat()">
+      <img src="${avatarUrl}" class="ai-btn-avatar" alt="KIM AI" onerror="this.src='https://ui-avatars.com/api/?name=KIM&background=0A1520&color=7EC8E3'">
       Initialize KIM AI
     </div>
     <div id="ai-chat-window">
       <div class="ai-chat-head">
         <div class="ai-chat-head-left">
-          <img src="${avatarUrl}" class="ai-chat-head-avatar" alt="KIM AI">
+          <img src="${avatarUrl}" class="ai-chat-head-avatar" alt="KIM AI" onerror="this.src='https://ui-avatars.com/api/?name=KIM&background=0A1520&color=7EC8E3'">
           <div style="line-height:1.3;">
             <b style="font-size:1.05rem; letter-spacing:0.5px;">KIM v1.0</b><br>
             <span style="font-size:0.65rem; color:#7EC8E3; font-weight:700; letter-spacing:1px; text-transform:uppercase;">● System Online</span>
           </div>
         </div>
-        <button onclick="toggleNovaChat()">✕</button>
+        <button onclick="toggleKIMChat()">✕</button>
       </div>
       <div class="ai-chat-body" id="ai-chat-body">
         <div class="ai-msg bot">System online. Hello, I am KIM—the Artificial Intelligence Export Specialist for Memane International. How can I accelerate your global sourcing today?</div>
       </div>
       <div class="ai-chat-foot">
-        <input type="text" id="ai-chat-input" placeholder="Initialize query..." onkeydown="if(event.key==='Enter')sendNovaChat()">
-        <button onclick="sendNovaChat()">➤</button>
+        <input type="text" id="ai-chat-input" placeholder="Initialize query..." onkeydown="if(event.key==='Enter')sendKIMChat()">
+        <button onclick="sendKIMChat()">➤</button>
       </div>
     </div>
   `;
@@ -67,11 +67,11 @@
   document.body.appendChild(container);
 
   // 3. Logic & Functions attached to global window
-  window.toggleNovaChat = function() {
+  window.toggleKIMChat = function() {
     document.getElementById('ai-chat-window').classList.toggle('open');
   };
 
-  window.sendNovaChat = async function() {
+  window.sendKIMChat = async function() {
     const input = document.getElementById('ai-chat-input');
     const msg = input.value.trim();
     if(!msg) return;
@@ -118,7 +118,7 @@
   setTimeout(function() {
     var chatWindow = document.getElementById('ai-chat-window');
     if (chatWindow && !chatWindow.classList.contains('open')) {
-      window.toggleNovaChat();
+      window.toggleKIMChat();
     }
   }, 3000);
 
