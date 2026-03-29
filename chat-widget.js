@@ -34,7 +34,7 @@
   document.head.appendChild(styleSheet);
 
   // 100% Bulletproof Local Image Link
-  const avatarUrl = "/uploads/kim.jpg";
+  const avatarUrl = "https://raw.githubusercontent.com/memaneexim/memane-prod-env/main/uploads/kim.jpg";
 
   // 2. Inject the HTML into the page
   const chatHTML = `
