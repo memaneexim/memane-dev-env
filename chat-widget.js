@@ -23,19 +23,16 @@
     #ai-chat-input { flex:1; border:1px solid #dee2e6; border-radius:20px; padding:10px 15px; font-size:14px; outline:none; margin:0; width:100%; background:#fff; color:#212529; }
     #ai-chat-input:focus { border-color:#7EC8E3; }
     .ai-chat-foot button { background:#1a2b5f; color:#fff; border:none; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; font-size:16px; margin:0;}
-    
-    @media(max-width:768px) { #ai-chat-window { left:16px; right:16px; width:auto; bottom:80px; } #ai-chat-btn { left:16px; bottom:16px; } }
   `;
   const styleSheet = document.createElement('style');
   styleSheet.type = 'text/css';
   styleSheet.innerText = styles;
   document.head.appendChild(styleSheet);
 
-  // Local path with cache buster so it stops showing the broken image
   const avatarUrl = "/kim.jpg";
   
-  // THE MEMORY BANK
-  let chatHistory = "";
+  // ---> THE MEMORY BANK <---
+  let chatHistory = "KIM: Welcome to Memane International. I'm KIM. What commodities are you looking to source today?\n";
 
   const chatHTML = `
     <button id="ai-chat-btn" onclick="toggleKIMChat()">
@@ -54,7 +51,7 @@
         <button onclick="toggleKIMChat()">✕</button>
       </div>
       <div class="ai-chat-body" id="ai-chat-body">
-        <div class="ai-msg bot">Hello! I am KIM, the Executive Assistant at Memane International. How can I help you with your global sourcing today?</div>
+        <div class="ai-msg bot">Welcome to Memane International. I'm KIM. What commodities are you looking to source today?</div>
       </div>
       <div class="ai-chat-foot">
         <input type="text" id="ai-chat-input" placeholder="Type your message..." onkeydown="if(event.key==='Enter')sendKIMChat()">
@@ -82,7 +79,7 @@
     udiv.textContent = msg;
     body.appendChild(udiv);
     
-    // Save to memory
+    // Log user message into memory
     chatHistory += "Buyer: " + msg + "\n";
     
     input.value = '';
@@ -95,17 +92,17 @@
     body.scrollTop = body.scrollHeight;
     
     try {
+      // Send the FULL chat history, not just the single line
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        // Send the FULL chat history, not just the single message
         body: JSON.stringify({message: chatHistory})
       });
       const data = await res.json();
       
       if (data.ok) {
         ldiv.textContent = data.reply;
-        // Save KIM's reply to memory so she knows what she just said
+        // Log KIM's reply into memory
         chatHistory += "KIM: " + data.reply + "\n";
       } else {
         ldiv.textContent = 'System Error: ' + (data.msg || 'Connection lost.');
