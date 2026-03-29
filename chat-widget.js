@@ -47,8 +47,8 @@
         <div class="ai-chat-head-left">
           <img src="${avatarUrl}" class="ai-chat-head-avatar" alt="KIM AI" onerror="this.src='https://ui-avatars.com/api/?name=KIM&background=0A1520&color=7EC8E3'">
           <div style="line-height:1.3;">
-            <b style="font-size:1.05rem; letter-spacing:0.5px;">KIM v1.0</b><br>
-            <span style="font-size:0.65rem; color:#7EC8E3; font-weight:700; letter-spacing:1px; text-transform:uppercase;">● System Online</span>
+            <b style="font-size:1.05rem; letter-spacing:0.5px;">KIM</b><br>
+            <span style="font-size:0.65rem; color:#7EC8E3; font-weight:700; letter-spacing:1px; text-transform:uppercase;">● Executive Assistant</span>
           </div>
         </div>
         <button onclick="toggleKIMChat()">✕</button>
