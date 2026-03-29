@@ -32,7 +32,7 @@
   document.head.appendChild(styleSheet);
 
   // Local path with cache buster so it stops showing the broken image
-  const avatarUrl = "/uploads/kim.jpg?v=2";
+  const avatarUrl = "/kim.jpg";
   
   // THE MEMORY BANK
   let chatHistory = "";
