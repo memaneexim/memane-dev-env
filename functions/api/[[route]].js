@@ -154,19 +154,30 @@ function b32dec(s){const a='ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';let bits=0,val=0;c
 async function genTOTP(secret,w=0){const epoch=Math.floor(Date.now()/1000);const ctr=Math.floor(epoch/30)+w;const key=await crypto.subtle.importKey('raw',b32dec(secret),{name:'HMAC',hash:'SHA-1'},false,['sign']);const data=new DataView(new ArrayBuffer(8));data.setUint32(4,ctr,false);const sig=new Uint8Array(await crypto.subtle.sign('HMAC',key,data.buffer));const off=sig[19]&0xf;const code=(((sig[off]&0x7f)<<24)|(sig[off+1]<<16)|(sig[off+2]<<8)|sig[off+3])%1000000;return code.toString().padStart(6,'0');}
 async function verifyTOTP(secret,token){for(const w of[-1,0,1])if(await genTOTP(secret,w)===token)return true;return false;}
 async function sendEmail(toEmail,toName,subject,htmlBody){
+  // Web3Forms — delivers to memaneexim@gmail.com (registered account)
+  // toEmail is shown in subject so you know who the email is for
   try{
-    const res=await fetch('https://api.mailchannels.net/tx/v1/send',{
+    const res=await fetch('https://api.web3forms.com/submit',{
       method:'POST',
-      headers:{'content-type':'application/json'},
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
       body:JSON.stringify({
-        personalizations:[{to:[{email:toEmail,name:toName}]}],
-        from:{email:'noreply@memaneinternational.in',name:'Memane International'},
-        subject:subject,
-        content:[{type:'text/html',value:htmlBody}]
+        access_key:'ceeae473-d8e0-4dbd-9741-2ae400c5f2dc',
+        subject:'[Admin] '+subject+' — For: '+toEmail,
+        from_name:'Memane International Admin System',
+        name:toName,
+        email:'admin@memaneinternational.in',
+        message:'Admin notification for: '+toEmail+' | '+subject,
+        html:htmlBody,
+        botcheck:''
       })
     });
-    return res.status===202;
-  }catch(e){return false;}
+    const d=await res.json();
+    console.log('Web3Forms result:',JSON.stringify(d));
+    return d.success===true;
+  }catch(e){
+    console.error('Email error:',e.message);
+    return false;
+  }
 }
 
 function genSecret(){const c='ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';return Array.from(crypto.getRandomValues(new Uint8Array(20))).map(b=>c[b%32]).join('');}
@@ -178,7 +189,7 @@ async function seedIfEmpty(env){
     await setKV(env,'categories',DEFAULT_CATEGORIES);
     await setKV(env,'products',DEFAULT_PRODUCTS);
     await setKV(env,'enquiries',[]);
-    await setKV(env,'admins',[{id:'admin1',username:'admin',password:'admin123',role:'superadmin',name:'Tejas Memane',totp_secret:null,totp_enabled:false,created:Date.now()}]);
+    await setKV(env,'admins',[{id:'admin1',username:'admin',password:'admin123',role:'superadmin',name:'Tejas Memane',email:'memaneexim@gmail.com',totp_secret:null,totp_enabled:false,created:Date.now()}]);
   }
 }
 
