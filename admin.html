@@ -7,708 +7,620 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 /* ═══════════════════════════════════════════════════════════
-   MI DESIGN SYSTEM v1.0 — Memane International
-   Original CSS — inspired by modern dashboard design principles
-   Author: Memane International
+   MI ADMIN — "AdminLTE" Lite Theme
+   Pure CSS implementation of the classic AdminLTE layout
    ═══════════════════════════════════════════════════════════ */
 
-/* ── TOKENS ──────────────────────────────────────────────── */
 :root {
-  --mi-bg:       #0B1929;
-  --mi-surface:  #112236;
-  --mi-card:     #162A3E;
-  --mi-border:   #1E3550;
-  --mi-border2:  #243E58;
-  --mi-gold:     #C9A84C;
-  --mi-gold-dim: rgba(201,168,76,.12);
-  --mi-gold-glow:rgba(201,168,76,.25);
-  --mi-red:      #C0392B;
-  --mi-red-dim:  rgba(192,57,43,.15);
-  --mi-grn:      #27AE60;
-  --mi-grn-dim:  rgba(39,174,96,.12);
-  --mi-blue-dim: rgba(52,152,219,.12);
-  --mi-txt:      #DCE8F0;
-  --mi-txt2:     #8FAAB8;
-  --mi-txt3:     #4A6478;
-  --mi-white:    #FFFFFF;
-  --mi-radius:   8px;
-  --mi-radius-lg:12px;
-  --mi-shadow:   0 4px 24px rgba(0,0,0,.35);
-  --mi-trans:    all .18s ease;
+  --alt-bg:       #f4f6f9;
+  --alt-sidebar:  #343a40;
+  --alt-sidebar-h:#3f474e;
+  --alt-primary:  #007bff;
+  --alt-primary-h:#0069d9;
+  --alt-success:  #28a745;
+  --alt-danger:   #dc3545;
+  --alt-warning:  #ffc107;
+  --alt-info:     #17a2b8;
+  --alt-dark:     #343a40;
+  --alt-text:     #212529;
+  --alt-text-mut: #6c757d;
+  --alt-white:    #ffffff;
+  --alt-border:   rgba(0,0,0,.125);
+  --alt-shadow:   0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
+  --alt-radius:   .25rem;
+  --sidebar-w:    250px;
 }
 
-/* ── RESET ───────────────────────────────────────────────── */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--mi-bg);color:var(--mi-txt);font-size:14px;line-height:1.5;min-height:100vh;}
-a{color:inherit;text-decoration:none;}
+body{font-family:'Source Sans Pro',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;background:var(--alt-bg);color:var(--alt-text);font-size:1rem;line-height:1.5;min-height:100vh;overflow-x:hidden;}
+a{color:var(--alt-primary);text-decoration:none;cursor:pointer;}
+a:hover{text-decoration:underline;}
 button,input,select,textarea{font-family:inherit;font-size:inherit;}
 button{cursor:pointer;}
 img{max-width:100%;}
 
-/* ── AUTH SCREENS ─────────────────────────────────────────── */
+/* ── AUTH SCREENS (AdminLTE Login Box) ───────────────────── */
 .auth-page {
   min-height:100vh;display:flex;align-items:center;justify-content:center;
-  padding:20px;background:var(--mi-bg);
-  background-image:radial-gradient(ellipse at 20% 50%, rgba(201,168,76,.06) 0%, transparent 60%),
-                   radial-gradient(ellipse at 80% 20%, rgba(52,152,219,.04) 0%, transparent 50%);
+  padding:20px;background:#e9ecef;
 }
 .auth-card {
-  background:var(--mi-card);border:1px solid var(--mi-border);
-  border-radius:var(--mi-radius-lg);padding:36px;width:100%;max-width:400px;
-  box-shadow:var(--mi-shadow);
+  background:var(--alt-white);border-radius:var(--alt-radius);width:100%;max-width:360px;
+  box-shadow:0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
+  border-top:3px solid var(--alt-primary);
 }
-.auth-card.wide{max-width:480px;}
-.auth-logo{text-align:center;margin-bottom:28px;}
-.auth-logo .pill{
-  display:inline-block;background:var(--mi-gold);color:#000;
-  font-size:10px;font-weight:800;padding:3px 12px;border-radius:3px;
-  letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;
-}
-.auth-logo h1{font-size:1.15rem;color:var(--mi-white);font-weight:700;margin-bottom:4px;}
-.auth-logo p{font-size:12px;color:var(--mi-txt2);}
+.auth-card.wide{max-width:450px;}
+.auth-logo{text-align:center;padding:20px;border-bottom:1px solid var(--alt-border);}
+.auth-logo h1{font-size:1.5rem;color:var(--alt-text);font-weight:300;}
+.auth-logo h1 b{font-weight:700;}
+.auth-body{padding:20px;}
+.auth-msg{font-size:.9rem;color:var(--alt-text-mut);text-align:center;margin-bottom:15px;}
 
 /* ── FORM COMPONENTS ─────────────────────────────────────── */
-.mi-field{margin-bottom:16px;}
-.mi-label{display:block;font-size:11px;font-weight:700;color:var(--mi-txt2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;}
+.mi-field{margin-bottom:1rem;}
+.mi-label{display:inline-block;font-size:.875rem;font-weight:700;margin-bottom:.5rem;}
 .mi-input,.mi-select,.mi-textarea{
-  width:100%;background:#0A1520;border:1px solid var(--mi-border);
-  color:var(--mi-txt);padding:10px 13px;border-radius:var(--mi-radius);
-  transition:var(--mi-trans);appearance:none;
+  display:block;width:100%;height:calc(2.25rem + 2px);padding:.375rem .75rem;
+  font-size:1rem;font-weight:400;line-height:1.5;color:#495057;
+  background-color:#fff;background-clip:padding-box;border:1px solid #ced4da;
+  border-radius:.25rem;transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
+.mi-textarea{height:auto;min-height:100px;}
 .mi-input:focus,.mi-select:focus,.mi-textarea:focus{
-  outline:none;border-color:var(--mi-gold);
-  box-shadow:0 0 0 3px var(--mi-gold-dim);
+  color:#495057;background-color:#fff;border-color:#80bdff;outline:0;
+  box-shadow:0 0 0 0.2rem rgba(0,123,255,.25);
 }
-.mi-input::placeholder{color:var(--mi-txt3);}
-.mi-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%238FAAB8' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;}
-.mi-select option{background:#0A1520;color:var(--mi-txt);}
-.mi-textarea{resize:vertical;min-height:80px;}
-.mi-grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.mi-grid2{display:grid;grid-template-columns:1fr 1fr;gap:15px;}
 
 /* ── BUTTONS ─────────────────────────────────────────────── */
 .mi-btn{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:9px 18px;border-radius:var(--mi-radius);
-  font-size:13px;font-weight:600;border:1px solid transparent;
-  transition:var(--mi-trans);white-space:nowrap;
+  display:inline-block;font-weight:400;color:#212529;text-align:center;vertical-align:middle;
+  user-select:none;background-color:transparent;border:1px solid transparent;
+  padding:.375rem .75rem;font-size:1rem;line-height:1.5;border-radius:.25rem;
+  transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
-.mi-btn-sm{padding:5px 12px;font-size:12px;border-radius:6px;}
-.mi-btn-block{width:100%;justify-content:center;}
-.mi-btn-primary{background:var(--mi-gold);color:#000;border-color:var(--mi-gold);}
-.mi-btn-primary:hover{opacity:.88;transform:translateY(-1px);}
-.mi-btn-ghost{background:rgba(255,255,255,.06);color:var(--mi-txt);border-color:var(--mi-border2);}
-.mi-btn-ghost:hover{background:rgba(255,255,255,.1);}
-.mi-btn-danger{background:var(--mi-red-dim);color:#E57373;border-color:var(--mi-red);}
-.mi-btn-danger:hover{background:rgba(192,57,43,.25);}
-.mi-btn-success{background:var(--mi-grn-dim);color:#6FCF97;border-color:var(--mi-grn);}
-.mi-btn-success:hover{background:rgba(39,174,96,.22);}
+.mi-btn-sm{padding:.25rem .5rem;font-size:.875rem;line-height:1.5;border-radius:.2rem;}
+.mi-btn-block{display:block;width:100%;}
+.mi-btn-primary{color:#fff;background-color:var(--alt-primary);border-color:var(--alt-primary);}
+.mi-btn-primary:hover{color:#fff;background-color:var(--alt-primary-h);border-color:#0062cc;text-decoration:none;}
+.mi-btn-ghost{color:#212529;background-color:#f8f9fa;border-color:#f8f9fa;}
+.mi-btn-ghost:hover{color:#212529;background-color:#e2e6ea;border-color:#dae0e5;text-decoration:none;}
+.mi-btn-danger{color:#fff;background-color:var(--alt-danger);border-color:var(--alt-danger);}
+.mi-btn-danger:hover{color:#fff;background-color:#c82333;border-color:#bd2130;text-decoration:none;}
+.mi-btn-success{color:#fff;background-color:var(--alt-success);border-color:var(--alt-success);}
+.mi-btn-success:hover{color:#fff;background-color:#218838;border-color:#1e7e34;text-decoration:none;}
 
 /* ── BADGES ──────────────────────────────────────────────── */
-.mi-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;letter-spacing:.3px;}
-.badge-on  {background:var(--mi-grn-dim);color:#6FCF97;border:1px solid rgba(39,174,96,.3);}
-.badge-off {background:var(--mi-red-dim);color:#E57373;border:1px solid rgba(192,57,43,.3);}
-.badge-new {background:var(--mi-blue-dim);color:#7EC8E3;border:1px solid rgba(52,152,219,.3);}
-.badge-read{background:var(--mi-gold-dim);color:var(--mi-gold);border:1px solid rgba(201,168,76,.3);}
-.badge-done{background:var(--mi-grn-dim);color:#6FCF97;border:1px solid rgba(39,174,96,.3);}
-.badge-sup {background:var(--mi-gold-dim);color:var(--mi-gold);}
-.badge-ed  {background:var(--mi-blue-dim);color:#7EC8E3;}
-.badge-view{background:rgba(255,255,255,.06);color:var(--mi-txt2);}
+.mi-badge{display:inline-block;padding:.25em .4em;font-size:75%;font-weight:700;line-height:1;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25rem;}
+.badge-on,.badge-done{color:#fff;background-color:var(--alt-success);}
+.badge-off{color:#fff;background-color:var(--alt-danger);}
+.badge-new,.badge-sup{color:#212529;background-color:var(--alt-warning);}
+.badge-read,.badge-ed{color:#fff;background-color:var(--alt-info);}
+.badge-view{color:#fff;background-color:var(--alt-text-mut);}
 
 /* ── ALERTS ──────────────────────────────────────────────── */
-.mi-alert{padding:10px 13px;border-radius:var(--mi-radius);font-size:13px;margin-top:12px;display:none;}
-.mi-alert-danger{background:var(--mi-red-dim);border:1px solid rgba(192,57,43,.4);color:#E57373;}
-.mi-alert-info{background:var(--mi-blue-dim);border:1px solid rgba(52,152,219,.3);color:#7EC8E3;}
+.mi-alert{position:relative;padding:.75rem 1.25rem;margin-bottom:1rem;border:1px solid transparent;border-radius:.25rem;display:none;font-size:.9rem;}
+.mi-alert-danger{color:#721c24;background-color:#f8d7da;border-color:#f5c6cb;}
+.mi-alert-success{color:#155724;background-color:#d4edda;border-color:#c3e6cb;}
 
-/* ── APP SHELL ────────────────────────────────────────────── */
+/* ── APP SHELL (AdminLTE Layout) ─────────────────────────── */
 #app{display:none;min-height:100vh;flex-direction:column;}
 #app.visible{display:flex;}
+.wrapper{display:flex;width:100%;min-height:100vh;}
 
-/* ── TOPBAR ──────────────────────────────────────────────── */
-.mi-topbar{
-  background:var(--mi-surface);border-bottom:1px solid var(--mi-border);
-  padding:0 24px;display:flex;align-items:center;justify-content:space-between;
-  height:56px;position:sticky;top:0;z-index:50;flex-shrink:0;
+/* ── SIDEBAR ─────────────────────────────────────────────── */
+.main-sidebar{
+  background:var(--alt-sidebar);width:var(--sidebar-w);flex-shrink:0;
+  position:fixed;top:0;bottom:0;left:0;z-index:1038;
+  box-shadow:0 14px 28px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.22);
+  transition:margin-left .3s ease-in-out;
 }
-.mi-topbar-brand{display:flex;align-items:center;gap:10px;}
-.mi-topbar-brand img{height:28px;border-radius:4px;}
-.mi-topbar-brand .brand-name{font-size:13px;font-weight:700;color:var(--mi-white);}
-.mi-topbar-brand .brand-env{font-size:10px;color:var(--mi-txt2);margin-left:4px;}
-.mi-topbar-right{display:flex;align-items:center;gap:12px;}
-.mi-topbar-user{text-align:right;}
-.mi-topbar-user .username{font-size:13px;font-weight:600;color:var(--mi-white);}
-.mi-topbar-user .role-txt{font-size:11px;color:var(--mi-txt2);}
-.mi-btn-signout{padding:6px 14px;font-size:12px;background:var(--mi-red-dim);color:#E57373;border:1px solid rgba(192,57,43,.4);border-radius:6px;transition:var(--mi-trans);}
-.mi-btn-signout:hover{background:rgba(192,57,43,.25);}
+.brand-link{
+  display:flex;align-items:center;padding:.8125rem .5rem;
+  font-size:1.25rem;color:rgba(255,255,255,.8);border-bottom:1px solid #4b545c;
+  white-space:nowrap;
+}
+.brand-link img{width:33px;height:33px;border-radius:50%;margin-left:.8rem;margin-right:.5rem;background:#fff;padding:2px;}
+.brand-link:hover{color:#fff;text-decoration:none;}
+.sidebar-user{
+  display:flex;align-items:center;padding:1rem .5rem;
+  border-bottom:1px solid #4b545c;color:#c2c7d0;
+}
+.sidebar-user-icon{
+  width:34px;height:34px;border-radius:50%;background:#4b545c;
+  display:flex;align-items:center;justify-content:center;
+  margin-left:.8rem;margin-right:.8rem;font-weight:bold;color:#fff;
+}
+.sidebar-user-info{display:flex;flex-direction:column;line-height:1.2;}
+.sidebar-user-name{font-weight:600;}
+.sidebar-user-role{font-size:.75rem;color:#a3a8ae;}
 
-/* ── NAV BAR ─────────────────────────────────────────────── */
-.mi-navbar{
-  background:var(--mi-surface);border-bottom:1px solid var(--mi-border);
-  padding:0 24px;display:flex;gap:2px;align-items:center;overflow-x:auto;
-}
-.mi-navbar::-webkit-scrollbar{display:none;}
+.nav-sidebar{padding:0 8px;margin-top:1rem;display:flex;flex-direction:column;gap:4px;}
 .mi-navitem{
-  padding:14px 16px;font-size:13px;font-weight:500;color:var(--mi-txt2);
-  border-bottom:2px solid transparent;white-space:nowrap;transition:var(--mi-trans);
-  cursor:pointer;user-select:none;display:flex;align-items:center;gap:6px;
-  position:relative;
+  display:flex;align-items:center;gap:12px;padding:.5rem 1rem;
+  color:#c2c7d0;border-radius:.25rem;cursor:pointer;transition:all .2s;
+  font-size:1rem;
 }
-.mi-navitem:hover{color:var(--mi-txt);}
-.mi-navitem.active{color:var(--mi-gold);border-bottom-color:var(--mi-gold);}
+.mi-navitem:hover{background:var(--alt-sidebar-h);color:#fff;}
+.mi-navitem.active{background:var(--alt-primary);color:#fff;box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);}
 .mi-navitem .nav-dot{
-  width:6px;height:6px;background:#3498DB;border-radius:50%;
-  position:absolute;top:10px;right:8px;display:none;
+  margin-left:auto;background:var(--alt-danger);color:#fff;
+  font-size:.7rem;padding:2px 6px;border-radius:10px;font-weight:700;
+  display:none;
 }
-.mi-navitem .nav-dot.show{display:block;}
+.mi-navitem .nav-dot.show{display:inline-block;}
 
-/* ── MAIN CONTENT ────────────────────────────────────────── */
-.mi-content{flex:1;padding:28px 24px;max-width:1400px;margin:0 auto;width:100%;}
+/* ── MAIN WRAPPER ────────────────────────────────────────── */
+.content-wrapper{
+  flex:1;margin-left:var(--sidebar-w);display:flex;flex-direction:column;
+  min-height:100vh;transition:margin-left .3s ease-in-out;
+}
+
+/* ── TOP NAVBAR ──────────────────────────────────────────── */
+.main-header{
+  background:#fff;border-bottom:1px solid #dee2e6;
+  height:57px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 1rem;position:sticky;top:0;z-index:1000;
+}
+.mh-left{display:flex;align-items:center;}
+.btn-pushmenu{background:none;border:none;color:var(--alt-text-mut);font-size:1.2rem;padding:5px 10px;cursor:pointer;}
+.btn-pushmenu:hover{color:var(--alt-text);}
+.mh-right{display:flex;align-items:center;gap:15px;}
+
+/* ── CONTENT AREA ────────────────────────────────────────── */
+.content{padding:20px;flex:1;}
 .mi-page{display:none;}
-.mi-page.active{display:block;}
-.mi-page-header{margin-bottom:24px;}
-.mi-page-title{font-size:1.35rem;font-weight:700;color:var(--mi-white);}
-.mi-page-sub{font-size:12px;color:var(--mi-txt2);margin-top:3px;}
+.mi-page.active{display:block;animation:fadeIn .3s;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 
-/* ── STAT CARDS ──────────────────────────────────────────── */
-.mi-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
-.mi-stat{
-  background:var(--mi-card);border:1px solid var(--mi-border);
-  border-radius:var(--mi-radius-lg);padding:20px;cursor:pointer;
-  transition:var(--mi-trans);position:relative;overflow:hidden;
+.content-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;}
+.mi-page-title{font-size:1.8rem;margin:0;font-weight:400;}
+.mi-page-sub{font-size:.9rem;color:var(--alt-text-mut);}
+
+/* ── STAT BOXES (Small Boxes) ────────────────────────────── */
+.mi-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:20px;}
+.small-box{
+  border-radius:.25rem;box-shadow:0 0 1px rgba(0,0,0,.125),0 1px 3px rgba(0,0,0,.2);
+  display:block;position:relative;padding:20px;color:#fff;cursor:pointer;
+  transition:transform .3s;overflow:hidden;
 }
-.mi-stat::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,var(--mi-gold),transparent);opacity:0;
-  transition:var(--mi-trans);
-}
-.mi-stat:hover{border-color:var(--mi-gold);transform:translateY(-2px);}
-.mi-stat:hover::before{opacity:1;}
-.mi-stat-num{font-size:2rem;font-weight:800;color:var(--mi-gold);line-height:1.1;margin-bottom:4px;}
-.mi-stat-num.blue{color:#7EC8E3;}
-.mi-stat-lbl{font-size:12px;color:var(--mi-txt2);}
-.mi-stat-icon{position:absolute;right:16px;top:16px;font-size:1.6rem;opacity:.25;}
+.small-box:hover{transform:translateY(-3px);text-decoration:none;color:#fff;}
+.bg-info{background-color:var(--alt-info);}
+.bg-success{background-color:var(--alt-success);}
+.bg-warning{background-color:var(--alt-warning);color:#1f2d3d!important;}
+.bg-danger{background-color:var(--alt-danger);}
+.small-box .inner h3{font-size:2.2rem;font-weight:700;margin:0;white-space:nowrap;}
+.small-box .inner p{font-size:1rem;margin:0;}
+.small-box .icon{color:rgba(0,0,0,.15);position:absolute;right:15px;top:15px;font-size:4rem;line-height:1;transition:transform .3s;}
+.small-box:hover .icon{transform:scale(1.1);}
 
 /* ── CARDS ───────────────────────────────────────────────── */
 .mi-card{
-  background:var(--mi-card);border:1px solid var(--mi-border);
-  border-radius:var(--mi-radius-lg);overflow:hidden;
+  position:relative;display:flex;flex-direction:column;min-width:0;
+  word-wrap:break-word;background-color:#fff;background-clip:border-box;
+  border:0 solid rgba(0,0,0,.125);border-radius:.25rem;
+  box-shadow:var(--alt-shadow);margin-bottom:1rem;
 }
+.mi-card-primary{border-top:3px solid var(--alt-primary);}
+.mi-card-success{border-top:3px solid var(--alt-success);}
+.mi-card-warning{border-top:3px solid var(--alt-warning);}
+.mi-card-danger{border-top:3px solid var(--alt-danger);}
+
 .mi-card-head{
-  padding:16px 20px;border-bottom:1px solid var(--mi-border);
-  display:flex;justify-content:space-between;align-items:center;
+  padding:.75rem 1.25rem;margin-bottom:0;background-color:transparent;
+  border-bottom:1px solid rgba(0,0,0,.125);display:flex;justify-content:space-between;align-items:center;
 }
-.mi-card-title{font-size:14px;font-weight:700;color:var(--mi-white);}
-.mi-card-body{padding:20px;}
-.mi-card-body-sm{padding:14px 20px;}
+.mi-card-title{font-size:1.1rem;font-weight:400;margin:0;}
+.mi-card-body{padding:1.25rem;flex:1 1 auto;}
+.mi-card-body-sm{padding:0;}
 
 /* ── DASH GRID ───────────────────────────────────────────── */
-.mi-dash-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.mi-dash-row{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px;}
 
-/* Category bar chart */
+/* Category bars */
 .mi-catbar{
-  display:flex;align-items:center;gap:10px;
-  padding:8px 0;border-bottom:1px solid var(--mi-border);
-  cursor:pointer;transition:var(--mi-trans);
+  display:flex;align-items:center;padding:10px 15px;border-bottom:1px solid #f4f4f4;
+  cursor:pointer;transition:background .2s;
 }
-.mi-catbar:last-child{border:none;}
-.mi-catbar:hover .mi-catbar-name{color:var(--mi-gold);}
-.mi-catbar-icon{width:22px;text-align:center;font-size:1rem;flex-shrink:0;}
-.mi-catbar-name{flex:1;font-size:12.5px;color:var(--mi-txt);transition:color .15s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.mi-catbar-track{width:80px;height:5px;background:var(--mi-border);border-radius:3px;flex-shrink:0;overflow:hidden;}
-.mi-catbar-fill{height:100%;background:var(--mi-gold);border-radius:3px;transition:width .7s cubic-bezier(.4,0,.2,1);}
-.mi-catbar-count{font-size:11px;color:var(--mi-txt2);min-width:18px;text-align:right;flex-shrink:0;}
+.mi-catbar:hover{background:#f8f9fa;}
+.mi-catbar-icon{width:30px;font-size:1.2rem;text-align:center;}
+.mi-catbar-name{flex:1;font-weight:600;}
+.mi-catbar-track{width:100px;height:8px;background:#e9ecef;border-radius:4px;overflow:hidden;margin:0 15px;}
+.mi-catbar-fill{height:100%;background:var(--alt-primary);}
+.mi-catbar-count{width:30px;text-align:right;}
 
-/* Quick actions */
-.mi-qa-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.mi-qa{
-  padding:14px;border-radius:var(--mi-radius);border:1px solid var(--mi-border2);
-  background:rgba(201,168,76,.06);color:var(--mi-gold);font-size:12px;font-weight:600;
-  text-align:center;transition:var(--mi-trans);cursor:pointer;
-}
-.mi-qa:hover{background:rgba(201,168,76,.14);border-color:var(--mi-gold);transform:translateY(-1px);}
-
-/* Recent enquiry rows */
+/* Enquiries */
 .mi-enq-row{
   display:flex;align-items:center;justify-content:space-between;
-  padding:9px 0;border-bottom:1px solid var(--mi-border);
-  cursor:pointer;transition:var(--mi-trans);
+  padding:12px 15px;border-bottom:1px solid #f4f4f4;cursor:pointer;
 }
-.mi-enq-row:last-child{border:none;}
-.mi-enq-row:hover .mi-enq-name{color:var(--mi-gold);}
-.mi-enq-name{font-size:13px;font-weight:600;color:var(--mi-white);transition:color .15s;}
-.mi-enq-prod{font-size:11.5px;color:var(--mi-txt2);}
+.mi-enq-row:hover{background:#f8f9fa;}
+.mi-enq-name{font-weight:600;color:var(--alt-text);}
+.mi-enq-prod{font-size:.85rem;color:var(--alt-text-mut);}
 
-/* ── TOOLBAR ─────────────────────────────────────────────── */
-.mi-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:10px;flex-wrap:wrap;}
-.mi-search{
-  background:#0A1520;border:1px solid var(--mi-border);color:var(--mi-txt);
-  padding:8px 13px;border-radius:var(--mi-radius);font-size:13px;width:240px;
-  transition:var(--mi-trans);
-}
-.mi-search:focus{outline:none;border-color:var(--mi-gold);width:280px;}
-.mi-search::placeholder{color:var(--mi-txt3);}
-
-/* ── TABS ─────────────────────────────────────────────────── */
-.mi-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+/* ── TOOLBAR & TABS ──────────────────────────────────────── */
+.mi-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px;gap:10px;flex-wrap:wrap;}
+.mi-search{width:300px;}
+.mi-tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:15px;}
 .mi-tab{
-  padding:5px 13px;border-radius:5px;font-size:12px;font-weight:600;
-  border:1px solid var(--mi-border);color:var(--mi-txt2);background:none;
-  transition:var(--mi-trans);cursor:pointer;
+  padding:.375rem .75rem;background:#fff;border:1px solid #dee2e6;
+  color:#495057;border-radius:.25rem;font-size:.9rem;
 }
-.mi-tab:hover,.mi-tab.active{background:var(--mi-gold);color:#000;border-color:var(--mi-gold);}
+.mi-tab.active,.mi-tab:hover{background:var(--alt-primary);color:#fff;border-color:var(--alt-primary);}
 
 /* ── TABLE ───────────────────────────────────────────────── */
 .mi-table-wrap{overflow-x:auto;}
-.mi-table{width:100%;border-collapse:collapse;}
-.mi-table th{
-  text-align:left;padding:10px 13px;font-size:11px;font-weight:700;
-  color:var(--mi-txt2);text-transform:uppercase;letter-spacing:.5px;
-  border-bottom:1px solid var(--mi-border);white-space:nowrap;
-}
-.mi-table td{
-  padding:10px 13px;font-size:13px;
-  border-bottom:1px solid rgba(30,53,80,.5);vertical-align:middle;
-}
-.mi-table tbody tr{cursor:pointer;transition:background .12s;}
-.mi-table tbody tr:hover td{background:rgba(201,168,76,.05);}
-.mi-table tbody tr:last-child td{border:none;}
-.mi-table .no-click{cursor:default;}
-.mi-table .no-click:hover td{background:none;}
+.mi-table{width:100%;margin-bottom:0;color:#212529;border-collapse:collapse;}
+.mi-table th,.mi-table td{padding:.75rem;vertical-align:middle;border-top:1px solid #dee2e6;}
+.mi-table thead th{vertical-align:bottom;border-bottom:2px solid #dee2e6;font-weight:600;color:#495057;}
+.mi-table tbody tr{cursor:pointer;}
+.mi-table tbody tr:hover{background-color:rgba(0,0,0,.05);}
 
-/* Product thumbnail */
-.mi-thumb{
-  width:36px;height:36px;border-radius:6px;object-fit:cover;
-  background:var(--mi-border);display:block;flex-shrink:0;
-}
-.mi-thumb-fallback{
-  width:36px;height:36px;border-radius:6px;background:var(--mi-border2);
-  display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;
-}
-
-/* ── IMAGE PREVIEW BOX ───────────────────────────────────── */
-.mi-img-prev{
-  width:100%;height:96px;border-radius:var(--mi-radius);
-  background:#0A1520;border:1px dashed var(--mi-border2);
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;margin-top:6px;transition:var(--mi-trans);
-}
-.mi-img-prev img{width:100%;height:100%;object-fit:cover;display:block;}
-.mi-img-prev span{font-size:12px;color:var(--mi-txt3);text-align:center;padding:0 10px;}
-.mi-img-prev.loaded{border-style:solid;border-color:var(--mi-border);}
+.mi-thumb{width:40px;height:40px;border-radius:4px;object-fit:cover;}
+.mi-thumb-fallback{width:40px;height:40px;border-radius:4px;background:#e9ecef;display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
 
 /* ── ENQUIRY CARDS ───────────────────────────────────────── */
 .mi-enq-card{
-  background:var(--mi-card);border:1px solid var(--mi-border);
-  border-radius:var(--mi-radius-lg);padding:16px;margin-bottom:12px;
-  transition:var(--mi-trans);
+  background:#fff;border:1px solid #dee2e6;border-radius:.25rem;
+  padding:15px;margin-bottom:15px;box-shadow:0 1px 3px rgba(0,0,0,.12);
+  border-left:4px solid var(--alt-primary);
 }
-.mi-enq-card:hover{border-color:var(--mi-border2);}
-.mi-enq-card-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
-.mi-enq-name{font-size:14px;font-weight:700;color:var(--mi-white);}
-.mi-enq-meta{font-size:12px;color:var(--mi-txt2);margin-top:2px;}
-.mi-enq-product{font-size:12px;color:var(--mi-gold);margin-bottom:6px;}
-.mi-enq-msg{font-size:12.5px;color:var(--mi-txt2);line-height:1.65;margin-bottom:12px;}
-.mi-enq-foot{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.mi-enq-card-head{display:flex;justify-content:space-between;margin-bottom:10px;}
+.mi-enq-name{font-size:1.1rem;font-weight:600;}
+.mi-enq-meta{font-size:.85rem;color:var(--alt-text-mut);}
+.mi-enq-product{font-size:.9rem;font-weight:600;color:var(--alt-primary);margin-bottom:8px;}
+.mi-enq-msg{background:#f8f9fa;padding:10px;border-radius:4px;font-size:.95rem;margin-bottom:15px;border:1px solid #e9ecef;}
+.mi-enq-foot{display:flex;gap:10px;align-items:center;}
 
-/* ── SETTINGS ACCORDION ──────────────────────────────────── */
-.mi-acc{border:1px solid var(--mi-border);border-radius:var(--mi-radius-lg);margin-bottom:10px;overflow:hidden;}
+/* ── SETTINGS / ACCORDION (Card style) ───────────────────── */
+.mi-acc{margin-bottom:15px;}
 .mi-acc-head{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:14px 18px;cursor:pointer;background:rgba(255,255,255,.02);
-  transition:var(--mi-trans);
+  background:#f8f9fa;padding:12px 20px;cursor:pointer;
+  border:1px solid rgba(0,0,0,.125);border-radius:.25rem;
+  display:flex;justify-content:space-between;font-weight:600;
 }
-.mi-acc-head:hover{background:rgba(255,255,255,.04);}
-.mi-acc-title{font-size:13px;font-weight:600;color:var(--mi-txt);}
-.mi-acc-arrow{font-size:11px;color:var(--mi-txt2);transition:transform .2s;}
-.mi-acc-arrow.open{transform:rotate(180deg);}
-.mi-acc-body{display:none;padding:18px;border-top:1px solid var(--mi-border);}
+.mi-acc-body{
+  background:#fff;padding:20px;border:1px solid rgba(0,0,0,.125);
+  border-top:none;border-radius:0 0 .25rem .25rem;display:none;
+}
 .mi-acc-body.open{display:block;}
 
-/* ── ADMIN USER CARDS ────────────────────────────────────── */
-.mi-admin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+/* ── ADMIN CARDS ─────────────────────────────────────────── */
+.mi-admin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:15px;}
 .mi-admin-card{
-  background:var(--mi-card);border:1px solid var(--mi-border);
-  border-radius:var(--mi-radius-lg);padding:18px;
+  background:#fff;border:1px solid rgba(0,0,0,.125);border-radius:.25rem;
+  padding:20px;box-shadow:var(--alt-shadow);text-align:center;
 }
-.mi-admin-card-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
 .mi-admin-avatar{
-  width:44px;height:44px;border-radius:50%;background:var(--mi-gold-dim);
-  border:2px solid var(--mi-gold);display:flex;align-items:center;justify-content:center;
-  font-size:1.1rem;font-weight:700;color:var(--mi-gold);flex-shrink:0;
+  width:60px;height:60px;border-radius:50%;background:#e9ecef;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:1.5rem;font-weight:700;color:var(--alt-primary);
+  margin-bottom:10px;border:3px solid #fff;box-shadow:0 2px 4px rgba(0,0,0,.1);
 }
-.mi-admin-name{font-size:14px;font-weight:700;color:var(--mi-white);}
-.mi-admin-info{font-size:11.5px;color:var(--mi-txt2);margin-top:2px;}
-.mi-admin-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
-.mi-admin-foot{display:flex;gap:7px;flex-wrap:wrap;}
+.mi-admin-name{font-size:1.2rem;font-weight:600;}
+.mi-admin-info{font-size:.85rem;color:var(--alt-text-mut);margin-bottom:15px;}
+.mi-admin-foot{display:flex;gap:10px;justify-content:center;margin-top:15px;padding-top:15px;border-top:1px solid #f4f4f4;}
 
 /* ── MODAL ───────────────────────────────────────────────── */
 .mi-modal-bg{
-  display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,.7);backdrop-filter:blur(4px);
-  z-index:200;align-items:center;justify-content:center;padding:20px;
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);
+  z-index:1050;align-items:flex-start;justify-content:center;padding:30px 10px;
+  overflow-y:auto;
 }
 .mi-modal-bg.open{display:flex;}
 .mi-modal{
-  background:var(--mi-card);border:1px solid var(--mi-border2);
-  border-radius:var(--mi-radius-lg);width:100%;max-width:560px;
-  max-height:90vh;overflow-y:auto;box-shadow:var(--mi-shadow);
+  background:#fff;border-radius:.3rem;width:100%;max-width:600px;
+  box-shadow:0 .5rem 1rem rgba(0,0,0,.5);margin:auto;
 }
-.mi-modal::-webkit-scrollbar{width:5px;}
-.mi-modal::-webkit-scrollbar-track{background:transparent;}
-.mi-modal::-webkit-scrollbar-thumb{background:var(--mi-border2);border-radius:3px;}
 .mi-modal-head{
+  padding:1rem;border-bottom:1px solid #e9ecef;
   display:flex;justify-content:space-between;align-items:center;
-  padding:16px 20px;border-bottom:1px solid var(--mi-border);
-  position:sticky;top:0;background:var(--mi-card);z-index:1;
 }
-.mi-modal-title{font-size:14px;font-weight:700;color:var(--mi-white);}
-.mi-modal-close{background:none;border:none;color:var(--mi-txt2);font-size:1.1rem;padding:2px 6px;border-radius:4px;transition:var(--mi-trans);}
-.mi-modal-close:hover{background:rgba(255,255,255,.08);color:var(--mi-txt);}
-.mi-modal-body{padding:20px;}
-.mi-modal-foot{padding:14px 20px;border-top:1px solid var(--mi-border);display:flex;justify-content:flex-end;gap:8px;}
+.mi-modal-title{font-size:1.25rem;margin:0;font-weight:400;}
+.mi-modal-close{background:none;border:none;font-size:1.5rem;line-height:1;color:#000;opacity:.5;padding:0;margin:0;}
+.mi-modal-close:hover{opacity:.75;}
+.mi-modal-body{padding:1rem;}
+.mi-modal-foot{padding:1rem;border-top:1px solid #e9ecef;display:flex;justify-content:flex-end;gap:10px;}
 
-/* ── TOTP SETUP ──────────────────────────────────────────── */
-.totp-wrap{text-align:center;padding:8px 0;}
-#qrcode-box{display:inline-block;background:#fff;padding:12px;border-radius:10px;margin:16px auto;}
-.totp-secret{
-  font-family:'Courier New',monospace;font-size:13px;
-  background:#0A1520;border:1px solid var(--mi-border);
-  border-radius:6px;padding:12px;color:var(--mi-gold);
-  word-break:break-all;text-align:center;letter-spacing:1px;margin:10px 0;
-}
-.totp-steps{text-align:left;background:#0A1520;border:1px solid var(--mi-border);border-radius:8px;padding:14px 16px;margin:12px 0;}
-.totp-steps li{font-size:12.5px;color:var(--mi-txt2);margin-bottom:6px;padding-left:4px;}
-.totp-steps li:last-child{margin-bottom:0;}
-.otp-input{
-  font-size:1.8rem;letter-spacing:12px;text-align:center;
-  font-family:'Courier New',monospace;background:#0A1520;
-  border:1px solid var(--mi-border);color:var(--mi-gold);
-  padding:12px;border-radius:var(--mi-radius);width:100%;
-  transition:var(--mi-trans);
-}
-.otp-input:focus{outline:none;border-color:var(--mi-gold);box-shadow:0 0 0 3px var(--mi-gold-dim);}
+.mi-img-prev{width:100%;height:150px;background:#f8f9fa;border:1px dashed #ced4da;border-radius:.25rem;display:flex;align-items:center;justify-content:center;overflow:hidden;margin-top:5px;}
+.mi-img-prev img{width:100%;height:100%;object-fit:cover;}
 
-/* ── TOAST SYSTEM ────────────────────────────────────────── */
-#mi-toasts{position:fixed;bottom:22px;right:22px;z-index:999;display:flex;flex-direction:column;gap:8px;pointer-events:none;}
+/* ── TOTP ────────────────────────────────────────────────── */
+.totp-wrap{text-align:center;padding:10px 0;}
+#qrcode-box{display:inline-block;padding:10px;background:#fff;border:1px solid #dee2e6;border-radius:.25rem;margin:10px auto;}
+.totp-secret{font-family:monospace;font-size:1.1rem;background:#f8f9fa;padding:10px;border-radius:.25rem;color:var(--alt-primary);margin-bottom:15px;border:1px solid #dee2e6;}
+.otp-input{font-family:monospace;font-size:2rem;letter-spacing:10px;text-align:center;height:auto;padding:10px;}
+
+/* ── TOASTS ──────────────────────────────────────────────── */
+#mi-toasts{position:fixed;top:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;pointer-events:none;}
 .mi-toast{
-  padding:12px 16px;border-radius:8px;font-size:13px;
-  max-width:300px;border:1px solid;pointer-events:auto;
-  animation:toastIn .3s cubic-bezier(.34,1.56,.64,1);
-  display:flex;align-items:center;gap:8px;
+  background:#fff;border-left:4px solid var(--alt-primary);
+  box-shadow:0 .25rem .75rem rgba(0,0,0,.1);padding:15px 20px;
+  border-radius:.25rem;min-width:250px;animation:slideIn .3s ease;
 }
-.mi-toast-ok {background:rgba(39,174,96,.12);border-color:rgba(39,174,96,.4);color:#6FCF97;}
-.mi-toast-err{background:var(--mi-red-dim);border-color:rgba(192,57,43,.4);color:#E57373;}
-.mi-toast-inf{background:var(--mi-blue-dim);border-color:rgba(52,152,219,.3);color:#7EC8E3;}
-@keyframes toastIn{from{transform:translateX(60px);opacity:0}to{transform:translateX(0);opacity:1}}
+.mi-toast-err{border-left-color:var(--alt-danger);}
+.mi-toast-ok{border-left-color:var(--alt-success);}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
 
-/* ── DIVIDER ─────────────────────────────────────────────── */
-.mi-divider{height:1px;background:var(--mi-border);margin:16px 0;}
+/* ── RESPONSIVE / COLLAPSED SIDEBAR ──────────────────────── */
+body.sidebar-collapse .main-sidebar { margin-left: calc(var(--sidebar-w) * -1); }
+body.sidebar-collapse .content-wrapper { margin-left: 0; }
 
-/* ── EMPTY STATE ─────────────────────────────────────────── */
-.mi-empty{text-align:center;padding:40px 20px;color:var(--mi-txt2);}
-.mi-empty-icon{font-size:2.5rem;margin-bottom:10px;}
-.mi-empty p{font-size:13px;}
-
-/* ── RESPONSIVE ──────────────────────────────────────────── */
 @media(max-width:768px){
   .mi-stats{grid-template-columns:1fr 1fr;}
   .mi-dash-row{grid-template-columns:1fr;}
-  .mi-content{padding:16px;}
-  .mi-search{width:100%;}
-  .mi-toolbar{flex-direction:column;align-items:stretch;}
+  .main-sidebar{margin-left:calc(var(--sidebar-w) * -1);}
+  .content-wrapper{margin-left:0;}
+  /* When open on mobile */
+  body.sidebar-open .main-sidebar{margin-left:0;}
   .mi-grid2{grid-template-columns:1fr;}
-  .mi-qa-grid{grid-template-columns:1fr 1fr;}
-  .mi-topbar{padding:0 14px;}
-  .mi-navbar{padding:0 10px;}
 }
 @media(max-width:480px){
-  .mi-stats{grid-template-columns:1fr 1fr;}
-  .mi-stat-num{font-size:1.6rem;}
+  .mi-stats{grid-template-columns:1fr;}
 }
 </style>
 </head>
-<body>
+<body class="hold-transition sidebar-mini">
 
 <div id="scr-login" class="auth-page">
   <div class="auth-card">
     <div class="auth-logo">
-      <div class="pill">Admin Panel</div>
-      <h1>Memane International</h1>
-      <p>Sign in to manage your website</p>
+      <h1><b>Memane</b>Admin</h1>
     </div>
-    <div class="mi-field">
-      <label class="mi-label">Username</label>
-      <input class="mi-input" id="l-user" placeholder="Enter username" autocomplete="username" onkeydown="if(event.key==='Enter')$$('l-pass').focus()">
-    </div>
-    <div class="mi-field">
-      <label class="mi-label">Password</label>
-      <input class="mi-input" type="password" id="l-pass" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
-    </div>
-    <button class="mi-btn mi-btn-primary mi-btn-block" id="l-btn" onclick="doLogin()">Sign In →</button>
-    <div class="mi-alert mi-alert-danger" id="l-err"></div>
-    <div style="text-align:center;margin-top:14px;">
-      <a onclick="showScr('scr-forgot')" style="font-size:12px;color:var(--mi-txt2);cursor:pointer;text-decoration:underline;">Forgot Password?</a>
+    <div class="auth-body">
+      <p class="auth-msg">Sign in to start your session</p>
+      <div class="mi-field">
+        <input class="mi-input" id="l-user" placeholder="Username" autocomplete="username" onkeydown="if(event.key==='Enter')$$('l-pass').focus()">
+      </div>
+      <div class="mi-field" style="margin-bottom:20px;">
+        <input class="mi-input" type="password" id="l-pass" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <button class="mi-btn mi-btn-primary mi-btn-block" id="l-btn" onclick="doLogin()">Sign In</button>
+      <div class="mi-alert mi-alert-danger" id="l-err"></div>
+      <div style="text-align:center;margin-top:15px;">
+        <a onclick="showScr('scr-forgot')">I forgot my password</a>
+      </div>
     </div>
   </div>
 </div>
 
 <div id="scr-forgot" class="auth-page" style="display:none;">
   <div class="auth-card">
-    <div class="auth-logo">
-      <div class="pill">Account Recovery</div>
-      <h1>Forgot Password?</h1>
-      <p>Enter your <strong>registered email</strong> — we'll send your username and a password reset link</p>
-    </div>
-    <div class="mi-field">
-      <label class="mi-label">Registered Email Address</label>
-      <input class="mi-input" type="email" id="fp-email" placeholder="admin@example.com" autocomplete="email" onkeydown="if(event.key==='Enter')doForgotPassword()">
-    </div>
-    <button class="mi-btn mi-btn-primary mi-btn-block" id="fp-btn" onclick="doForgotPassword()">Send Recovery Email →</button>
-    <div class="mi-alert mi-alert-danger" id="fp-err" style="display:none;"></div>
-    <div class="mi-alert" id="fp-ok" style="display:none;background:rgba(39,174,96,.1);border:1px solid rgba(39,174,96,.3);color:#27AE60;"></div>
-    <div style="text-align:center;margin-top:14px;">
-      <a onclick="showScr('scr-login')" style="font-size:12px;color:var(--mi-txt2);cursor:pointer;text-decoration:underline;">← Back to Login</a>
+    <div class="auth-logo"><h1><b>Memane</b>Admin</h1></div>
+    <div class="auth-body">
+      <p class="auth-msg">You forgot your password? Here you can easily retrieve a new one.</p>
+      <div class="mi-field">
+        <input class="mi-input" type="email" id="fp-email" placeholder="Registered Email Address" onkeydown="if(event.key==='Enter')doForgotPassword()">
+      </div>
+      <button class="mi-btn mi-btn-primary mi-btn-block" id="fp-btn" onclick="doForgotPassword()">Request new password</button>
+      <div class="mi-alert mi-alert-danger" id="fp-err" style="margin-top:15px;"></div>
+      <div class="mi-alert mi-alert-success" id="fp-ok" style="margin-top:15px;"></div>
+      <div style="margin-top:15px;"><a onclick="showScr('scr-login')">Login</a></div>
     </div>
   </div>
 </div>
 
 <div id="scr-reset" class="auth-page" style="display:none;">
   <div class="auth-card">
-    <div class="auth-logo">
-      <div class="pill" style="background:rgba(39,174,96,.15);color:#27AE60;border-color:rgba(39,174,96,.3);">🔐 Set New Password</div>
-      <h1>Reset Password</h1>
-      <p>Choose a strong new password for your admin account</p>
+    <div class="auth-logo"><h1><b>Memane</b>Admin</h1></div>
+    <div class="auth-body">
+      <p class="auth-msg">You are only one step a way from your new password, recover your password now.</p>
+      <div class="mi-field"><input class="mi-input" type="password" id="rp-new" placeholder="New Password (min 8 chars)" onkeydown="if(event.key==='Enter')$$('rp-confirm').focus()"></div>
+      <div class="mi-field"><input class="mi-input" type="password" id="rp-confirm" placeholder="Confirm Password" onkeydown="if(event.key==='Enter')doResetPassword()"></div>
+      <button class="mi-btn mi-btn-primary mi-btn-block" id="rp-btn" onclick="doResetPassword()">Change password</button>
+      <div class="mi-alert mi-alert-danger" id="rp-err" style="margin-top:15px;"></div>
+      <div class="mi-alert mi-alert-success" id="rp-ok" style="margin-top:15px;"></div>
     </div>
-    <div class="mi-field">
-      <label class="mi-label">New Password</label>
-      <input class="mi-input" type="password" id="rp-new" placeholder="Min 8 characters" onkeydown="if(event.key==='Enter')$$('rp-confirm').focus()">
-    </div>
-    <div class="mi-field">
-      <label class="mi-label">Confirm New Password</label>
-      <input class="mi-input" type="password" id="rp-confirm" placeholder="Repeat new password" onkeydown="if(event.key==='Enter')doResetPassword()">
-    </div>
-    <button class="mi-btn mi-btn-primary mi-btn-block" id="rp-btn" onclick="doResetPassword()">Set New Password →</button>
-    <div class="mi-alert mi-alert-danger" id="rp-err" style="display:none;"></div>
-    <div class="mi-alert" id="rp-ok" style="display:none;background:rgba(39,174,96,.1);border:1px solid rgba(39,174,96,.3);color:#27AE60;"></div>
   </div>
 </div>
 
 <div id="scr-setup" class="auth-page" style="display:none;">
   <div class="auth-card wide">
-    <div class="auth-logo">
-      <div class="pill">Setup 2FA</div>
-      <h1>Google Authenticator Setup</h1>
-      <p>Scan the QR code to secure your account</p>
-    </div>
-    <div class="totp-wrap">
-      <div id="qrcode-box"></div>
-      <div style="font-size:12px;color:var(--mi-txt2);margin-bottom:6px;">Or enter this key manually in Google Authenticator:</div>
-      <div class="totp-secret" id="totp-secret-show"></div>
-    </div>
-    <ol class="totp-steps">
-      <li>Open <strong style="color:var(--mi-txt);">Google Authenticator</strong> app on your phone</li>
-      <li>Tap <strong style="color:var(--mi-txt);">+</strong> → <strong style="color:var(--mi-txt);">Scan a QR code</strong></li>
-      <li>Scan the code above, then enter the 6-digit code below</li>
-    </ol>
-    <div class="mi-field">
-      <label class="mi-label">6-Digit Code from App</label>
-      <input class="otp-input" id="s-code" placeholder="000000" maxlength="6" oninput="this.value=this.value.replace(/\D/g,'')" onkeydown="if(event.key==='Enter')doTotpSetup()">
-    </div>
-    <button class="mi-btn mi-btn-primary mi-btn-block" id="s-btn" onclick="doTotpSetup()">Activate & Continue →</button>
-    <div class="mi-alert mi-alert-danger" id="s-err"></div>
-    <div style="text-align:center;margin-top:12px;">
-      <a href="#" onclick="backToLogin()" style="font-size:12px;color:var(--mi-txt2);">← Back to login</a>
+    <div class="auth-logo"><h1><b>Security</b>Setup</h1></div>
+    <div class="auth-body">
+      <p class="auth-msg">Set up Two-Factor Authentication</p>
+      <div class="totp-wrap">
+        <div id="qrcode-box"></div>
+        <div class="totp-secret" id="totp-secret-show"></div>
+      </div>
+      <p style="font-size:.9rem;color:#6c757d;">1. Open Google Authenticator<br>2. Scan QR or enter code<br>3. Enter 6-digit pin below</p>
+      <div class="mi-field"><input class="mi-input otp-input" id="s-code" placeholder="000000" maxlength="6" oninput="this.value=this.value.replace(/\D/g,'')" onkeydown="if(event.key==='Enter')doTotpSetup()"></div>
+      <button class="mi-btn mi-btn-primary mi-btn-block" id="s-btn" onclick="doTotpSetup()">Verify & Save</button>
+      <div class="mi-alert mi-alert-danger" id="s-err" style="margin-top:15px;"></div>
+      <div style="text-align:center;margin-top:15px;"><a onclick="backToLogin()">Cancel</a></div>
     </div>
   </div>
 </div>
 
 <div id="scr-totp" class="auth-page" style="display:none;">
   <div class="auth-card">
-    <div class="auth-logo">
-      <div style="font-size:2.5rem;margin-bottom:8px;">🔐</div>
-      <h1>Two-Factor Auth</h1>
-      <p>Enter the 6-digit code from Google Authenticator</p>
-    </div>
-    <div class="mi-field">
-      <label class="mi-label">Authentication Code</label>
-      <input class="otp-input" id="t-code" placeholder="000000" maxlength="6" oninput="this.value=this.value.replace(/\D/g,'')" onkeydown="if(event.key==='Enter')doTotpLogin()">
-    </div>
-    <button class="mi-btn mi-btn-primary mi-btn-block" id="t-btn" onclick="doTotpLogin()">Verify →</button>
-    <div class="mi-alert mi-alert-danger" id="t-err"></div>
-    <div style="text-align:center;margin-top:12px;">
-      <a href="#" onclick="backToLogin()" style="font-size:12px;color:var(--mi-txt2);">← Back to login</a>
+    <div class="auth-logo"><h1><b>Auth</b>Verify</h1></div>
+    <div class="auth-body">
+      <p class="auth-msg">Enter your Google Authenticator code</p>
+      <div class="mi-field"><input class="mi-input otp-input" id="t-code" placeholder="000000" maxlength="6" oninput="this.value=this.value.replace(/\D/g,'')" onkeydown="if(event.key==='Enter')doTotpLogin()"></div>
+      <button class="mi-btn mi-btn-primary mi-btn-block" id="t-btn" onclick="doTotpLogin()">Sign In</button>
+      <div class="mi-alert mi-alert-danger" id="t-err" style="margin-top:15px;"></div>
+      <div style="text-align:center;margin-top:15px;"><a onclick="backToLogin()">Cancel</a></div>
     </div>
   </div>
 </div>
 
 
-<div id="app">
+<div id="app" class="wrapper">
 
-  <header class="mi-topbar">
-    <div class="mi-topbar-brand">
-      <img src="/uploads/logo.jpeg" alt="MI" onerror="this.style.display='none'">
-      <span class="brand-name">Memane International</span>
-      <span class="brand-env">Admin</span>
+  <aside class="main-sidebar">
+    <a href="#" class="brand-link" onclick="nav('dash',$$('nav-dash'))">
+      <img src="/uploads/logo.jpeg" alt="Logo" onerror="this.style.display='none'">
+      <span style="font-weight:300;">Memane<b>Admin</b></span>
+    </a>
+    <div class="sidebar-user">
+      <div class="sidebar-user-icon" id="top-initial">A</div>
+      <div class="sidebar-user-info">
+        <span class="sidebar-user-name" id="top-user">Admin</span>
+        <span class="sidebar-user-role" id="top-role">Super Admin</span>
+      </div>
     </div>
-    <div class="mi-topbar-right">
-      <div class="mi-topbar-user">
-        <div class="username" id="top-user">—</div>
-        <div class="role-txt" id="top-role">—</div>
+    <div class="nav-sidebar">
+      <div class="mi-navitem active" id="nav-dash"  onclick="nav('dash',this)">
+        <i style="width:25px;text-align:center;">📊</i> Dashboard
       </div>
-      <button class="mi-btn-signout" onclick="doLogout()">Sign Out</button>
+      <div class="mi-navitem" id="nav-prods" onclick="nav('prods',this)">
+        <i style="width:25px;text-align:center;">📦</i> Products
+      </div>
+      <div class="mi-navitem" id="nav-cats"  onclick="nav('cats',this)">
+        <i style="width:25px;text-align:center;">🗂</i> Categories
+      </div>
+      <div class="mi-navitem" id="nav-enqs"  onclick="nav('enqs',this)">
+        <i style="width:25px;text-align:center;">✉️</i> Enquiries
+        <span class="nav-dot" id="enq-dot">New</span>
+      </div>
+      <div style="margin:10px 0;border-top:1px solid #4b545c;"></div>
+      <div class="mi-navitem" id="nav-setts" onclick="nav('setts',this)">
+        <i style="width:25px;text-align:center;">⚙️</i> Settings
+      </div>
+      <div class="mi-navitem" id="nav-admins" onclick="nav('admins',this)">
+        <i style="width:25px;text-align:center;">👥</i> Admins
+      </div>
     </div>
-  </header>
+  </aside>
 
-  <nav class="mi-navbar">
-    <div class="mi-navitem active" id="nav-dash"  onclick="nav('dash',this)">📊 Dashboard</div>
-    <div class="mi-navitem"        id="nav-prods" onclick="nav('prods',this)">📦 Products</div>
-    <div class="mi-navitem"        id="nav-cats"  onclick="nav('cats',this)">🗂 Categories</div>
-    <div class="mi-navitem"        id="nav-enqs"  onclick="nav('enqs',this)">✉️ Enquiries<span class="nav-dot" id="enq-dot"></span></div>
-    <div class="mi-navitem"        id="nav-setts" onclick="nav('setts',this)">⚙️ Settings</div>
-    <div class="mi-navitem"        id="nav-admins" onclick="nav('admins',this)">👥 Admins</div>
-  </nav>
-
-  <main class="mi-content">
-
-    <div class="mi-page active" id="pg-dash">
-      <div class="mi-page-header">
-        <div class="mi-page-title">Dashboard</div>
-        <div class="mi-page-sub" id="dash-greet">Welcome back</div>
+  <div class="content-wrapper">
+    
+    <nav class="main-header">
+      <div class="mh-left">
+        <button class="btn-pushmenu" onclick="document.body.classList.toggle('sidebar-collapse');document.body.classList.toggle('sidebar-open');">☰</button>
       </div>
-
-      <div class="mi-stats">
-        <div class="mi-stat" onclick="nav('prods',$$('nav-prods'))">
-          <div class="mi-stat-icon">📦</div>
-          <div class="mi-stat-num" id="st-total">—</div>
-          <div class="mi-stat-lbl">Total Products</div>
-        </div>
-        <div class="mi-stat" onclick="nav('prods',$$('nav-prods'))">
-          <div class="mi-stat-icon">✅</div>
-          <div class="mi-stat-num" id="st-active">—</div>
-          <div class="mi-stat-lbl">Active Products</div>
-        </div>
-        <div class="mi-stat" onclick="nav('cats',$$('nav-cats'))">
-          <div class="mi-stat-icon">🗂</div>
-          <div class="mi-stat-num" id="st-cats">—</div>
-          <div class="mi-stat-lbl">Categories</div>
-        </div>
-        <div class="mi-stat" onclick="nav('enqs',$$('nav-enqs'))">
-          <div class="mi-stat-icon">✉️</div>
-          <div class="mi-stat-num blue" id="st-enqs">—</div>
-          <div class="mi-stat-lbl">Enquiries</div>
-        </div>
+      <div class="mh-right">
+        <button class="mi-btn mi-btn-ghost" onclick="doLogout()">Sign out</button>
       </div>
+    </nav>
 
-      <div class="mi-dash-row">
-        <div class="mi-card">
-          <div class="mi-card-head">
-            <span class="mi-card-title">Products by Category</span>
+    <main class="content">
+
+      <div class="mi-page active" id="pg-dash">
+        <div class="content-header">
+          <h1 class="mi-page-title">Dashboard</h1>
+          <span class="mi-page-sub" id="dash-greet">Welcome</span>
+        </div>
+
+        <div class="mi-stats">
+          <div class="small-box bg-info" onclick="nav('prods',$$('nav-prods'))">
+            <div class="inner"><h3 id="st-total">0</h3><p>Products</p></div>
+            <div class="icon">📦</div>
           </div>
-          <div class="mi-card-body-sm" id="d-catbars"></div>
+          <div class="small-box bg-success" onclick="nav('prods',$$('nav-prods'))">
+            <div class="inner"><h3 id="st-active">0</h3><p>Active</p></div>
+            <div class="icon">✅</div>
+          </div>
+          <div class="small-box bg-warning" onclick="nav('cats',$$('nav-cats'))">
+            <div class="inner"><h3 id="st-cats">0</h3><p>Categories</p></div>
+            <div class="icon">🗂</div>
+          </div>
+          <div class="small-box bg-danger" onclick="nav('enqs',$$('nav-enqs'))">
+            <div class="inner"><h3 id="st-enqs">0</h3><p>Enquiries</p></div>
+            <div class="icon">✉️</div>
+          </div>
         </div>
-        <div class="mi-card">
-          <div class="mi-card-head"><span class="mi-card-title">Quick Actions</span></div>
-          <div class="mi-card-body">
-            <div class="mi-qa-grid">
-              <div class="mi-qa" onclick="nav('prods',$$('nav-prods'));openProd()">＋ Add Product</div>
-              <div class="mi-qa" onclick="nav('cats',$$('nav-cats'));openCat()">＋ Add Category</div>
-              <div class="mi-qa" onclick="nav('enqs',$$('nav-enqs'))">View Enquiries</div>
-              <div class="mi-qa" onclick="nav('setts',$$('nav-setts'))">Settings</div>
+
+        <div class="mi-dash-row">
+          <div class="mi-card mi-card-primary">
+            <div class="mi-card-head"><h3 class="mi-card-title">Products by Category</h3></div>
+            <div class="mi-card-body-sm" id="d-catbars"></div>
+          </div>
+          
+          <div class="mi-card mi-card-success">
+            <div class="mi-card-head">
+              <h3 class="mi-card-title">Recent Enquiries</h3>
+              <button class="mi-btn mi-btn-sm mi-btn-ghost" onclick="nav('enqs',$$('nav-enqs'))">View All</button>
+            </div>
+            <div class="mi-card-body-sm" id="d-enqs"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mi-page" id="pg-prods">
+        <div class="content-header">
+          <h1 class="mi-page-title">Products</h1>
+          <span class="mi-page-sub">Total: <b id="prod-count">0</b></span>
+        </div>
+        <div class="mi-toolbar">
+          <input class="mi-input mi-search" id="p-search" placeholder="Search products..." oninput="renderProds()">
+          <button class="mi-btn mi-btn-primary" onclick="openProd()">+ Add New Product</button>
+        </div>
+        <div class="mi-tabs" id="p-tabs"></div>
+        <div class="mi-card mi-card-primary">
+          <div class="mi-card-body-sm">
+            <div class="mi-table-wrap">
+              <table class="mi-table">
+                <thead><tr><th style="width:50px;">Img</th><th>Product Name</th><th>Category</th><th>MOQ Export</th><th>Status</th><th style="width:140px;">Actions</th></tr></thead>
+                <tbody id="p-tbody"></tbody>
+              </table>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="mi-card">
-        <div class="mi-card-head">
-          <span class="mi-card-title">Recent Enquiries</span>
-          <button class="mi-btn mi-btn-ghost mi-btn-sm" onclick="nav('enqs',$$('nav-enqs'))">View All →</button>
+      <div class="mi-page" id="pg-cats">
+        <div class="content-header">
+          <h1 class="mi-page-title">Categories</h1>
         </div>
-        <div class="mi-card-body-sm" id="d-enqs"></div>
-      </div>
-    </div>
-
-    <div class="mi-page" id="pg-prods">
-      <div class="mi-page-header">
-        <div class="mi-page-title">Products</div>
-        <div class="mi-page-sub">Click any row to edit &nbsp;·&nbsp; <span id="prod-count" style="color:var(--mi-gold)">0</span> products total</div>
-      </div>
-      <div class="mi-toolbar">
-        <input class="mi-search" id="p-search" placeholder="🔍  Search products..." oninput="renderProds()">
-        <button class="mi-btn mi-btn-primary" onclick="openProd()">+ Add Product</button>
-      </div>
-      <div class="mi-tabs" id="p-tabs"></div>
-      <div class="mi-card">
-        <div class="mi-table-wrap">
-          <table class="mi-table">
-            <thead><tr><th style="width:46px;"></th><th>Product Name</th><th>Category</th><th>MOQ Export</th><th>Status</th><th style="width:160px;">Actions</th></tr></thead>
-            <tbody id="p-tbody"></tbody>
-          </table>
+        <div class="mi-toolbar">
+          <span></span>
+          <button class="mi-btn mi-btn-primary" onclick="openCat()">+ Add Category</button>
+        </div>
+        <div class="mi-card mi-card-warning">
+          <div class="mi-card-body-sm">
+            <div class="mi-table-wrap">
+              <table class="mi-table">
+                <thead><tr><th style="width:60px;">Img</th><th style="width:50px;">Icon</th><th>Name</th><th>Subtitle</th><th>Products</th><th style="width:140px;">Actions</th></tr></thead>
+                <tbody id="c-tbody"></tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="mi-page" id="pg-cats">
-      <div class="mi-page-header">
-        <div class="mi-page-title">Categories</div>
-        <div class="mi-page-sub">Manage product categories</div>
-      </div>
-      <div class="mi-toolbar">
-        <span></span>
-        <button class="mi-btn mi-btn-primary" onclick="openCat()">+ Add Category</button>
-      </div>
-      <div class="mi-card">
-        <div class="mi-table-wrap">
-          <table class="mi-table">
-            <thead><tr><th style="width:56px;">Image</th><th style="width:40px;">Icon</th><th>Name</th><th>Subtitle</th><th>Products</th><th style="width:130px;">Actions</th></tr></thead>
-            <tbody id="c-tbody"></tbody>
-          </table>
+      <div class="mi-page" id="pg-enqs">
+        <div class="content-header">
+          <h1 class="mi-page-title">Trade Enquiries</h1>
         </div>
+        <div class="mi-tabs">
+          <button class="mi-tab active" onclick="setEF('all',this)">All</button>
+          <button class="mi-tab" onclick="setEF('new',this)">New</button>
+          <button class="mi-tab" onclick="setEF('read',this)">Read</button>
+          <button class="mi-tab" onclick="setEF('done',this)">Done</button>
+        </div>
+        <div id="e-grid"></div>
       </div>
-    </div>
 
-    <div class="mi-page" id="pg-enqs">
-      <div class="mi-page-header">
-        <div class="mi-page-title">Enquiries</div>
-        <div class="mi-page-sub">Customer trade enquiries from website</div>
+      <div class="mi-page" id="pg-setts">
+        <div class="content-header">
+          <h1 class="mi-page-title">System Settings</h1>
+        </div>
+        <div id="setts-body"></div>
       </div>
-      <div class="mi-tabs">
-        <button class="mi-tab active" onclick="setEF('all',this)">All</button>
-        <button class="mi-tab" onclick="setEF('new',this)">🔵 New</button>
-        <button class="mi-tab" onclick="setEF('read',this)">Read</button>
-        <button class="mi-tab" onclick="setEF('done',this)">✅ Done</button>
-      </div>
-      <div id="e-grid"></div>
-    </div>
 
-    <div class="mi-page" id="pg-setts">
-      <div class="mi-page-header">
-        <div class="mi-page-title">Settings</div>
-        <div class="mi-page-sub">Company information and website configuration</div>
+      <div class="mi-page" id="pg-admins">
+        <div class="content-header">
+          <h1 class="mi-page-title">Admin Management</h1>
+        </div>
+        <div class="mi-toolbar">
+          <span></span>
+          <button class="mi-btn mi-btn-primary" id="add-admin-btn" onclick="openAdminModal()">+ Add Admin</button>
+        </div>
+        <div class="mi-admin-grid" id="a-grid"></div>
       </div>
-      <div id="setts-body"></div>
-    </div>
 
-    <div class="mi-page" id="pg-admins">
-      <div class="mi-page-header">
-        <div class="mi-page-title">Admin Users</div>
-        <div class="mi-page-sub">Manage admin accounts and roles</div>
-      </div>
-      <div class="mi-toolbar">
-        <span></span>
-        <button class="mi-btn mi-btn-primary" id="add-admin-btn" onclick="openAdminModal()">+ Add Admin</button>
-      </div>
-      <div class="mi-admin-grid" id="a-grid"></div>
-    </div>
-
-  </main>
+    </main>
+  </div>
 </div>
 
 <div class="mi-modal-bg" id="modal-bg" onclick="if(event.target===this)closeModal()">
   <div class="mi-modal">
     <div class="mi-modal-head">
-      <span class="mi-modal-title" id="modal-title">—</span>
-      <button class="mi-modal-close" onclick="closeModal()">✕</button>
+      <h4 class="mi-modal-title" id="modal-title">Title</h4>
+      <button class="mi-modal-close" onclick="closeModal()">×</button>
     </div>
     <div class="mi-modal-body" id="modal-body"></div>
     <div class="mi-modal-foot" id="modal-foot"></div>
@@ -720,7 +632,7 @@ img{max-width:100%;}
 
 <script>
 // ════════════════════════════════════════════════════════════
-// MI ADMIN SYSTEM v2.0 — Memane International
+// MI ADMIN SYSTEM v2.0 — JS Logic (Unchanged from working ver)
 // ════════════════════════════════════════════════════════════
 
 // ── STATE ────────────────────────────────────────────────────
@@ -741,7 +653,7 @@ function gv(id){ var e=$$(id); return e ? e.value.trim() : ''; }
 
 function showScr(id) {
   ['scr-login','scr-setup','scr-totp','scr-forgot','scr-reset'].forEach(s => {
-    $$(s).style.display = s === id ? 'flex' : 'none';
+    if($$(s)) $$(s).style.display = s === id ? 'flex' : 'none';
   });
 }
 
@@ -765,27 +677,23 @@ async function doLogin() {
   try {
     var d = await api('login', {username: user, password: pass});
     S.tmpTok = d.tmp_token || d.token;
-    // Worker returns requireTotp (our API) or totp_setup/totp_required (old API)
     if (d.totp_setup || (d.requireTotp && !d.token)) {
-      // First time TOTP setup — show QR
       showScr('scr-setup');
       if ($$('totp-secret-show')) $$('totp-secret-show').textContent = d.secret || '';
       if ($$('qrcode-box')) {
         $$('qrcode-box').innerHTML = '';
-        if (d.totp_uri || d.otpauth) new QRCode($$('qrcode-box'), {text: d.totp_uri||d.otpauth, width:180, height:180, colorDark:'#000', colorLight:'#fff'});
+        if (d.totp_uri || d.otpauth) new QRCode($$('qrcode-box'), {text: d.totp_uri||d.otpauth, width:150, height:150, colorDark:'#000', colorLight:'#fff'});
       }
     } else if (d.totp_required || d.requireTotp) {
       showScr('scr-totp');
       setTimeout(() => $$('t-code') && $$('t-code').focus(), 100);
     } else if (d.ok && d.token) {
-      // Direct login success — no TOTP needed
-      saveSession(d);
-      loadApp();
+      saveSession(d); loadApp();
     }
   } catch(e) {
     err.textContent = e.message; err.style.display = 'block';
   }
-  btn.textContent = 'Sign In →'; btn.disabled = false;
+  btn.textContent = 'Sign In'; btn.disabled = false;
 }
 
 async function doTotpSetup() {
@@ -798,7 +706,7 @@ async function doTotpSetup() {
     saveSession(d); loadApp();
   } catch(e) {
     err.textContent = e.message; err.style.display = 'block';
-    btn.textContent = 'Activate & Continue →'; btn.disabled = false;
+    btn.textContent = 'Verify & Save'; btn.disabled = false;
   }
 }
 
@@ -812,14 +720,12 @@ async function doTotpLogin() {
     saveSession(d); loadApp();
   } catch(e) {
     err.textContent = e.message; err.style.display = 'block';
-    btn.textContent = 'Verify →'; btn.disabled = false;
+    btn.textContent = 'Sign In'; btn.disabled = false;
   }
 }
 
 function saveSession(d) {
-  S.tok = d.token;
-  S.role = d.role || 'superadmin';
-  S.user = d.username || d.name || 'admin';
+  S.tok = d.token; S.role = d.role || 'superadmin'; S.user = d.username || d.name || 'admin';
   sessionStorage.setItem('mi_tok', d.token);
   sessionStorage.setItem('mi_role', S.role);
   sessionStorage.setItem('mi_user', S.user);
@@ -829,103 +735,70 @@ function backToLogin() { showScr('scr-login'); }
 
 // ── FORGOT PASSWORD ────────────────────────────────────────────
 async function doForgotPassword() {
-  var emailVal = ($$('fp-email')?$$('fp-email').value:'').trim();
+  var emailVal = gv('fp-email');
   var err = $$('fp-err'), ok = $$('fp-ok'), btn = $$('fp-btn');
   err.style.display='none'; ok.style.display='none';
   if(!emailVal){ err.textContent='Please enter your registered email address.'; err.style.display='block'; return; }
   btn.disabled=true; btn.textContent='Sending...';
   try {
-    var d = await fetch('/api/admin/forgot-password',{
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({email:emailVal})
-    }).then(r=>r.json());
-    ok.textContent = d.msg || 'Recovery email sent! Check your inbox.';
-    ok.style.display='block';
+    var d = await fetch('/api/admin/forgot-password',{ method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email:emailVal}) }).then(r=>r.json());
+    ok.textContent = d.msg || 'Recovery email sent! Check your inbox.'; ok.style.display='block';
     if($$('fp-email')) $$('fp-email').value='';
-  } catch(e) {
-    err.textContent = e.message||'Something went wrong. Please try again.';
-    err.style.display='block';
-  }
-  btn.disabled=false; btn.textContent='Send Recovery Email →';
+  } catch(e) { err.textContent = e.message||'Error.'; err.style.display='block'; }
+  btn.disabled=false; btn.textContent='Request new password';
 }
 
-// ── RESET PASSWORD (via email link token) ─────────────────────
 async function doResetPassword() {
-  var newPass = ($$('rp-new').value||'');
-  var confirm = ($$('rp-confirm').value||'');
+  var newPass = gv('rp-new'), confirm = gv('rp-confirm');
   var err = $$('rp-err'), ok = $$('rp-ok'), btn = $$('rp-btn');
   err.style.display='none'; ok.style.display='none';
   if(!newPass||newPass.length<8){ err.textContent='Password must be at least 8 characters.'; err.style.display='block'; return; }
   if(newPass!==confirm){ err.textContent='Passwords do not match.'; err.style.display='block'; return; }
   var params = new URLSearchParams(window.location.search);
   var token = params.get('reset');
-  if(!token){ err.textContent='Invalid reset link. Please request a new one.'; err.style.display='block'; return; }
+  if(!token){ err.textContent='Invalid reset link.'; err.style.display='block'; return; }
   btn.disabled=true; btn.textContent='Resetting...';
   try {
-    var d = await fetch('/api/admin/reset-password',{
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({token:token, newPassword:newPass})
-    }).then(r=>r.json());
-    if(!d.ok){ err.textContent=d.msg||'Reset failed.'; err.style.display='block'; btn.disabled=false; btn.textContent='Set New Password →'; return; }
-    ok.textContent = '✅ ' + (d.msg||'Password reset! Redirecting to login...');
-    ok.style.display='block';
-    btn.style.display='none';
-    // Remove token from URL and go to login after 2s
-    setTimeout(function(){
-      window.history.replaceState({},'',window.location.pathname);
-      showScr('scr-login');
-    }, 2500);
-  } catch(e) {
-    err.textContent = e.message||'Something went wrong.';
-    err.style.display='block';
-    btn.disabled=false; btn.textContent='Set New Password →';
-  }
+    var d = await fetch('/api/admin/reset-password',{ method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({token:token, newPassword:newPass}) }).then(r=>r.json());
+    if(!d.ok){ err.textContent=d.msg||'Reset failed.'; err.style.display='block'; btn.disabled=false; btn.textContent='Change password'; return; }
+    ok.textContent = d.msg||'Password reset!'; ok.style.display='block'; btn.style.display='none';
+    setTimeout(function(){ window.history.replaceState({},'',window.location.pathname); showScr('scr-login'); }, 2500);
+  } catch(e) { err.textContent = e.message||'Error.'; err.style.display='block'; btn.disabled=false; btn.textContent='Change password'; }
 }
 
-// ── CHANGE PASSWORD (logged in) ────────────────────────────────
 async function doChangePassword() {
-  var cur  = ($$('cp-cur').value||'');
-  var nw   = ($$('cp-new').value||'');
-  var conf = ($$('cp-conf').value||'');
-  var err  = $$('cp-err'), ok = $$('cp-ok');
+  var cur=gv('cp-cur'), nw=gv('cp-new'), conf=gv('cp-conf');
+  var err=$$('cp-err'), ok=$$('cp-ok');
   err.style.display='none'; ok.style.display='none';
   if(!cur){ err.textContent='Please enter your current password.'; err.style.display='block'; return; }
   if(nw.length<8){ err.textContent='New password must be at least 8 characters.'; err.style.display='block'; return; }
   if(nw!==conf){ err.textContent='New passwords do not match.'; err.style.display='block'; return; }
   try {
     var d = await api('admin/change-password', {currentPassword:cur, newPassword:nw});
-    if(!d.ok){ err.textContent=d.msg||'Failed to change password.'; err.style.display='block'; return; }
-    ok.textContent = '✅ ' + (d.msg||'Password changed! Confirmation email sent.');
-    ok.style.display='block';
+    if(!d.ok){ err.textContent=d.msg||'Failed.'; err.style.display='block'; return; }
+    ok.textContent = d.msg||'Password changed!'; ok.style.display='block';
     $$('cp-cur').value=''; $$('cp-new').value=''; $$('cp-conf').value='';
-  } catch(e) {
-    err.textContent = e.message||'Something went wrong.';
-    err.style.display='block';
-  }
+  } catch(e) { err.textContent = e.message||'Error.'; err.style.display='block'; }
 }
 
 async function doLogout() {
   try { await api('admin/logout', {}); } catch(e) {}
-  sessionStorage.clear();
-  location.reload();
+  sessionStorage.clear(); location.reload();
 }
 
 // ── APP INIT ─────────────────────────────────────────────────
 async function loadApp() {
-  // Hide auth, show app
-  ['scr-login','scr-setup','scr-totp','scr-forgot','scr-reset'].forEach(s => $$(s).style.display = 'none');
-  $$('app').style.display = 'flex';
+  ['scr-login','scr-setup','scr-totp','scr-forgot','scr-reset'].forEach(s => {if($$(s))$$(s).style.display = 'none';});
+  $$('app').classList.add('visible');
 
-  // Set top bar
   $$('top-user').textContent = S.user;
-  $$('top-role').textContent = S.role === 'superadmin' ? '⭐ Super Admin' : S.role === 'editor' ? '✏️ Editor' : '👁 Viewer';
+  $$('top-initial').textContent = (S.user||'A')[0].toUpperCase();
+  $$('top-role').textContent = S.role === 'superadmin' ? 'Super Admin' : S.role === 'editor' ? 'Editor' : 'Viewer';
 
-  // Hide admin mgmt for non-superadmins
   if (S.role !== 'superadmin') {
     $$('nav-admins').style.display = 'none';
     $$('nav-setts').style.display = 'none';
   }
-
   await loadData();
 }
 
@@ -944,24 +817,17 @@ async function loadData() {
   }
 }
 
-function renderAll() {
-  renderDash(); renderProds(); renderCats();
-  renderEnqs(); renderSetts(); renderAdmins();
-}
+function renderAll() { renderDash(); renderProds(); renderCats(); renderEnqs(); renderSetts(); renderAdmins(); }
 
-// Auto login if session exists
-if (S.tok) {
-  loadApp();
-} else {
-  showScr('scr-login');
-}
+if (S.tok) { loadApp(); } else { showScr('scr-login'); }
 
 // ── NAVIGATION ───────────────────────────────────────────────
 function nav(id, el) {
   document.querySelectorAll('.mi-page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.mi-navitem').forEach(n=>n.classList.remove('active'));
-  $$('pg-' + id).classList.add('active');
+  if($$('pg-' + id)) $$('pg-' + id).classList.add('active');
   if (el) el.classList.add('active');
+  if (window.innerWidth <= 768) { document.body.classList.remove('sidebar-open'); document.body.classList.add('sidebar-collapse'); }
 }
 
 // ── DASHBOARD ────────────────────────────────────────────────
@@ -975,38 +841,33 @@ function renderDash() {
   $$('st-enqs').textContent   = D.enquiries.length;
 
   var newEnqs = D.enquiries.filter(e=>(e.status||'new')==='new').length;
-  var dot = $$('enq-dot');
-  dot.classList.toggle('show', newEnqs > 0);
+  $$('enq-dot').classList.toggle('show', newEnqs > 0);
+  if(newEnqs>0) $$('enq-dot').textContent = newEnqs;
 
-  // Category bars
   var maxP = Math.max(1, ...D.categories.map(c=>D.products.filter(p=>p.category_id===c.id).length));
   $$('d-catbars').innerHTML = D.categories.length ? D.categories.map(c=>{
     var cnt = D.products.filter(p=>p.category_id===c.id).length;
     var pct = Math.round(cnt/maxP*100);
     return '<div class="mi-catbar" onclick="nav(\'prods\',$$({\'nav-prods\'}));S.prodCatFilter=\''+c.id+'\';renderProds()">' +
-      '<span class="mi-catbar-icon">'+(c.icon||'📦')+'</span>' +
-      '<span class="mi-catbar-name">'+esc(c.name)+'</span>' +
+      '<div class="mi-catbar-icon">'+(c.icon||'📦')+'</div>' +
+      '<div class="mi-catbar-name">'+esc(c.name)+'</div>' +
       '<div class="mi-catbar-track"><div class="mi-catbar-fill" style="width:'+pct+'%"></div></div>' +
-      '<span class="mi-catbar-count">'+cnt+'</span></div>';
-  }).join('') : '<div class="mi-empty"><p>No categories yet</p></div>';
+      '<div class="mi-catbar-count">'+cnt+'</div></div>';
+  }).join('') : '<div style="padding:20px;text-align:center;color:#6c757d">No categories</div>';
 
-  // Recent enquiries
-  var rec = D.enquiries.slice(-6).reverse();
+  var rec = D.enquiries.slice(-5).reverse();
   $$('d-enqs').innerHTML = rec.length ? rec.map(e=>
     '<div class="mi-enq-row" onclick="nav(\'enqs\',$$({\'nav-enqs\'}))">' +
     '<div><div class="mi-enq-name">'+esc(e.name)+'</div>' +
     '<div class="mi-enq-prod">'+esc(e.product||'General Enquiry')+'</div></div>' +
     '<span class="mi-badge badge-'+((e.status||'new'))+'">'+esc(e.status||'new')+'</span></div>'
-  ).join('') : '<div class="mi-empty"><p>No enquiries yet</p></div>';
+  ).join('') : '<div style="padding:20px;text-align:center;color:#6c757d">No enquiries</div>';
 
-  // Fix onclick - template issue workaround
   document.querySelectorAll('.mi-catbar').forEach((el,i)=>{
     var cat = S.data.categories[i];
     if (cat) el.onclick = ()=>{ nav('prods',$$('nav-prods')); S.prodCatFilter=cat.id; renderProds(); };
   });
-  document.querySelectorAll('.mi-enq-row').forEach(el=>{
-    el.onclick = ()=> nav('enqs', $$('nav-enqs'));
-  });
+  document.querySelectorAll('.mi-enq-row').forEach(el=>{ el.onclick = ()=> nav('enqs', $$('nav-enqs')); });
 }
 
 // ── PRODUCTS ─────────────────────────────────────────────────
@@ -1014,7 +875,6 @@ function renderProds() {
   var D = S.data;
   $$('prod-count').textContent = D.products.length;
 
-  // Build tabs
   $$('p-tabs').innerHTML =
     '<button class="mi-tab'+(S.prodCatFilter==='all'?' active':'')+'" onclick="S.prodCatFilter=\'all\';renderProds()">All ('+D.products.length+')</button>' +
     D.categories.map(c=>{
@@ -1023,39 +883,33 @@ function renderProds() {
       return '<button class="mi-tab'+act+'" onclick="S.prodCatFilter=\''+c.id+'\';renderProds()">'+c.icon+' '+esc(c.name)+' ('+cnt+')</button>';
     }).join('');
 
-  var q = ($$('p-search')||{value:''}).value.toLowerCase();
+  var q = gv('p-search').toLowerCase();
   var list = D.products.filter(p=>{
     if (S.prodCatFilter!=='all' && p.category_id!==S.prodCatFilter) return false;
     if (q && !p.name.toLowerCase().includes(q)) return false;
     return true;
   });
 
-  var rows = list.map(p=>{
+  $$('p-tbody').innerHTML = list.length ? list.map(p=>{
     var cat = D.categories.find(c=>c.id===p.category_id)||{};
-    var thumb = p.img
-      ? '<img class="mi-thumb" src="'+esc(p.img)+'" alt="" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">' +
-        '<div class="mi-thumb-fallback" style="display:none">'+(cat.icon||'📦')+'</div>'
-      : '<div class="mi-thumb-fallback">'+(cat.icon||'📦')+'</div>';
+    var thumb = p.img ? '<img class="mi-thumb" src="'+esc(p.img)+'" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'"><div class="mi-thumb-fallback" style="display:none">'+(cat.icon||'📦')+'</div>' : '<div class="mi-thumb-fallback">'+(cat.icon||'📦')+'</div>';
     return '<tr onclick="openProd(\''+esc(p.id)+'\')">' +
-      '<td><div style="display:flex">'+ thumb +'</div></td>' +
-      '<td style="font-weight:600;max-width:220px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block">'+esc(p.name)+'</span></td>' +
-      '<td style="font-size:12px">'+(cat.icon||'')+' '+esc(cat.name||p.category_id||'—')+'</td>' +
-      '<td style="font-size:12px;color:var(--mi-txt2)">'+esc(p.moq_export||'—')+'</td>' +
-      '<td><span class="mi-badge '+(p.active===false?'badge-off':'badge-on')+'">'+(p.active===false?'Off':'On')+'</span></td>' +
-      '<td onclick="event.stopPropagation()"><div style="display:flex;gap:6px">' +
-        '<button class="mi-btn mi-btn-sm '+(p.active===false?'mi-btn-success':'mi-btn-danger')+'" onclick="toggleProd(\''+esc(p.id)+'\')">'+(p.active===false?'Enable':'Disable')+'</button>' +
+      '<td>'+ thumb +'</td>' +
+      '<td><b>'+esc(p.name)+'</b></td>' +
+      '<td style="color:#6c757d">'+(cat.icon||'')+' '+esc(cat.name||'—')+'</td>' +
+      '<td style="color:#6c757d">'+esc(p.moq_export||'—')+'</td>' +
+      '<td><span class="mi-badge '+(p.active===false?'badge-off':'badge-on')+'">'+(p.active===false?'Off':'Active')+'</span></td>' +
+      '<td onclick="event.stopPropagation()">' +
+        '<button class="mi-btn mi-btn-sm mi-btn-ghost" style="margin-right:5px" onclick="toggleProd(\''+esc(p.id)+'\')">'+(p.active===false?'Enable':'Disable')+'</button>' +
         '<button class="mi-btn mi-btn-sm mi-btn-danger" onclick="delProd(\''+esc(p.id)+'\')">Del</button>' +
-      '</div></td></tr>';
-  }).join('');
-
-  $$('p-tbody').innerHTML = rows || '<tr><td colspan="6"><div class="mi-empty"><div class="mi-empty-icon">📦</div><p>No products found</p></div></td></tr>';
+      '</td></tr>';
+  }).join('') : '<tr><td colspan="6" style="text-align:center;padding:30px;color:#6c757d;">No products found</td></tr>';
 }
 
 function openProd(id) {
   var p = id ? S.data.products.find(x=>x.id===id) : {};
-  if (!p) return;
-  var title = id ? 'Edit Product' : 'Add Product';
-  $$('modal-title').textContent = title;
+  if (!p && id) return;
+  $$('modal-title').textContent = id ? 'Edit Product' : 'Add Product';
   $$('modal-body').innerHTML =
     '<div class="mi-field"><label class="mi-label">Product Name *</label><input class="mi-input" id="mp-name" value="'+esc(p.name||'')+'"></div>' +
     '<div class="mi-field"><label class="mi-label">Category *</label><select class="mi-select" id="mp-cat">'+
@@ -1077,399 +931,180 @@ function openProd(id) {
     '<div class="mi-field"><label class="mi-label">Certifications</label><input class="mi-input" id="mp-cert" value="'+esc(p.certifications||'')+'"></div>' +
     '<div class="mi-field"><label class="mi-label">Storage</label><input class="mi-input" id="mp-stor" value="'+esc(p.storage||'')+'"></div>' +
     '<div class="mi-field"><label class="mi-label">Image URL</label>' +
-      '<input class="mi-input" id="mp-img" value="'+esc(p.img||'')+'" placeholder="https://images.unsplash.com/..." oninput="prevImg(\'mp-img\',\'mp-prev\')">' +
-      '<div class="mi-img-prev" id="mp-prev">'+(p.img?'<img src="'+esc(p.img)+'" onerror="this.parentNode.innerHTML=\'<span>Cannot load image</span>\'">':'<span>Paste image URL above to preview</span>')+'</div>' +
+      '<input class="mi-input" id="mp-img" value="'+esc(p.img||'')+'" oninput="prevImg(\'mp-img\',\'mp-prev\')">' +
+      '<div class="mi-img-prev" id="mp-prev">'+(p.img?'<img src="'+esc(p.img)+'">':'<span>Preview</span>')+'</div>' +
     '</div>' +
     '<div class="mi-field"><label class="mi-label">Description</label><textarea class="mi-textarea" id="mp-desc">'+esc(p.description||'')+'</textarea></div>' +
     '<div class="mi-field"><label class="mi-label">Status</label><select class="mi-select" id="mp-active"><option value="1"'+(p.active!==false?' selected':'')+'>Active</option><option value="0"'+(p.active===false?' selected':'')+'>Inactive</option></select></div>';
-  $$('modal-foot').innerHTML =
-    '<button class="mi-btn mi-btn-ghost" onclick="closeModal()">Cancel</button>' +
-    '<button class="mi-btn mi-btn-primary" onclick="saveProd(\''+esc(id||'')+'\')">Save Product</button>';
+  $$('modal-foot').innerHTML = '<button class="mi-btn mi-btn-ghost" onclick="closeModal()">Cancel</button><button class="mi-btn mi-btn-primary" onclick="saveProd(\''+esc(id||'')+'\')">Save Changes</button>';
   openModal();
 }
 
 async function saveProd(id) {
   var name=gv('mp-name'), cat=gv('mp-cat');
   if (!name||!cat) return toast('Name and category required','err');
-  var p = {category_id:cat, name, moq_india:gv('mp-mi'), moq_export:gv('mp-mx'),
-    form:gv('mp-form'), grade:gv('mp-grade'), origin:gv('mp-origin'),
-    shelf_life:gv('mp-shelf'), packing:gv('mp-pack'), certifications:gv('mp-cert'),
-    storage:gv('mp-stor'), img:gv('mp-img'), description:gv('mp-desc'),
-    active: $$('mp-active').value==='1'};
+  var p = {category_id:cat, name, moq_india:gv('mp-mi'), moq_export:gv('mp-mx'), form:gv('mp-form'), grade:gv('mp-grade'), origin:gv('mp-origin'), shelf_life:gv('mp-shelf'), packing:gv('mp-pack'), certifications:gv('mp-cert'), storage:gv('mp-stor'), img:gv('mp-img'), description:gv('mp-desc'), active: $$('mp-active').value==='1'};
   if (id) p.id = id;
-  try {
-    await api('admin/save-product', p);
-    var d = await api('admin/data', {}); S.data.products = d.products||[];
-    renderProds(); renderDash(); closeModal(); toast('Product saved!','ok');
-  } catch(e) { toast(e.message,'err'); }
+  try { await api('admin/save-product', p); var d = await api('admin/data', {}); S.data.products = d.products||[]; renderProds(); renderDash(); closeModal(); toast('Saved!','ok'); } catch(e) { toast(e.message,'err'); }
 }
-
 async function toggleProd(id) {
-  try {
-    await api('admin/toggle-product', {id});
-    var d = await api('admin/data', {}); S.data.products = d.products||[];
-    renderProds(); renderDash(); toast('Updated.','ok');
-  } catch(e) { toast(e.message,'err'); }
+  try { await api('admin/toggle-product', {id}); var d = await api('admin/data', {}); S.data.products = d.products||[]; renderProds(); renderDash(); toast('Updated','ok'); } catch(e) { toast(e.message,'err'); }
 }
-
 async function delProd(id) {
   if (!confirm('Delete this product?')) return;
-  try {
-    await api('admin/delete-product', {id});
-    var d = await api('admin/data', {}); S.data.products = d.products||[];
-    renderProds(); renderDash(); toast('Deleted.','ok');
-  } catch(e) { toast(e.message,'err'); }
+  try { await api('admin/delete-product', {id}); var d = await api('admin/data', {}); S.data.products = d.products||[]; renderProds(); renderDash(); toast('Deleted','ok'); } catch(e) { toast(e.message,'err'); }
 }
 
 // ── CATEGORIES ───────────────────────────────────────────────
 function renderCats() {
-  var rows = S.data.categories.map(c=>{
+  $$('c-tbody').innerHTML = S.data.categories.length ? S.data.categories.map(c=>{
     var cnt = S.data.products.filter(p=>p.category_id===c.id).length;
-    var img = c.img
-      ? '<img style="width:44px;height:44px;border-radius:6px;object-fit:cover;display:block" src="'+esc(c.img)+'" onerror="this.style.display=\'none\'">'
-      : '<div style="width:44px;height:44px;border-radius:6px;background:var(--mi-border2);display:flex;align-items:center;justify-content:center;font-size:1.1rem">'+c.icon+'</div>';
+    var img = c.img ? '<img class="mi-thumb" src="'+esc(c.img)+'">' : '<div class="mi-thumb-fallback">'+c.icon+'</div>';
     return '<tr onclick="openCat(\''+esc(c.id)+'\')">' +
-      '<td>'+img+'</td>' +
-      '<td style="font-size:1.3rem">'+esc(c.icon||'📦')+'</td>' +
-      '<td style="font-weight:600">'+esc(c.name)+'</td>' +
-      '<td style="font-size:12px;color:var(--mi-txt2)">'+esc(c.sub||'')+'</td>' +
-      '<td><span class="mi-badge badge-read">'+cnt+'</span></td>' +
-      '<td onclick="event.stopPropagation()"><div style="display:flex;gap:6px">' +
-        '<button class="mi-btn mi-btn-sm mi-btn-ghost" onclick="openCat(\''+esc(c.id)+'\')">Edit</button>' +
+      '<td>'+img+'</td><td style="font-size:1.5rem;text-align:center;">'+esc(c.icon||'📦')+'</td>' +
+      '<td><b>'+esc(c.name)+'</b></td><td style="color:#6c757d">'+esc(c.sub||'')+'</td>' +
+      '<td><span class="mi-badge badge-read">'+cnt+' items</span></td>' +
+      '<td onclick="event.stopPropagation()">' +
+        '<button class="mi-btn mi-btn-sm mi-btn-ghost" style="margin-right:5px" onclick="openCat(\''+esc(c.id)+'\')">Edit</button>' +
         '<button class="mi-btn mi-btn-sm mi-btn-danger" onclick="delCat(\''+esc(c.id)+'\')">Del</button>' +
-      '</div></td></tr>';
-  }).join('');
-  $$('c-tbody').innerHTML = rows || '<tr><td colspan="6"><div class="mi-empty"><div class="mi-empty-icon">🗂</div><p>No categories yet</p></div></td></tr>';
+      '</td></tr>';
+  }).join('') : '<tr><td colspan="6" style="text-align:center;padding:30px;color:#6c757d;">No categories</td></tr>';
 }
 
 function openCat(id) {
   var c = id ? S.data.categories.find(x=>x.id===id) : {};
-  if (!c) return;
+  if (!c && id) return;
   $$('modal-title').textContent = id ? 'Edit Category' : 'Add Category';
   $$('modal-body').innerHTML =
-    '<div class="mi-grid2">' +
-      '<div class="mi-field">' +
-        '<label class="mi-label">Icon (Emoji) *</label>' +
-        '<input class="mi-input" id="mc-icon" value="'+esc(c.icon||'')+'" placeholder="e.g. 🌾" style="font-size:1.4rem;text-align:center;letter-spacing:4px;">' +
-        '<div style="font-size:11px;color:var(--mi-txt2);margin-top:4px;">Copy any emoji from: <a href="https://emojipedia.org" target="_blank" style="color:var(--mi-gold)">emojipedia.org</a> and paste here</div>' +
-      '</div>' +
-      '<div class="mi-field">' +
-        '<label class="mi-label">ID * (lowercase, no spaces)</label>' +
-        '<input class="mi-input" id="mc-id" value="'+esc(c.id||'')+'" placeholder="e.g. metals"'+(id?' readonly style="opacity:.5"':'')+' oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9]/g,\'\')">' +
-        '<div style="font-size:11px;color:var(--mi-txt2);margin-top:4px;">Unique key — only letters & numbers (e.g. metals, dryfruits, hardware)</div>' +
-      '</div>' +
-    '</div>' +
+    '<div class="mi-grid2"><div class="mi-field"><label class="mi-label">Emoji Icon *</label><input class="mi-input" id="mc-icon" value="'+esc(c.icon||'')+'" style="font-size:1.5rem;text-align:center;"></div>' +
+    '<div class="mi-field"><label class="mi-label">ID (lowercase) *</label><input class="mi-input" id="mc-id" value="'+esc(c.id||'')+'" '+(id?'readonly':'')+'></div></div>' +
     '<div class="mi-field"><label class="mi-label">Name *</label><input class="mi-input" id="mc-name" value="'+esc(c.name||'')+'"></div>' +
     '<div class="mi-field"><label class="mi-label">Subtitle</label><input class="mi-input" id="mc-sub" value="'+esc(c.sub||'')+'"></div>' +
-    '<div class="mi-field"><label class="mi-label">Image URL</label>' +
-      '<input class="mi-input" id="mc-img" value="'+esc(c.img||'')+'" placeholder="https://images.unsplash.com/..." oninput="prevImg(\'mc-img\',\'mc-prev\')">' +
-      '<div class="mi-img-prev" id="mc-prev">'+(c.img?'<img src="'+esc(c.img)+'">':'<span>Paste URL to preview</span>')+'</div>' +
-    '</div>';
-  $$('modal-foot').innerHTML =
-    '<button class="mi-btn mi-btn-ghost" onclick="closeModal()">Cancel</button>' +
-    '<button class="mi-btn mi-btn-primary" onclick="saveCat(\''+esc(id||'')+'\')">Save Category</button>';
+    '<div class="mi-field"><label class="mi-label">Image URL</label><input class="mi-input" id="mc-img" value="'+esc(c.img||'')+'" oninput="prevImg(\'mc-img\',\'mc-prev\')"><div class="mi-img-prev" id="mc-prev">'+(c.img?'<img src="'+esc(c.img)+'">':'<span>Preview</span>')+'</div></div>';
+  $$('modal-foot').innerHTML = '<button class="mi-btn mi-btn-ghost" onclick="closeModal()">Cancel</button><button class="mi-btn mi-btn-primary" onclick="saveCat(\''+esc(id||'')+'\')">Save Changes</button>';
   openModal();
 }
 
 async function saveCat(id) {
-  var iconEl=document.getElementById('mc-icon');
-  var cidEl=document.getElementById('mc-id');
-  var nameEl=document.getElementById('mc-name');
-  var icon=(iconEl?iconEl.value:'').trim();
-  var cid=(cidEl?cidEl.value:'').trim().toLowerCase().replace(/\s+/g,'');
-  var name=(nameEl?nameEl.value:'').trim();
-  if (!icon){ toast('Emoji icon required (e.g. 🌾)','err'); return; }
-  if (!cid){ toast('Category ID required (e.g. metals)','err'); return; }
-  if (!name){ toast('Category name required','err'); return; }
-  var c = {icon, id:cid, name, sub:gv('mc-sub'), img:gv('mc-img')};
-  try {
-    await api('admin/save-category', c);
-    var d = await api('admin/data', {}); S.data.categories=d.categories||[]; S.data.products=d.products||[];
-    renderCats(); renderProds(); renderDash(); closeModal(); toast('Category saved!','ok');
-  } catch(e) { toast(e.message,'err'); }
+  var icon=gv('mc-icon'), cid=gv('mc-id').toLowerCase().replace(/\s+/g,''), name=gv('mc-name');
+  if (!icon||!cid||!name) return toast('Icon, ID, and Name required','err');
+  try { await api('admin/save-category', {icon, id:cid, name, sub:gv('mc-sub'), img:gv('mc-img')}); var d=await api('admin/data',{}); S.data.categories=d.categories||[]; renderCats(); renderDash(); closeModal(); toast('Saved!','ok'); } catch(e) { toast(e.message,'err'); }
 }
-
 async function delCat(id) {
-  if (!confirm('Delete category? Products inside will also be removed.')) return;
-  try {
-    await api('admin/delete-category', {id});
-    var d = await api('admin/data', {}); S.data.categories=d.categories||[]; S.data.products=d.products||[];
-    renderCats(); renderProds(); renderDash(); toast('Deleted.','ok');
-  } catch(e) { toast(e.message,'err'); }
+  if (!confirm('Delete category and empty products?')) return;
+  try { await api('admin/delete-category', {id}); var d=await api('admin/data',{}); S.data.categories=d.categories||[]; renderCats(); renderDash(); toast('Deleted','ok'); } catch(e) { toast(e.message,'err'); }
 }
 
 // ── ENQUIRIES ────────────────────────────────────────────────
 function setEF(f,btn){
-  S.enqFilter=f;
-  document.querySelectorAll('#pg-enqs .mi-tab').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  renderEnqs();
+  S.enqFilter=f; document.querySelectorAll('#pg-enqs .mi-tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderEnqs();
 }
-
 function renderEnqs(){
   var list = S.data.enquiries.slice().reverse();
   if (S.enqFilter!=='all') list=list.filter(e=>(e.status||'new')===S.enqFilter);
   var el = $$('e-grid');
-  if (!list.length) { el.innerHTML='<div class="mi-card"><div class="mi-empty"><div class="mi-empty-icon">✉️</div><p>No enquiries found</p></div></div>'; return; }
+  if (!list.length) { el.innerHTML='<div style="padding:40px;text-align:center;color:#6c757d;background:#fff;border-radius:4px;border:1px solid #dee2e6;">No enquiries found</div>'; return; }
   el.innerHTML = list.map(e=>
     '<div class="mi-enq-card">' +
       '<div class="mi-enq-card-head">' +
-        '<div><div class="mi-enq-name">'+esc(e.name)+'</div>' +
-        '<div class="mi-enq-meta">'+esc(e.email||'')+(e.phone?' · '+esc(e.phone):'')+' · '+esc((e.date||'').slice(0,10))+'</div></div>' +
-        '<span class="mi-badge badge-'+(e.status||'new')+'">'+esc(e.status||'new')+'</span>' +
+        '<div><div class="mi-enq-name">'+esc(e.name)+'</div><div class="mi-enq-meta">'+esc(e.email||'')+(e.phone?' · '+esc(e.phone):'')+' · '+esc((e.date||'').slice(0,10))+'</div></div>' +
+        '<span class="mi-badge badge-'+(e.status||'new')+'">'+esc(e.status||'new').toUpperCase()+'</span>' +
       '</div>' +
       (e.product?'<div class="mi-enq-product">📦 '+esc(e.product)+(e.quantity?' · '+esc(e.quantity):'')+'</div>':'')+
-      (e.message?'<div class="mi-enq-msg">'+esc(e.message)+'</div>':'')+
+      (e.message?'<div class="mi-enq-msg">"'+esc(e.message)+'"</div>':'')+
       '<div class="mi-enq-foot">' +
-        '<select class="mi-select" style="width:auto;padding:4px 28px 4px 8px;font-size:12px" onchange="updEnq(\''+e.id+'\',this.value)">'+
-          ['new','read','done'].map(s=>'<option value="'+s+'"'+(e.status===s?' selected':'')+'>'+s+'</option>').join('')+
-        '</select>'+
-        (e.email?'<a href="mailto:'+esc(e.email)+'" class="mi-btn mi-btn-ghost mi-btn-sm">Reply</a>':'')+
-        (e.phone?'<a href="https://wa.me/'+e.phone.replace(/\D/g,'')+'" target="_blank" class="mi-btn mi-btn-success mi-btn-sm">WhatsApp</a>':'')+
-        '<button class="mi-btn mi-btn-danger mi-btn-sm" onclick="delEnq(\''+e.id+'\')">Delete</button>'+
+        '<select class="mi-select" style="width:120px;" onchange="updEnq(\''+e.id+'\',this.value)">'+['new','read','done'].map(s=>'<option value="'+s+'"'+(e.status===s?' selected':'')+'>Mark as '+s+'</option>').join('')+'</select>'+
+        (e.email?'<a href="mailto:'+esc(e.email)+'" class="mi-btn mi-btn-ghost">Reply Email</a>':'')+
+        (e.phone?'<a href="https://wa.me/'+e.phone.replace(/\D/g,'')+'" target="_blank" class="mi-btn mi-btn-success">WhatsApp</a>':'')+
+        '<button class="mi-btn mi-btn-danger" style="margin-left:auto" onclick="delEnq(\''+e.id+'\')">Delete</button>'+
       '</div></div>'
   ).join('');
 }
-
-async function updEnq(id,status){
-  try {
-    await api('admin/update-enquiry',{id,status});
-    var d=await api('admin/data',{}); S.data.enquiries=d.enquiries||[];
-    renderEnqs(); renderDash(); toast('Updated.','ok');
-  } catch(e){toast(e.message,'err');}
-}
-
-async function delEnq(id){
-  if(!confirm('Delete enquiry?')) return;
-  try {
-    await api('admin/delete-enquiry',{id});
-    var d=await api('admin/data',{}); S.data.enquiries=d.enquiries||[];
-    renderEnqs(); renderDash(); toast('Deleted.','ok');
-  } catch(e){toast(e.message,'err');}
-}
+async function updEnq(id,status){ try{await api('admin/update-enquiry',{id,status}); var d=await api('admin/data',{}); S.data.enquiries=d.enquiries||[]; renderEnqs(); renderDash(); toast('Updated','ok');}catch(e){toast(e.message,'err');} }
+async function delEnq(id){ if(!confirm('Delete?'))return; try{await api('admin/delete-enquiry',{id}); var d=await api('admin/data',{}); S.data.enquiries=d.enquiries||[]; renderEnqs(); renderDash(); toast('Deleted','ok');}catch(e){toast(e.message,'err');} }
 
 // ── SETTINGS ─────────────────────────────────────────────────
 function renderSetts(){
   var s = S.data.settings;
   var groups = [
-    {title:'🏢 Company', keys:[
-      {k:'company',l:'Company Name'},{k:'proprietor',l:'Proprietor Name'},
-      {k:'tagline',l:'Tagline'},{k:'about_short',l:'About (Short)',ta:true},{k:'about_long',l:'About (Long)',ta:true},
-    ]},
-    {title:'📞 Contact', keys:[
-      {k:'phone1',l:'Phone 1'},{k:'phone2',l:'Phone 2'},
-      {k:'whatsapp',l:'WhatsApp (with country code)'},{k:'email1',l:'Email 1'},
-      {k:'email2',l:'Email 2'},{k:'address',l:'Address',ta:true},
-    ]}
+    {title:'🏢 Company Profile', keys:[{k:'company',l:'Company Name'},{k:'proprietor',l:'Proprietor'},{k:'tagline',l:'Tagline'},{k:'about_short',l:'About (Short)',ta:true},{k:'about_long',l:'About (Long)',ta:true}]},
+    {title:'📞 Contact Details', keys:[{k:'phone1',l:'Phone 1'},{k:'phone2',l:'Phone 2'},{k:'whatsapp',l:'WhatsApp'},{k:'email1',l:'Main Email'},{k:'email2',l:'Alt Email'},{k:'address',l:'Address',ta:true}]}
   ];
-  $$('setts-body').innerHTML = groups.map((g,i)=>
-    '<div class="mi-acc">' +
-      '<div class="mi-acc-head" onclick="toggleAcc(\'ac'+i+'\')">' +
-        '<span class="mi-acc-title">'+g.title+'</span>' +
-        '<span class="mi-acc-arrow" id="ac'+i+'-arr">▼</span>' +
-      '</div>' +
-      '<div class="mi-acc-body" id="ac'+i+'">' +
-        g.keys.map(f=>
-          '<div class="mi-field"><label class="mi-label">'+esc(f.l)+'</label>'+
-          (f.ta?'<textarea class="mi-textarea" id="sf-'+f.k+'">'+esc(s[f.k]||'')+'</textarea>'
-               :'<input class="mi-input" id="sf-'+f.k+'" value="'+esc(s[f.k]||'')+'">')+
-          '</div>'
-        ).join('')+
-        '<button class="mi-btn mi-btn-primary mi-btn-sm" onclick="saveSG('+JSON.stringify(g.keys.map(f=>f.k))+')">Save</button>' +
-      '</div></div>'
-  ).join('') +
+  var html = '<div class="mi-card mi-card-primary"><div class="mi-card-body-sm">';
+  html += groups.map((g,i)=>
+    '<div class="mi-acc"><div class="mi-acc-head" onclick="toggleAcc(\'ac'+i+'\')">'+g.title+'<span>▼</span></div>' +
+    '<div class="mi-acc-body" id="ac'+i+'">' +
+      g.keys.map(f=>'<div class="mi-field"><label class="mi-label">'+esc(f.l)+'</label>'+(f.ta?'<textarea class="mi-textarea" id="sf-'+f.k+'">'+esc(s[f.k]||'')+'</textarea>':'<input class="mi-input" id="sf-'+f.k+'" value="'+esc(s[f.k]||'')+'">')+'</div>').join('')+
+      '<button class="mi-btn mi-btn-primary" onclick="saveSG('+JSON.stringify(g.keys.map(f=>f.k))+')">Save Section</button>'+
+    '</div></div>'
+  ).join('');
+  html += '</div></div>';
 
-  // Change Password section
-  '<div class="mi-acc" style="margin-top:20px;">' +
-    '<div class="mi-acc-head" onclick="toggleAcc(\'ac-chpass\')">' +
-      '<span class="mi-acc-title">🔐 Change Password</span>' +
-      '<span class="mi-acc-arrow" id="ac-chpass-arr">▼</span>' +
-    '</div>' +
-    '<div class="mi-acc-body" id="ac-chpass">' +
-      '<div class="mi-field"><label class="mi-label">Current Password</label><input class="mi-input" type="password" id="cp-cur" placeholder="Enter current password"></div>' +
-      '<div class="mi-field"><label class="mi-label">New Password</label><input class="mi-input" type="password" id="cp-new" placeholder="Min 8 characters"></div>' +
-      '<div class="mi-field"><label class="mi-label">Confirm New Password</label><input class="mi-input" type="password" id="cp-conf" placeholder="Repeat new password"></div>' +
-      '<div class="mi-alert mi-alert-danger" id="cp-err" style="display:none;margin-bottom:10px;"></div>' +
-      '<div class="mi-alert" id="cp-ok" style="display:none;background:rgba(39,174,96,.1);border:1px solid rgba(39,174,96,.3);color:#27AE60;margin-bottom:10px;"></div>' +
-      '<button class="mi-btn mi-btn-primary" onclick="doChangePassword()">🔐 Update Password</button>' +
-      '<div style="margin-top:10px;padding:10px;background:rgba(201,168,76,.07);border-radius:6px;border:1px solid rgba(201,168,76,.2);">' +
-        '<div style="font-size:11px;color:var(--mi-txt2);">✉ A confirmation email will be sent to your registered email address after the password is changed.</div>' +
-      '</div>' +
-    '</div></div>' +
-
-  // Data Tools section
-  '<div class="mi-acc" style="margin-top:20px;border-color:rgba(201,168,76,.3)">' +
-    '<div class="mi-acc-head" onclick="toggleAcc(\'ac-tools\')" style="background:rgba(201,168,76,.06)">' +
-      '<span class="mi-acc-title" style="color:var(--mi-gold)">🔧 Data Tools</span>' +
-      '<span class="mi-acc-arrow" id="ac-tools-arr">▼</span>' +
-    '</div>' +
-    '<div class="mi-acc-body" id="ac-tools">' +
-      '<div style="background:var(--mi-red-dim);border:1px solid rgba(192,57,43,.3);border-radius:8px;padding:14px;margin-bottom:14px">' +
-        '<div style="font-size:13px;font-weight:700;color:#E57373;margin-bottom:6px">⚠️ Reset Products to Defaults</div>' +
-        '<div style="font-size:12px;color:var(--mi-txt2);margin-bottom:12px">This will overwrite ALL products and categories with the latest 109 default products. Use this if products are missing or outdated after a deployment.</div>' +
-        '<button class="mi-btn mi-btn-danger" onclick="resetProducts()">🔄 Reset All 109 Products</button>' +
-      '</div>' +
-    '</div></div>';
+  html += '<div class="mi-card mi-card-warning"><div class="mi-card-head"><h3 class="mi-card-title">🔐 Change Password</h3></div><div class="mi-card-body">' +
+    '<div class="mi-field"><label class="mi-label">Current Password</label><input class="mi-input" type="password" id="cp-cur"></div>' +
+    '<div class="mi-field"><label class="mi-label">New Password</label><input class="mi-input" type="password" id="cp-new"></div>' +
+    '<div class="mi-field"><label class="mi-label">Confirm New Password</label><input class="mi-input" type="password" id="cp-conf"></div>' +
+    '<button class="mi-btn mi-btn-warning" style="background:var(--alt-warning)" onclick="doChangePassword()">Update Password</button>' +
+    '<div id="cp-err" class="mi-alert mi-alert-danger" style="margin-top:10px"></div><div id="cp-ok" class="mi-alert mi-alert-success" style="margin-top:10px"></div>' +
+  '</div></div>';
+  $$('setts-body').innerHTML = html;
 }
-
-async function resetProducts() {
-  if (!confirm('This will reset ALL products to the default 109 products list. Any custom products you added will be removed. Continue?')) return;
-  try {
-    var d = await api('admin/reset-products', {});
-    toast(d.msg || 'Products reset!', 'ok');
-    var r = await api('admin/data', {});
-    S.data.products = r.products||[]; S.data.categories = r.categories||[];
-    renderProds(); renderCats(); renderDash();
-  } catch(e) { toast(e.message, 'err'); }
-}
-
-function toggleAcc(id){
-  var b=$$(id), a=$$(id+'-arr');
-  b.classList.toggle('open'); a.classList.toggle('open');
-}
-
+function toggleAcc(id){ $$(id).classList.toggle('open'); }
 async function saveSG(keys){
-  var allBtns = document.querySelectorAll('button');
-  var saveBtn = null;
-  allBtns.forEach(function(b){ if(b.textContent.trim()==='Save') saveBtn=b; });
-  if(saveBtn){ saveBtn.disabled=true; saveBtn.textContent='Saving...'; }
   var s = Object.assign({}, S.data.settings);
-  keys.forEach(function(k){
-    var el = document.getElementById('sf-'+k);
-    if(el) s[k] = el.value;
-  });
-  try {
-    await api('admin/save-settings', {settings:s});
-    S.data.settings = s;
-    toast('✅ Saved successfully!','ok');
-  } catch(e) {
-    toast('❌ '+e.message,'err');
-  }
-  if(saveBtn){ saveBtn.disabled=false; saveBtn.textContent='Save'; }
+  keys.forEach(k=>{if($$('sf-'+k)) s[k] = $$('sf-'+k).value;});
+  try{ await api('admin/save-settings', {settings:s}); S.data.settings = s; toast('Saved!','ok'); }catch(e){toast(e.message,'err');}
 }
 
-// ── ADMIN MANAGEMENT ─────────────────────────────────────────
+// ── ADMINS ───────────────────────────────────────────────────
 function renderAdmins(){
-  var myUser = S.user;
-  var html = S.data.admins.map(a=>{
-    var initial = (a.username||'A')[0].toUpperCase();
-    var roleClass = a.role==='superadmin'?'badge-sup':a.role==='editor'?'badge-ed':'badge-view';
-    var roleLabel = a.role==='superadmin'?'Super Admin':a.role==='editor'?'Editor':'Viewer';
-    var isMe = a.username===myUser;
+  $$('a-grid').innerHTML = S.data.admins.length ? S.data.admins.map(a=>{
+    var isMe = a.username===S.user;
     return '<div class="mi-admin-card">' +
-      '<div class="mi-admin-card-head">' +
-        '<div class="mi-admin-avatar">'+initial+'</div>' +
-        '<div><div class="mi-admin-name">'+esc(a.username)+(isMe?' <span style="font-size:10px;color:var(--mi-txt2)">(you)</span>':'')+'</div>' +
-        '<div class="mi-admin-info">Since '+esc(a.created_at||'—')+'</div></div>' +
-      '</div>' +
-      '<div class="mi-admin-meta">' +
-        '<span class="mi-badge '+roleClass+'">'+roleLabel+'</span>' +
-        '<span class="mi-badge '+(a.totp_enabled?'badge-on':'badge-off')+'">2FA '+(a.totp_enabled?'ON':'OFF')+'</span>' +
-      '</div>' +
+      '<div class="mi-admin-avatar">'+(a.username||'A')[0].toUpperCase()+'</div>' +
+      '<div class="mi-admin-name">'+esc(a.username)+(isMe?' (You)':'')+'</div>' +
+      '<div class="mi-admin-info">'+esc(a.email||'')+'</div>' +
+      '<div><span class="mi-badge '+(a.role==='superadmin'?'badge-sup':'badge-ed')+'">'+a.role+'</span> <span class="mi-badge '+(a.totp_enabled?'badge-on':'badge-off')+'">2FA '+(a.totp_enabled?'ON':'OFF')+'</span></div>' +
       '<div class="mi-admin-foot">' +
-        '<button class="mi-btn mi-btn-ghost mi-btn-sm" onclick="openAdminModal(\''+esc(a.id)+'\')">Edit</button>' +
-        '<button class="mi-btn mi-btn-danger mi-btn-sm" onclick="resetTotp(\''+esc(a.id)+'\')">Reset 2FA</button>' +
-        (!isMe?'<button class="mi-btn mi-btn-danger mi-btn-sm" onclick="delAdmin(\''+esc(a.id)+'\')">Delete</button>':'')+
+        '<button class="mi-btn mi-btn-sm mi-btn-ghost" onclick="openAdminModal(\''+esc(a.id)+'\')">Edit</button>' +
+        '<button class="mi-btn mi-btn-sm mi-btn-warning" onclick="resetTotp(\''+esc(a.id)+'\')">Reset 2FA</button>' +
+        (!isMe?'<button class="mi-btn mi-btn-sm mi-btn-danger" onclick="delAdmin(\''+esc(a.id)+'\')">Del</button>':'')+
       '</div></div>';
-  }).join('');
-  $$('a-grid').innerHTML = html || '<div class="mi-empty"><div class="mi-empty-icon">👥</div><p>No admins found</p></div>';
+  }).join('') : '';
 }
-
 function openAdminModal(id){
   var a = id ? S.data.admins.find(x=>x.id===id) : {};
-  if (!a) return;
+  if (!a && id) return;
   $$('modal-title').textContent = id ? 'Edit Admin' : 'Add Admin';
   $$('modal-body').innerHTML =
     '<div class="mi-field"><label class="mi-label">Username *</label><input class="mi-input" id="am-user" value="'+esc(a.username||'')+'"></div>' +
-    '<div class="mi-field"><label class="mi-label">Email Address * <span style="font-size:11px;color:var(--mi-txt2);font-weight:400;">(for password reset emails)</span></label><input class="mi-input" type="email" id="am-email" value="'+esc(a.email||'')+'" placeholder="admin@example.com"></div>' +
-    '<div class="mi-field"><label class="mi-label">Full Name</label><input class="mi-input" id="am-name" value="'+esc(a.name||'')+'" placeholder="e.g. Tejas Memane"></div>' +
-    '<div class="mi-field"><label class="mi-label">New Password '+(id?'(leave blank to keep)':'*')+'</label><input class="mi-input" type="password" id="am-pass" placeholder="'+(id?'Leave blank to keep':'Min 8 characters')+'"></div>' +
-    (id?'':'<div class="mi-field"><label class="mi-label">Confirm Password *</label><input class="mi-input" type="password" id="am-conf" placeholder="Repeat password above"></div>') +
-    '<div class="mi-field"><label class="mi-label">Role</label><select class="mi-select" id="am-role">' +
-      ['superadmin','editor','viewer'].map(r=>'<option value="'+r+'"'+(r===a.role?' selected':'')+'>'+r+'</option>').join('') +
-    '</select></div>';
-  $$('modal-foot').innerHTML =
-    '<button class="mi-btn mi-btn-ghost" onclick="closeModal()">Cancel</button>' +
-    '<button class="mi-btn mi-btn-primary" onclick="saveAdmin(\''+esc(id||'')+'\')">Save Admin</button>';
+    '<div class="mi-field"><label class="mi-label">Email Address *</label><input class="mi-input" type="email" id="am-email" value="'+esc(a.email||'')+'"></div>' +
+    '<div class="mi-field"><label class="mi-label">Full Name</label><input class="mi-input" id="am-name" value="'+esc(a.name||'')+'"></div>' +
+    '<div class="mi-grid2"><div class="mi-field"><label class="mi-label">Password '+(id?'(blank to keep)':'*')+'</label><input class="mi-input" type="password" id="am-pass"></div>' +
+    (id?'':'<div class="mi-field"><label class="mi-label">Confirm *</label><input class="mi-input" type="password" id="am-conf"></div>') + '</div>' +
+    '<div class="mi-field"><label class="mi-label">Role</label><select class="mi-select" id="am-role"><option value="superadmin"'+(a.role==='superadmin'?' selected':'')+'>Super Admin</option><option value="editor"'+(a.role==='editor'?' selected':'')+'>Editor</option></select></div>';
+  $$('modal-foot').innerHTML = '<button class="mi-btn mi-btn-ghost" onclick="closeModal()">Cancel</button><button class="mi-btn mi-btn-primary" onclick="saveAdmin(\''+esc(id||'')+'\')">Save Changes</button>';
   openModal();
 }
-
 async function saveAdmin(id){
-  var username=gv('am-user'), password=gv('am-pass'), role=gv('am-role');
-  var email=gv('am-email'), name=gv('am-name');
-  if (!username) return toast('Username required','err');
-  if (!id && !password) return toast('Password required','err');
-  if (!id && password && password.length < 8) return toast('Password must be at least 8 characters','err');
-  if (!id && password) {
-    var confEl = document.getElementById('am-conf');
-    var conf = confEl ? confEl.value : '';
-    if (password !== conf) return toast('Passwords do not match — please re-enter','err');
-  }
-  if (!email) return toast('Email required for password resets','err');
-  var body = {username, role, email, name};
-  if (id) body.id = id;
-  if (password) body.password = password;
-  try {
-    await api('admin/save-admin', body);
-    var d = await api('admin/data', {}); S.data.admins=d.admins||[];
-    renderAdmins(); closeModal(); toast('Admin saved!','ok');
-  } catch(e){toast(e.message,'err');}
+  var body = {username:gv('am-user'), email:gv('am-email'), name:gv('am-name'), role:gv('am-role')};
+  if(!body.username || !body.email) return toast('Username and email required','err');
+  if(!id && !gv('am-pass')) return toast('Password required','err');
+  if(!id && gv('am-pass')!==gv('am-conf')) return toast('Passwords do not match','err');
+  if(gv('am-pass')) body.password=gv('am-pass');
+  if(id) body.id = id;
+  try{ await api('admin/save-admin', body); var d=await api('admin/data',{}); S.data.admins=d.admins||[]; renderAdmins(); closeModal(); toast('Saved!','ok'); }catch(e){toast(e.message,'err');}
 }
+async function resetTotp(id){ if(!confirm('Reset 2FA?'))return; try{await api('admin/reset-totp',{id}); var d=await api('admin/data',{}); S.data.admins=d.admins||[]; renderAdmins(); toast('2FA Reset','ok');}catch(e){toast(e.message,'err');} }
+async function delAdmin(id){ if(!confirm('Delete?'))return; try{await api('admin/delete-admin',{id}); var d=await api('admin/data',{}); S.data.admins=d.admins||[]; renderAdmins(); toast('Deleted','ok');}catch(e){toast(e.message,'err');} }
 
-async function resetTotp(id){
-  if (!confirm('Reset 2FA for this admin? They will need to scan a new QR code on next login.')) return;
-  try {
-    await api('admin/reset-totp',{id});
-    var d = await api('admin/data', {}); S.data.admins=d.admins||[];
-    renderAdmins(); toast('2FA reset. Next login will show new QR code.','ok');
-  } catch(e){toast(e.message,'err');}
-}
-
-async function delAdmin(id){
-  if (!confirm('Delete this admin?')) return;
-  try {
-    await api('admin/delete-admin',{id});
-    var d = await api('admin/data', {}); S.data.admins=d.admins||[];
-    renderAdmins(); toast('Admin deleted.','ok');
-  } catch(e){toast(e.message,'err');}
-}
-
-// ── MODAL ─────────────────────────────────────────────────────
+// ── UTILS ─────────────────────────────────────────────────────
 function openModal(){ $$('modal-bg').classList.add('open'); }
 function closeModal(){ $$('modal-bg').classList.remove('open'); }
+function prevImg(id,pId){ var u=gv(id); $$(pId).innerHTML=u?'<img src="'+esc(u)+'">':'<span>Preview</span>'; }
+function toast(msg,type){ var w=$$('mi-toasts'), e=document.createElement('div'); e.className='mi-toast mi-toast-'+(type||'inf'); e.textContent=msg; w.appendChild(e); setTimeout(()=>{e.style.opacity=0;setTimeout(()=>e.remove(),300)},3000); }
 
-// ── IMAGE PREVIEW ─────────────────────────────────────────────
-function prevImg(inputId, previewId){
-  var url = gv(inputId), box = $$(previewId);
-  if (!box) return;
-  if (!url){ box.innerHTML='<span>Paste image URL to preview</span>'; box.classList.remove('loaded'); return; }
-  box.innerHTML='<img src="'+esc(url)+'" onerror="this.parentNode.innerHTML=\'<span>Cannot load image</span>\';this.parentNode.classList.remove(\'loaded\')">';
-  box.classList.add('loaded');
-}
-
-// ── TOAST ─────────────────────────────────────────────────────
-function toast(msg, type){
-  var wrap = $$('mi-toasts');
-  var el = document.createElement('div');
-  el.className = 'mi-toast mi-toast-' + (type||'inf');
-  el.textContent = msg;
-  wrap.appendChild(el);
-  setTimeout(()=>{ el.style.opacity='0'; el.style.transition='opacity .3s'; setTimeout(()=>el.remove(), 350); }, 3000);
-}
-
-// ── AUTO DETECT RESET TOKEN IN URL ────────────────────────────
-(function(){
-  var params = new URLSearchParams(window.location.search);
-  if(params.get('reset')){
-    // Hide all auth screens, show reset screen
-    ['scr-login','scr-setup','scr-totp','scr-forgot'].forEach(function(s){
-      var el = document.getElementById(s);
-      if(el) el.style.display='none';
-    });
-    var resetScr = document.getElementById('scr-reset');
-    if(resetScr) resetScr.style.display='flex';
-  }
-})();
+(function(){ var p=new URLSearchParams(window.location.search); if(p.get('reset')){ ['scr-login','scr-setup','scr-totp','scr-forgot'].forEach(s=>{if($$(s))$$(s).style.display='none';}); if($$('scr-reset'))$$('scr-reset').style.display='flex'; } })();
 </script>
 </body>
 </html>
