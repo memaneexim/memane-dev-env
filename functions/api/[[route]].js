@@ -281,37 +281,37 @@ export async function onRequest(context){
       return json({ok:true});
     }
 
-// 2. PUBLIC: AI Sales Assistant (Powered by Gemini)
+// ── PUBLIC: AI Sales Assistant (Powered by Gemini) ──
     if(path==='chat'){
+      if(request.method !== 'POST') return json({msg:'Method not allowed'}, 405);
+      
       const body = await request.json().catch(()=>({}));
       const userMsg = body.message;
       if(!userMsg) return json({ok:false, msg:'No message provided'}, 400);
-      if(!env.GEMINI_API_KEY) return json({ok:false, msg:'AI Key missing'}, 500);
+      
+      // THIS IS WHERE IT CHECKS FOR YOUR CLOUDFLARE KEY
+      if(!env.GEMINI_API_KEY) return json({ok:false, msg:'AI Key missing from Cloudflare'}, 500);
 
-      // Fetch your live catalog so the AI knows exactly what you sell
       const [settings, prods] = await Promise.all([
         getKV(env,'settings',DEFAULT_SETTINGS),
         getKV(env,'products',DEFAULT_PRODUCTS)
       ]);
 
-      // Create a lightweight, text-only list of your products
       const activeProds = prods.filter(p=>p.active!==false);
       const catalogText = activeProds.map(p => `- ${p.name} (MOQ: ${p.moq_export || 'Variable'})`).join('\n');
 
-      // The "System Prompt" - This programs the AI's personality and rules
-      const systemPrompt = `You are the official AI Sales Assistant for ${settings.company || 'Memane International'}. 
+      const systemPrompt = `You are Meera, the Executive Assistant at Memane International. 
 Your job is to be polite, professional, and help buyers find products. 
 Here is our exact, live product catalog:\n${catalogText}
 Contact Email: ${settings.email1 || 'info@memaneinternational.in'}
 WhatsApp: ${settings.whatsapp || '+91 8999662331'}
 
 Rule 1: If a user asks for a product in the catalog, confirm we have it, state the MOQ, and ask if they want a quote.
-Rule 2: If we don't have it, politely say we focus on our current catalog but they can contact us for custom sourcing.
-Rule 3: Keep your answers VERY short (1-3 sentences max). Be direct.
-Rule 4: USE PLAIN TEXT ONLY. Do not use bolding, asterisks, or markdown formatting.`;
+Rule 2: If we don't have it, politely say we focus on our current catalog but they can contact us via WhatsApp for custom sourcing.
+Rule 3: Keep your answers VERY short, friendly, and human-like (1-3 sentences max).
+Rule 4: USE PLAIN TEXT ONLY. Do not use bolding or markdown.`;
 
       try {
-        // Send the data to Google Gemini 1.5 Flash
         const aiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${env.GEMINI_API_KEY}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -325,7 +325,7 @@ Rule 4: USE PLAIN TEXT ONLY. Do not use bolding, asterisks, or markdown formatti
         
         return json({ok:true, reply: botReply});
       } catch(e) {
-        return json({ok:false, msg:'AI is currently sleeping.'}, 500);
+        return json({ok:false, msg:'Gemini API failed to respond.'}, 500);
       }
     }
     
