@@ -289,7 +289,6 @@ export async function onRequest(context){
       const userMsg = body.message;
       if(!userMsg) return json({ok:false, msg:'No message provided'}, 400);
       
-      // THIS IS WHERE IT CHECKS FOR YOUR CLOUDFLARE KEY
       if(!env.GEMINI_API_KEY) return json({ok:false, msg:'AI Key missing from Cloudflare'}, 500);
 
       const [settings, prods] = await Promise.all([
@@ -300,7 +299,7 @@ export async function onRequest(context){
       const activeProds = prods.filter(p=>p.active!==false);
       const catalogText = activeProds.map(p => `- ${p.name} (MOQ: ${p.moq_export || 'Variable'})`).join('\n');
 
-      const systemPrompt = `You are kim, the Executive Assistant at Memane International. 
+      const systemPrompt = `You are KIM, the Artificial Intelligence Export Specialist at Memane International. 
 Your job is to be polite, professional, and help buyers find products. 
 Here is our exact, live product catalog:\n${catalogText}
 Contact Email: ${settings.email1 || 'info@memaneinternational.in'}
@@ -311,7 +310,7 @@ Rule 2: If we don't have it, politely say we focus on our current catalog but th
 Rule 3: Keep your answers VERY short, friendly, and human-like (1-3 sentences max).
 Rule 4: USE PLAIN TEXT ONLY. Do not use bolding or markdown.`;
 
-try {
+      try {
         const aiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${env.GEMINI_API_KEY}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -333,6 +332,7 @@ try {
       } catch(e) {
         return json({ok:false, msg:'Code crash: ' + e.message}, 500);
       }
+    }
     
     // PUBLIC: Login
     if(path==='login'){
