@@ -33,7 +33,7 @@
   document.head.appendChild(styleSheet);
 
   // Global CDN link to your exact kim.jpg file on GitHub
-  const avatarUrl = "https://cdn.jsdelivr.net/gh/memaneexim/memane-prod-env@main/uploads/kim.jpg";
+ const avatarUrl = "https://memaneinternational.in/uploads/kim.jpg";
 
   // 2. Inject the HTML into the page
   const chatHTML = `
