@@ -1,5 +1,4 @@
 (function() {
-  // 1. Bulletproof CSS (Resists bleeding from main website)
   const styles = `
     #ai-chat-btn { position:fixed; bottom:26px; left:26px; z-index:9999; background:#1a2b5f; color:#fff; padding:8px 20px 8px 8px; border-radius:30px; font-weight:700; cursor:pointer; box-shadow:0 4px 15px rgba(0,0,0,0.2); transition:all 0.3s ease; display:flex; align-items:center; gap:10px; font-size:15px; font-family:sans-serif; border:none; line-height:1;}
     #ai-chat-btn:hover { transform:scale(1.05); }
@@ -32,10 +31,12 @@
   styleSheet.innerText = styles;
   document.head.appendChild(styleSheet);
 
-  // Global CDN link to your exact kim.jpg file on GitHub
- const avatarUrl = "https://memaneinternational.in/uploads/kim.jpg";
+  // Local path with cache buster so it stops showing the broken image
+  const avatarUrl = "/uploads/kim.jpg?v=2";
+  
+  // THE MEMORY BANK
+  let chatHistory = "";
 
-  // 2. Inject the HTML into the page
   const chatHTML = `
     <button id="ai-chat-btn" onclick="toggleKIMChat()">
       <img src="${avatarUrl}" class="ai-btn-avatar" alt="KIM" onerror="this.src='https://ui-avatars.com/api/?name=KIM&background=0A1520&color=7EC8E3'">
@@ -65,7 +66,6 @@
   container.innerHTML = chatHTML;
   document.body.appendChild(container);
 
-  // 3. Logic & Functions
   window.toggleKIMChat = function() {
     document.getElementById('ai-chat-window').classList.toggle('open');
   };
@@ -77,16 +77,17 @@
     
     const body = document.getElementById('ai-chat-body');
     
-    // Add user message
     const udiv = document.createElement('div');
     udiv.className = 'ai-msg user';
     udiv.textContent = msg;
     body.appendChild(udiv);
     
+    // Save to memory
+    chatHistory += "Buyer: " + msg + "\n";
+    
     input.value = '';
     body.scrollTop = body.scrollHeight;
     
-    // Show Loading
     const ldiv = document.createElement('div');
     ldiv.className = 'ai-msg bot';
     ldiv.textContent = 'Typing...';
@@ -97,12 +98,15 @@
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({message: msg})
+        // Send the FULL chat history, not just the single message
+        body: JSON.stringify({message: chatHistory})
       });
       const data = await res.json();
       
       if (data.ok) {
         ldiv.textContent = data.reply;
+        // Save KIM's reply to memory so she knows what she just said
+        chatHistory += "KIM: " + data.reply + "\n";
       } else {
         ldiv.textContent = 'System Error: ' + (data.msg || 'Connection lost.');
       }
@@ -112,12 +116,10 @@
     body.scrollTop = body.scrollHeight;
   };
 
-  // Auto-open chat after 3 seconds
   setTimeout(function() {
     var chatWindow = document.getElementById('ai-chat-window');
     if (chatWindow && !chatWindow.classList.contains('open')) {
       window.toggleKIMChat();
     }
   }, 3000);
-
 })();
