@@ -209,7 +209,27 @@ export async function onRequest(context){
     }
     return err('Invalid type');
   }
-
+// ── SECRET EMAIL DIAGNOSTIC TEST ──
+  if(request.method==='GET' && path==='test-email'){
+    if (!env.RESEND_API_KEY) return json({status: "FAIL", error: "Cloudflare cannot see the API Key. It is empty."});
+    
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        from: 'Memane Admin <info@memaneinternational.in>',
+        to: 'memaneexim@gmail.com', // Sending directly to you
+        subject: 'API Diagnostic Test',
+        html: '<p>If you get this, the API is working perfectly!</p>'
+      })
+    });
+    
+    const rawResponse = await res.text();
+    return new Response(rawResponse, { status: res.status, headers: {'Content-Type': 'application/json'} });
+  }
   // ── ALL POST ROUTES ─────────────────────────────────────────────────
   if(request.method==='POST'){
 
