@@ -245,7 +245,7 @@ button{cursor:pointer;}
 /* WHY US */
 .wgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:32px;}
 .wc{background:#fff;border:1px solid var(--bdr);border-radius:14px;padding:28px 24px;transition:all .3s;position:relative;overflow:hidden;}
-.wc::before{content:'current';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),var(--gold));opacity:0;transition:opacity .3s;}
+.wc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),var(--gold));opacity:0;transition:opacity .3s;}
 .wc:hover{box-shadow:0 12px 40px rgba(0,0,0,.1);transform:translateY(-3px);}
 .wc:hover::before{opacity:1;}
 .wi{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:14px;background:rgba(155,28,49,.08);}
@@ -970,6 +970,7 @@ footer{background:var(--ndk);padding:48px 0 0;}
     </ul></div>
     <div class="fcol"><h4>Contact</h4><ul>
       <li><a href="mailto:info@memaneinternational.in">info@memaneinternational.in</a></li>
+      <li><a href="mailto:memaneexim@gmail.com">memaneexim@gmail.com</a></li>
       <li><a href="tel:+918999662331">+91 8999662331</a></li>
       <li><a href="tel:+919011503140">+91 9011503140</a></li>
       <li><span style="color:rgba(255,255,255,.4);">Pune, Maharashtra, India</span></li>
@@ -1185,4 +1186,614 @@ var PRODS={
     {n:'1121 Golden Sella Basmati Rice',mi:'1-10 MT',mx:'25 MT / 1 FCL',f:'Parboiled Sella',g:'Golden',o:'Punjab, Haryana',pk:'5kg,10kg,25kg,50kg PP/Jute',c:'APEDA, Phytosanitary, COO',sh:'24 months',st:'Cool, Dry Place',d:'1121 Golden Sella Basmati — parboiled then milled to give a beautiful golden tint. Extra-long grain, non-sticky texture and rich aroma. Preferred across the Middle East and Gulf markets.'},
     {n:'1121 Steam Basmati Rice',mi:'1-10 MT',mx:'25 MT / 1 FCL',f:'Steam',g:'Premium',o:'Punjab, Haryana',pk:'5kg,10kg,25kg,50kg PP',c:'APEDA, Phytosanitary, COO',sh:'24 months',st:'Cool, Dry Place',d:'1121 Steam Basmati — partially cooked using steam. Easy to cook, non-sticky. Widely used in restaurants and food service across the Middle East.'},
     {n:'1121 Raw Basmati Rice',mi:'1-10 MT',mx:'25 MT / 1 FCL',f:'Raw',g:'Premium',o:'Punjab, Haryana',pk:'5kg,10kg,25kg,50kg PP',c:'APEDA, Phytosanitary, COO',sh:'24 months',st:'Cool, Dry Place',d:'1121 Raw Basmati — extra long grain, snow white, ideal for biryani and premium rice dishes. Exported widely to Europe and North America.'},
-    {n:'1121 White Sella Basmati Rice',mi:'1-10 MT',mx:'25 MT / 1 FCL',f:'Sella',g:'White',o:'Punjab',pk:'5kg,25kg,50kg PP',c:'APEDA, Phytosanitary',sh:'24 months',st:'Cool, Dry Place',d:'White Sella 1121 — parboiled and milled for
+    {n:'1121 White Sella Basmati Rice',mi:'1-10 MT',mx:'25 MT / 1 FCL',f:'Sella',g:'White',o:'Punjab',pk:'5kg,25kg,50kg PP',c:'APEDA, Phytosanitary',sh:'24 months',st:'Cool, Dry Place',d:'White Sella 1121 — parboiled and milled for bright white appearance. Popular in Gulf, European and Southeast Asian markets.'},
+    {n:'1509 Sella Basmati Rice',mi:'1-10 MT',mx:'25 MT / 1 FCL',f:'Sella',g:'A Grade',o:'Haryana, UP',pk:'5kg,25kg,50kg PP',c:'APEDA, Phytosanitary',sh:'24 months',st:'Cool, Dry Place',d:'1509 Sella Basmati — parboiled and milled. Non-sticky, elongates beautifully. Excellent for catering and bulk food service.'},
+    {n:'1509 Steam Basmati Rice',mi:'1-10 MT',mx:'25 MT / 1 FCL',f:'Steam',g:'A Grade',o:'Haryana, UP',pk:'5kg,25kg,50kg PP',c:'APEDA, Phytosanitary',sh:'24 months',st:'Cool, Dry Place',d:'1509 Steam Basmati — convenient cooking, uniform texture. Widely demanded in retail packs globally.'},
+    {n:'Sharbati Basmati Rice',mi:'1-5 MT',mx:'25 MT / 1 FCL',f:'Raw',g:'Premium',o:'Madhya Pradesh',pk:'5kg,10kg,25kg PP',c:'APEDA, Phytosanitary',sh:'24 months',st:'Cool, Dry Place',d:'Sharbati Basmati — thin long grain with sweet natural flavour. Grown in MP fertile black soil. Affordable premium basmati.'},
+    {n:'Pusa Basmati Rice',mi:'1-10 MT',mx:'25 MT / 1 FCL',f:'Raw/Sella',g:'Premium',o:'Haryana',pk:'5kg,10kg,25kg,50kg PP',c:'APEDA, Phytosanitary',sh:'24 months',st:'Cool, Dry Place',d:'Pusa Basmati — developed by IARI. Popular for its aroma, length and affordability. Widely sold in Indian grocery markets globally.'},
+    {n:'Sugandha Basmati Rice',mi:'1-5 MT',mx:'25 MT / 1 FCL',f:'Raw',g:'A Grade',o:'UP, Haryana',pk:'5kg,25kg PP',c:'APEDA, Phytosanitary',sh:'24 months',st:'Cool, Dry Place',d:'Sugandha Basmati — highly fragrant variety with long slender grains. Popular in South Asian diaspora markets globally.'},
+    {n:'Traditional Basmati Rice',mi:'1-5 MT',mx:'25 MT / 1 FCL',f:'Raw',g:'Premium',o:'Punjab, Dehradun',pk:'5kg,10kg,25kg PP',c:'APEDA, Phytosanitary',sh:'24 months',st:'Cool, Dry Place',d:'Traditional Basmati — heritage variety from the foothills of Himalayas. Intense aroma, soft texture. Premium grade for specialty markets.'},
+  ],
+  nonbasmati:[
+    {n:'IR 64 Parboiled Rice',mi:'5-20 MT',mx:'20 MT / 1 FCL',f:'Parboiled',g:'A Grade',o:'Andhra Pradesh, Odisha',pk:'25kg,50kg PP/Jute',c:'APEDA, Phytosanitary',sh:'18 months',st:'Cool, Dry Place',d:'IR 64 Parboiled — pre-gelatinized, retains nutrients. Most exported non-basmati variety to Africa and South Asia.'},
+    {n:'IR 64 Raw White Rice',mi:'5-20 MT',mx:'20 MT / 1 FCL',f:'Raw',g:'A Grade',o:'Andhra Pradesh',pk:'25kg,50kg PP',c:'APEDA, Phytosanitary',sh:'18 months',st:'Cool, Dry Place',d:'IR 64 Raw White — medium grain, economical. Popular in Africa, Middle East and South Asia. Competitive pricing.'},
+    {n:'Sona Masoori Rice',mi:'5-10 MT',mx:'20 MT / 1 FCL',f:'Raw',g:'Premium',o:'AP, Karnataka',pk:'5kg,10kg,25kg,50kg',c:'APEDA, Phytosanitary',sh:'18 months',st:'Cool, Dry Place',d:'Sona Masoori — lightweight, aromatic, low starch. Huge demand in USA, UK and Australia among South Asian communities.'},
+    {n:'Swarna Non Basmati Rice',mi:'5-20 MT',mx:'20 MT / 1 FCL',f:'Parboiled',g:'A Grade',o:'Odisha, AP, WB',pk:'25kg,50kg PP/Jute',c:'APEDA, Phytosanitary',sh:'18 months',st:'Cool, Dry Place',d:'Swarna Non-Basmati — high-yield medium-long grain. Most exported variety to Africa and Bangladesh.'},
+    {n:'Ponni Rice',mi:'5-10 MT',mx:'10 MT',f:'Raw',g:'Premium',o:'Tamil Nadu',pk:'5kg,10kg,25kg',c:'APEDA, Phytosanitary',sh:'18 months',st:'Cool, Dry Place',d:'Ponni Rice — soft texture, slightly sticky. Traditional South Indian variety. Popular in Tamil expat communities.'},
+    {n:'100% Broken Rice',mi:'5-20 MT',mx:'20 MT / 1 FCL',f:'Broken',g:'Standard',o:'AP, Odisha',pk:'25kg,50kg PP',c:'APEDA, Phytosanitary',sh:'12 months',st:'Cool, Dry Place',d:'100% Broken Rice — used in rice flour, animal feed and food processing. Cost-effective bulk commodity.'},
+    {n:'Matta Red Rice',mi:'2-5 MT',mx:'10 MT',f:'Raw',g:'A Grade',o:'Kerala',pk:'5kg,10kg,25kg',c:'APEDA, Phytosanitary',sh:'12 months',st:'Cool, Dry Place',d:'Matta Red Rice — distinctive red-brown colour, nutty flavour. Traditional rice of Kerala. High fiber and minerals.'},
+  ],
+  pulses:[
+    {n:'Toor Dal (Yellow)',mi:'1-5 MT',mx:'10 MT',f:'Split, Dehusked',g:'A Grade',o:'Maharashtra, Gujarat',pk:'1kg,5kg,25kg,50kg',c:'FSSAI, Phytosanitary',sh:'18 months',st:'Cool, Dry Place',d:"Yellow Toor Dal (Arhar) — India's most consumed dal. High protein. Exported to USA, UK, UAE and East Africa."},
+    {n:'Chana Dal (Yellow)',mi:'1-5 MT',mx:'10 MT',f:'Split, Dehusked',g:'A Grade',o:'Rajasthan, MP',pk:'1kg,5kg,25kg,50kg',c:'FSSAI, Phytosanitary',sh:'18 months',st:'Cool, Dry Place',d:'Yellow Chana Dal — split Bengal gram. High fiber, low GI. Major export demand in GCC and UK.'},
+    {n:'Moong Dal (Green)',mi:'1-5 MT',mx:'10 MT',f:'Whole/Split',g:'A Grade',o:'Rajasthan, Maharashtra',pk:'1kg,5kg,25kg',c:'FSSAI, Phytosanitary',sh:'18 months',st:'Cool, Dry Place',d:'Green Moong Dal — easy to digest, high protein. Popular in South Asia and Middle East.'},
+    {n:'Masoor Dal (Red)',mi:'1-5 MT',mx:'10 MT',f:'Whole/Split',g:'A Grade',o:'MP, UP, Bihar',pk:'1kg,5kg,25kg,50kg',c:'FSSAI, Phytosanitary',sh:'18 months',st:'Cool, Dry Place',d:'Red Masoor Dal — quick-cooking, high protein. Widely exported to UK, Canada, UAE and Europe.'},
+    {n:'Kabuli Chana (White)',mi:'1-5 MT',mx:'10 MT',f:'Whole',g:'A Grade',o:'MP, Rajasthan',pk:'1kg,5kg,25kg,50kg',c:'FSSAI, Phytosanitary',sh:'18 months',st:'Cool, Dry Place',d:'White Kabuli Chana — large white chickpeas for hummus and chole. Strong export to Europe and Middle East.'},
+    {n:'Urad Dal (Black)',mi:'1-5 MT',mx:'10 MT',f:'Whole/Split',g:'A Grade',o:'MP, UP',pk:'1kg,5kg,25kg,50kg',c:'FSSAI, Phytosanitary',sh:'18 months',st:'Cool, Dry Place',d:'Black Urad Dal — rich in fiber and iron. Used in dal makhani. Preferred by South Asian diaspora globally.'},
+  ],
+  wholespices:[
+    {n:'Black Pepper (Whole)',mi:'500 kg',mx:'1 MT',f:'Whole Seeds',g:'FAQ/Bold',o:'Kerala (Wayanad)',pk:'25kg,50kg PP',c:'Spices Board, APEDA',sh:'24 months',st:'Cool, Dry Place Away from Sunlight',d:'Black Pepper — King of Spices. High piperine content. Kerala black pepper globally renowned. Exported to USA, Europe, GCC.'},
+    {n:'Turmeric Finger',mi:'1 MT',mx:'5 MT',f:'Finger/Bulb',g:'Erode',o:'AP, Maharashtra',pk:'25kg,50kg Jute',c:'Spices Board, APEDA',sh:'12 months',st:'Cool, Dry Place',d:'Turmeric Finger — high curcumin 3-5%. Used in cooking, cosmetics, Ayurveda and nutraceuticals.'},
+    {n:'Green Cardamom',mi:'500 kg',mx:'500 kg',f:'Pods',g:'Bold/Medium',o:'Kerala (Idukki)',pk:'10kg,25kg',c:'Spices Board',sh:'18 months',st:'Airtight, Cool Place',d:'Green Cardamom — Queen of Spices. Intensely aromatic. Exported to Saudi Arabia, UAE and Europe.'},
+    {n:'Cumin Seeds',mi:'1 MT',mx:'5 MT',f:'Seeds',g:'Double Sortex',o:'Rajasthan, Gujarat',pk:'25kg,50kg PP',c:'Spices Board, APEDA',sh:'24 months',st:'Cool, Dry Place',d:'Cumin Seeds — bold earthy aroma. Indian cumin exported to Middle East, USA and Europe. Machine-cleaned and sortexed.'},
+    {n:'Coriander Seeds',mi:'1 MT',mx:'5 MT',f:'Seeds',g:'Eagle/Badami',o:'Rajasthan, MP',pk:'25kg,50kg Jute',c:'Spices Board, APEDA',sh:'24 months',st:'Cool, Dry Place',d:'Coriander Seeds — mild citrusy aroma. Used in curry powders, pickles and beverages. India is largest producer.'},
+    {n:'Dry Red Chilli',mi:'1 MT',mx:'5 MT',f:'Whole Dry',g:'Teja/Sannam',o:'AP, Telangana',pk:'25kg,50kg PP/Jute',c:'Spices Board, APEDA',sh:'12 months',st:'Cool, Dry Place',d:'Whole Dry Red Chilli — Teja, Sannam, Byadagi varieties. High colour ASTA 80-180. Exported to UAE, USA, UK, Bangladesh.'},
+    {n:'Cloves',mi:'500 kg',mx:'500 kg',f:'Whole',g:'A Grade',o:'Kerala, Tamil Nadu',pk:'25kg,50kg PP',c:'Spices Board',sh:'24 months',st:'Airtight, Cool Place',d:'A Grade Cloves — hand-picked, high essential oil content. Used in cooking, oral care and pharmaceuticals.'},
+    {n:'Cinnamon Sticks',mi:'500 kg',mx:'1 MT',f:'Sticks',g:'C5/Alba',o:'Kerala, Tamil Nadu',pk:'10kg,25kg PP',c:'Spices Board',sh:'24 months',st:'Cool, Dry Place',d:'Cinnamon Sticks — sweet warm aroma. Available Ceylon and Cassia grades for food processing, bakery and beverages.'},
+    {n:'Black Cardamom',mi:'500 kg',mx:'500 kg',f:'Pods',g:'A Grade',o:'Sikkim, West Bengal',pk:'10kg,25kg',c:'Spices Board',sh:'18 months',st:'Airtight, Cool Place',d:'Black Cardamom — smoky earthy flavour. Used in curries and biryani. India is the primary global supplier.'},
+  ],
+  groundspices:[
+    {n:'Red Chilli Powder',mi:'1 MT',mx:'1 MT',f:'Powder',g:'Extra Hot/Mild',o:'Andhra Pradesh',pk:'1kg,5kg,25kg,50kg',c:'FSSAI, Spices Board',sh:'18 months',st:'Cool, Dry Place',d:'Red Chilli Powder — hot, medium and mild grades. High colour ASTA 80+. Custom heat level available.'},
+    {n:'Turmeric Powder',mi:'1 MT',mx:'1 MT',f:'Powder',g:'High Curcumin',o:'AP, Maharashtra',pk:'1kg,5kg,25kg PP',c:'FSSAI, Spices Board',sh:'18 months',st:'Cool, Dry Place',d:'Turmeric Powder — curcumin 2-5%. Bright yellow colour. Used in food, cosmetics and nutraceuticals globally.'},
+    {n:'Coriander Powder',mi:'1 MT',mx:'1 MT',f:'Powder',g:'Double Sortex',o:'Rajasthan, MP',pk:'1kg,5kg,25kg PP',c:'FSSAI, Spices Board',sh:'18 months',st:'Cool, Dry Place',d:'Coriander Powder — mild citrusy earthy flavour. Foundation of Indian curry powders. High export demand.'},
+    {n:'Cumin Powder',mi:'1 MT',mx:'1 MT',f:'Powder',g:'Premium',o:'Rajasthan',pk:'1kg,5kg,25kg PP',c:'FSSAI, Spices Board',sh:'18 months',st:'Cool, Dry Place',d:'Cumin Powder — aromatic earthy. Ground from premium Rajasthani cumin. Used in Middle Eastern and Indian cuisines.'},
+    {n:'Black Pepper Powder',mi:'500 kg',mx:'500 kg',f:'Powder',g:'Premium',o:'Kerala',pk:'1kg,5kg,25kg PP',c:'FSSAI, Spices Board',sh:'18 months',st:'Cool, Dry Place',d:'Black Pepper Powder — freshly ground Kerala pepper. Strong aroma, high piperine. Coarse and fine grind available.'},
+    {n:'Cinnamon Powder',mi:'500 kg',mx:'500 kg',f:'Powder',g:'Premium',o:'Kerala',pk:'1kg,5kg,25kg PP',c:'FSSAI, Spices Board',sh:'18 months',st:'Cool, Dry Place',d:'Cinnamon Powder — finely milled from whole sticks. Sweet warm aroma for bakery and beverages worldwide.'},
+    {n:'Cardamom Powder (Green)',mi:'250 kg',mx:'250 kg',f:'Powder',g:'Premium',o:'Kerala (Idukki)',pk:'500g,1kg,5kg PP',c:'FSSAI, Spices Board',sh:'12 months',st:'Airtight, Cool Place',d:'Green Cardamom Powder — intense floral aroma. Premium for chai, desserts and Middle Eastern beverages.'},
+  ],
+  freshfruits:[
+    {n:'Fresh Mango (Alphonso / Kesar)',mi:'1 MT',mx:'5 MT',f:'Fresh',g:'A Grade',o:'Maharashtra, Gujarat',pk:'3kg,5kg Gift Cartons',c:'APEDA, Phytosanitary, Irradiation',sh:'1-2 weeks',st:'Refrigeration 8-12°C',d:"Fresh Indian Mango — Alphonso, Kesar, Totapuri varieties. The world's finest mangoes. Exported to USA, UK, UAE, Canada and Australia."},
+    {n:'Green A Grade Malda Mango',mi:'1 MT',mx:'5 MT',f:'Fresh',g:'A Grade',o:'West Bengal',pk:'5kg,10kg Cartons',c:'APEDA, Phytosanitary',sh:'1-2 weeks',st:'Refrigeration 8-12°C',d:'A Grade Malda Mango — large, sweet, green-skinned. Exported to diaspora markets in Gulf and UK.'},
+    {n:'Fresh Pomegranate (Bhagwa)',mi:'2 MT',mx:'10 MT',f:'Fresh',g:'A Grade',o:'Maharashtra (Solapur)',pk:'3kg,5kg Cartons',c:'GlobalGAP, APEDA, Phytosanitary',sh:'3-4 weeks',st:'Refrigeration 5-8°C',d:'Bhagwa Pomegranate — deep red arils, sweet-tart. India is the top global exporter of this variety.'},
+    {n:'Fresh Green Grapes (Thompson)',mi:'2 MT',mx:'10 MT',f:'Fresh',g:'A Grade',o:'Nashik, Maharashtra',pk:'500g,1kg,2kg Punnets',c:'EurepGAP, APEDA, Phytosanitary',sh:'2-3 weeks',st:'Refrigeration 0-2°C',d:'Thompson Seedless Grapes — crisp, sweet, export grade. Nashik is India grape capital. Exported to Europe, Gulf and Far East.'},
+    {n:'Fresh Orange (Nagpur Mandarin)',mi:'5 MT',mx:'10 MT',f:'Fresh',g:'A Grade',o:'Nagpur, Maharashtra',pk:'10kg,15kg Cartons',c:'APEDA, Phytosanitary',sh:'2-3 weeks',st:'Refrigeration 5-8°C',d:'Nagpur Mandarin (Santra) — sweet, seedless, easy-peel. GI tagged to Nagpur. Exported to GCC, UK and Singapore.'},
+    {n:'Fresh Banana (Cavendish G9)',mi:'5 MT',mx:'10 MT',f:'Fresh',g:'A Grade',o:'Maharashtra, AP, TN',pk:'13kg,18kg Cartons',c:'APEDA, Phytosanitary',sh:'Green stage',st:'Room Temperature',d:'Cavendish G9 Banana — uniform size, export grade. Green-stage harvested for long-distance shipping.'},
+    {n:'Fresh Papaya (Red Lady)',mi:'2 MT',mx:'5 MT',f:'Fresh',g:'A Grade',o:'Maharashtra, AP',pk:'3kg,5kg,10kg Cartons',c:'APEDA, Phytosanitary',sh:'1-2 weeks',st:'Refrigeration 10-13°C',d:'Red Lady Papaya — bright orange flesh, sweet. Rich in Vitamin A and C. Exported to GCC and Southeast Asia.'},
+    {n:'Fresh Guava',mi:'1 MT',mx:'5 MT',f:'Fresh',g:'A Grade',o:'Allahabad, Maharashtra',pk:'3kg,5kg Cartons',c:'APEDA, Phytosanitary',sh:'1 week',st:'Refrigeration 5-10°C',d:'A Grade Guava — sweet, crunchy. High Vitamin C. Allahabad Safeda and Taiwan Pink varieties. Popular in Gulf and SE Asia.'},
+    {n:'Fresh Watermelon',mi:'5 MT',mx:'10 MT',f:'Fresh',g:'A Grade',o:'AP, Karnataka, TN',pk:'10kg Cartons/Field-run',c:'APEDA, Phytosanitary',sh:'2-3 weeks',st:'Room Temperature/Cool',d:'Seedless and seeded watermelon. Deep red flesh, high sweetness. Exported to GCC and East Africa.'},
+  ],
+  freshveg:[
+    {n:'Fresh Red Onion',mi:'5-20 MT',mx:'25 MT / 1 FCL',f:'Fresh',g:'A Grade',o:'Nashik, Maharashtra',pk:'20kg,25kg,50kg Nets',c:'APEDA, Phytosanitary',sh:'4-8 weeks',st:'Cool, Well Ventilated',d:'Red Onion — India is top global exporter. Nashik Red and S-34 varieties. Exported to SE Asia, Middle East and Europe.'},
+    {n:'Fresh White Garlic',mi:'1-5 MT',mx:'10 MT',f:'Fresh',g:'A Grade',o:'Gujarat (Gondal)',pk:'500g,1kg,5kg,20kg',c:'APEDA, Phytosanitary',sh:'4-6 months',st:'Cool, Dry, Ventilated',d:'A Grade White Garlic — bold cloves, high allicin. Gondal garlic preferred across Southeast Asia and Middle East.'},
+    {n:'Fresh Potato',mi:'5-20 MT',mx:'20 MT / 1 FCL',f:'Fresh',g:'A Grade',o:'UP, Punjab, WB',pk:'20kg,50kg Jute/PP',c:'APEDA, Phytosanitary',sh:'2-4 months',st:'Cold Storage 4-8°C',d:'A Grade Potato — widely exported to GCC, Sri Lanka and Bangladesh. Consistent grade and size.'},
+    {n:'Fresh Ginger',mi:'1-5 MT',mx:'5 MT',f:'Fresh',g:'A Grade',o:'Kerala, Karnataka',pk:'10kg,20kg Jute Bags',c:'Spices Board, APEDA',sh:'2-4 weeks',st:'Cool, Ventilated',d:'Fresh Green Ginger — bold aroma, high gingerol. India is top producer. Exported to USA, UK, Europe, SE Asia.'},
+    {n:'Fresh Tomato',mi:'2-5 MT',mx:'5 MT',f:'Fresh',g:'A Grade',o:'Maharashtra, AP',pk:'5kg,10kg Cartons',c:'APEDA, Phytosanitary',sh:'1-2 weeks',st:'Refrigeration 10-13°C',d:'Round, Roma and Cherry tomatoes. Firm, bright red, uniform. Exported to GCC and neighbouring countries.'},
+    {n:'Fresh Green Chilli',mi:'500 kg',mx:'2 MT',f:'Fresh',g:'A Grade',o:'AP, Telangana',pk:'5kg,10kg Cartons',c:'APEDA, Phytosanitary',sh:'1-2 weeks',st:'Refrigeration 5-8°C',d:'Jwala, G4 and Bullet hot varieties. Essential in South Asian cooking. Exported to GCC and UK.'},
+    {n:'Fresh Lady Finger (Okra)',mi:'500 kg',mx:'2 MT',f:'Fresh',g:'A Grade',o:'Maharashtra, Gujarat',pk:'3kg,5kg Cartons',c:'APEDA, Phytosanitary',sh:'3-5 days',st:'Refrigeration 7-10°C',d:'Tender crisp okra. One of most exported Indian vegetables to the Gulf market year-round.'},
+    {n:'Fresh Capsicum (Red/Green)',mi:'1 MT',mx:'5 MT',f:'Fresh',g:'A Grade',o:'Maharashtra, HP',pk:'5kg,10kg Cartons',c:'APEDA, Phytosanitary',sh:'2-3 weeks',st:'Refrigeration 7-10°C',d:'Thick-walled colourful capsicum. Cold chain export to GCC hotels and European supermarkets.'},
+    {n:'Fresh Carrot',mi:'2-5 MT',mx:'5 MT',f:'Fresh',g:'A Grade',o:'Punjab, HP',pk:'10kg,20kg Bags',c:'APEDA, Phytosanitary',sh:'2-4 weeks',st:'Refrigeration 0-4°C',d:'Deep orange carrots. Rich in beta-carotene. Exported to GCC and South Asian markets.'},
+    {n:'Fresh Lemon',mi:'2-5 MT',mx:'5 MT',f:'Fresh',g:'A Grade',o:'Maharashtra, AP',pk:'5kg,10kg Nets',c:'APEDA, Phytosanitary',sh:'3-4 weeks',st:'Refrigeration 5-10°C',d:'High juice content, bold citrus. Exported to GCC, Europe and Southeast Asia year-round.'},
+    {n:'Fresh Broccoli',mi:'500 kg',mx:'2 MT',f:'Fresh',g:'A Grade',o:'Maharashtra, HP',pk:'5kg,10kg Cartons',c:'APEDA, Phytosanitary',sh:'1 week',st:'Refrigeration 0-4°C',d:'Tight dark green florets. Rich in Vitamin C. Cold chain packed for GCC and Southeast Asia.'},
+  ],
+  dairy:[
+    {n:'Pure Cow Ghee (Desi)',mi:'500 kg',mx:'1 MT',f:'Liquid Fat',g:'Premium/A2',o:'Rajasthan, Gujarat',pk:'200ml,500ml,1L Tins; 15kg Drums',c:'FSSAI, ISO 22000, Halal',sh:'12 months',st:'Cool, Dry Place',d:'Desi Cow Ghee — A2 Gir cow ghee available. Nutty aroma, golden colour. Growing demand in USA and Europe.'},
+    {n:'Buffalo Ghee',mi:'500 kg',mx:'1 MT',f:'Liquid Fat',g:'A Grade',o:'Maharashtra, UP',pk:'500ml,1L Tins; 15kg,200L Drums',c:'FSSAI, ISO 22000, Halal',sh:'12 months',st:'Cool, Dry Place',d:'Buffalo Ghee — higher fat content, rich creamy flavour. Popular in Gulf cooking. Bulk drums available.'},
+    {n:'Fresh Paneer',mi:'500 kg',mx:'1 MT',f:'Block/Slice',g:'Full Cream',o:'Punjab, UP',pk:'200g,500g,1kg Vacuum; Bulk slabs',c:'FSSAI, Halal',sh:'45-90 days',st:'Refrigeration 4°C',d:'Indian cottage cheese. Firm white mild. Widely demanded by Indian diaspora in GCC, UK, USA and Canada.'},
+    {n:'Full Cream Milk Powder',mi:'500 kg',mx:'1 MT',f:'Powder',g:'Instant',o:'India',pk:'25kg Bags; 200g,500g,1kg Retail',c:'FSSAI, ISO 22000, Halal',sh:'24 months',st:'Cool, Dry Place',d:'Spray-dried, 26-28% fat. Dissolves instantly. Exported to Southeast Asia, Africa and GCC.'},
+    {n:'Skimmed Milk Powder',mi:'500 kg',mx:'1 MT',f:'Powder',g:'Standard',o:'India',pk:'25kg Bags; 200g,500g Retail',c:'FSSAI, ISO 22000, Halal',sh:'24 months',st:'Cool, Dry Place',d:'Low fat (1.5% max). Used in bakery, confectionery, infant food and dairy processing.'},
+    {n:'Salted / Unsalted Butter',mi:'500 kg',mx:'1 MT',f:'Block',g:'Table Grade',o:'India',pk:'500g,1kg Cartons; 25kg Bulk',c:'FSSAI, Halal',sh:'9 months',st:'Frozen / Refrigerated',d:'Yellow Butter — salted and unsalted. Used in bakery and cooking. Popular in GCC and African retail.'},
+  ],
+  canned:[
+    {n:'Canned Sweet Corn',mi:'500 kg',mx:'1 MT',f:'Canned Kernels',g:'A Grade',o:'Maharashtra, UP',pk:'425g,850g,3kg Cans',c:'FSSAI, Codex, Halal',sh:'36 months',st:'Room Temperature',d:'Tender sweet corn kernels in brine. Ready-to-eat. Used in salads, pizza and food service worldwide.'},
+    {n:'Canned Mushroom',mi:'500 kg',mx:'1 MT',f:'Whole/Sliced',g:'A Grade',o:'HP, Maharashtra',pk:'400g,800g,3kg Cans',c:'FSSAI, ISO, Halal',sh:'36 months',st:'Room Temperature',d:'White button mushroom — whole, sliced, pieces/stems. Exported to GCC, Europe and USA.'},
+    {n:'Canned Pineapple',mi:'500 kg',mx:'1 MT',f:'Slices/Chunks',g:'A Grade',o:'Kerala, NE India',pk:'567g,850g,3kg Cans',c:'FSSAI, Codex, Halal',sh:'36 months',st:'Room Temperature',d:'Pineapple slices, chunks and tidbits in juice or syrup. Used in bakery, beverages and cooking.'},
+    {n:'Canned Lychee',mi:'500 kg',mx:'1 MT',f:'Whole in Syrup',g:'A Grade',o:'Bihar, WB',pk:'567g,850g,3kg Cans',c:'FSSAI, Codex, Halal',sh:'36 months',st:'Room Temperature',d:'Plump sweet whole lychees in light syrup. Exported to USA, UK, Australia and Southeast Asian markets.'},
+    {n:'Canned Fruit Cocktail',mi:'500 kg',mx:'1 MT',f:'Mix in Syrup',g:'A Grade',o:'India',pk:'425g,850g,3kg Cans',c:'FSSAI, Codex, Halal',sh:'36 months',st:'Room Temperature',d:'Peaches, pears, grapes, cherries in light/heavy syrup. Exported to Middle East, SE Asia and Europe.'},
+  ],
+  flour:[
+    {n:'Whole Wheat Flour (Atta)',mi:'5 MT',mx:'10 MT',f:'Fine Powder',g:'Standard/Premium',o:'Punjab, Rajasthan, UP',pk:'1kg,5kg,10kg,25kg,50kg PP',c:'FSSAI, APEDA, Halal',sh:'9 months',st:'Cool, Dry Place',d:'Whole wheat chapati flour. Custom protein content available. Exported to GCC, Africa and SE Asia.'},
+    {n:'White Wheat Flour (Maida)',mi:'5 MT',mx:'10 MT',f:'Fine Powder',g:'All Purpose',o:'Punjab, UP',pk:'1kg,5kg,25kg,50kg PP',c:'FSSAI, Halal',sh:'9 months',st:'Cool, Dry Place',d:'All-purpose refined wheat flour. Used in bakery, pasta and food service. Exported to GCC and Africa.'},
+    {n:'Gram Flour (Besan)',mi:'2 MT',mx:'5 MT',f:'Fine Powder',g:'Premium',o:'Rajasthan, MP',pk:'500g,1kg,5kg,25kg PP',c:'FSSAI, Halal',sh:'12 months',st:'Cool, Dry Place',d:'Indian Gram Flour — gluten-free, high protein. Used in pakora, kadhi and bakery. Growing health food segment.'},
+    {n:'Fine Semolina (Suji/Rawa)',mi:'2 MT',mx:'5 MT',f:'Coarse/Fine',g:'A Grade',o:'UP, Rajasthan',pk:'500g,1kg,5kg,25kg PP',c:'FSSAI, Halal',sh:'12 months',st:'Cool, Dry Place',d:'Coarse and fine semolina. Used in pasta, upma, halwa and bakery products.'},
+    {n:'Maize Flour (Corn)',mi:'2 MT',mx:'5 MT',f:'Fine Powder',g:'Standard',o:'India',pk:'500g,1kg,5kg,25kg PP',c:'FSSAI, Halal',sh:'12 months',st:'Cool, Dry Place',d:'White corn flour. Used in cornbread, tortillas and food thickening. Exported to Africa and Middle East.'},
+  ],
+  bakery:[
+    {n:'Wheat Rusk',mi:'500 kg',mx:'500 kg',f:'Toasted Slices',g:'A Grade',o:'India',pk:'200g,400g Packs',c:'FSSAI, Halal',sh:'6 months',st:'Cool, Dry Place',d:'Whole wheat toasted bread. High fiber, crunchy. Growing demand in health-conscious export markets.'},
+    {n:'Ajwain Rusk',mi:'500 kg',mx:'500 kg',f:'Toasted Slices',g:'A Grade',o:'India',pk:'200g,400g Packs',c:'FSSAI, Halal',sh:'6 months',st:'Cool, Dry Place',d:'Toasted bread with carom seeds. Crispy, digestive. Popular with chai in GCC and diaspora markets.'},
+    {n:'Butter Cookies',mi:'500 kg',mx:'500 kg',f:'Cookies',g:'A Grade',o:'India',pk:'150g,300g Packs',c:'FSSAI, Halal',sh:'6 months',st:'Cool, Dry Place',d:'Rich melt-in-mouth butter cookies. Popular in GCC and diaspora retail.'},
+    {n:'Jeera Cookies',mi:'500 kg',mx:'500 kg',f:'Cookies',g:'A Grade',o:'India',pk:'150g,300g Packs',c:'FSSAI, Halal',sh:'6 months',st:'Cool, Dry Place',d:'Cumin flavoured crisp cookies. Savoury-sweet combination. Popular accompaniment with tea.'},
+    {n:'Sandwich / Milk Bread',mi:'500 kg',mx:'500 kg',f:'Sliced Loaf',g:'A Grade',o:'India',pk:'400g,500g Packs',c:'FSSAI, Halal',sh:'14 days',st:'Room Temperature / Frozen',d:'Soft milk-enriched white bread. Popular in GCC retail and Indian diaspora households. Cold-chain export.'},
+    {n:'Multigrain Bread',mi:'500 kg',mx:'500 kg',f:'Sliced Loaf',g:'A Grade',o:'India',pk:'400g,500g Packs',c:'FSSAI, Halal',sh:'14 days',st:'Room Temperature / Frozen',d:'Wheat, oats, millet, flaxseeds. Health segment. Cold-chain export to GCC supermarkets.'},
+  ],
+  edibleoil:[
+    {n:'Refined Sunflower Oil',mi:'1 MT',mx:'5 MT',f:'Liquid',g:'Refined',o:'India',pk:'1L,5L,15L Bottles; 200L Drums',c:'FSSAI, Codex, Halal',sh:'18 months',st:'Cool, Dry Place',d:"Neutral taste, high smoke point, low saturated fat. India's most consumed cooking oil. Exported to Africa and GCC."},
+    {n:'Pure Mustard Oil (Kachi Ghani)',mi:'1 MT',mx:'1 MT',f:'Liquid',g:'Cold Pressed',o:'Rajasthan, Punjab',pk:'500ml,1L,5L Bottles; 200L Drums',c:'FSSAI, Halal, APEDA',sh:'12 months',st:'Cool, Dry Place',d:'Pungent deeply flavoured cold-pressed mustard oil. Used in North Indian and Bengali cooking. Growing export demand.'},
+    {n:'Pure Coconut Oil (Virgin)',mi:'500 kg',mx:'1 MT',f:'Liquid',g:'Virgin/Refined',o:'Kerala, Tamil Nadu',pk:'500ml,1L,5L Bottles; 200L Drums',c:'FSSAI, Halal, Organic avail.',sh:'24 months',st:'Cool, Dry Place',d:'Virgin cold-pressed and refined coconut oil. Used for cooking, beauty and pharmaceuticals.'},
+    {n:'Pure Sesame Oil',mi:'500 kg',mx:'1 MT',f:'Liquid',g:'Cold Pressed',o:'Gujarat, Rajasthan',pk:'500ml,1L,5L Bottles; 200L Drums',c:'FSSAI, Halal, Organic avail.',sh:'18 months',st:'Cool, Dry Place',d:'Cold-pressed and toasted variants. Nutty aromatic. Used in Asian cooking, Ayurveda and cosmetics.'},
+    {n:'Groundnut Oil',mi:'1 MT',mx:'5 MT',f:'Liquid',g:'Refined/Filtered',o:'Gujarat, Rajasthan',pk:'1L,5L,15L Bottles; 200L Drums',c:'FSSAI, Halal',sh:'12 months',st:'Cool, Dry Place',d:'Refined groundnut oil — high smoke point, mild flavour. Used for deep frying and cooking.'},
+  ],
+  sesame:[
+    {n:'Natural White Sesame Seeds',mi:'1 MT',mx:'1 MT',f:'Whole Seeds',g:'FAQ/99% Purity',o:'Gujarat, Rajasthan',pk:'25kg,50kg PP Bags',c:'FSSAI, Halal, Organic avail.',sh:'18 months',st:'Cool, Dry Place',d:'Un-hulled white sesame seeds. Full nutrition. Used in bread and oil extraction. India is top global exporter.'},
+    {n:'Hulled White Sesame Seeds',mi:'1 MT',mx:'1 MT',f:'Hulled',g:'99.9% Purity',o:'Gujarat, Rajasthan',pk:'25kg,50kg PP Bags',c:'FSSAI, Halal, EU Organic',sh:'12 months',st:'Cool, Dry Place',d:'Skin removed, bright white, mild nutty. Used in tahini, burger buns and confectionery. Top export grade.'},
+    {n:'Black Sesame Seeds',mi:'1 MT',mx:'1 MT',f:'Whole Seeds',g:'FAQ/Bold',o:'Gujarat, Rajasthan',pk:'25kg,50kg PP Bags',c:'FSSAI, Halal, Organic avail.',sh:'18 months',st:'Cool, Dry Place',d:'Un-hulled deep black seeds. Bold nutty flavour. Strong demand in Japan, China, Korea and USA.'},
+  ],
+  seafood:[
+    {n:'Frozen Vannamei Prawns (White)',mi:'500 kg',mx:'1 MT',f:'IQF / Block',g:'HOSO/HLSO/PD',o:'Andhra Pradesh',pk:'1kg,2kg Retail; 10kg Master Carton',c:'MPEDA, EU, Halal, HACCP, BAP',sh:'24 months frozen',st:'Frozen -18°C',d:'Farm-raised Vannamei. India is top shrimp exporter. All formats available. Exported to USA, EU and Japan.'},
+    {n:'Frozen Black Tiger Shrimp',mi:'500 kg',mx:'1 MT',f:'IQF',g:'HOSO/HLSO/PD',o:'Gujarat, AP',pk:'1kg,2kg Retail; 10kg Master Carton',c:'MPEDA, EU, Halal, HACCP',sh:'24 months frozen',st:'Frozen -18°C',d:'Premium black tiger shrimp. Size 8/12 to 41/50. Exported to EU, USA and Japan. All processing forms available.'},
+    {n:'Frozen Mackerel',mi:'1 MT',mx:'2 MT',f:'Whole Round',g:'A Grade',o:'Kerala, Goa',pk:'10kg Master Cartons, IQF',c:'MPEDA, Halal, HACCP',sh:'18 months frozen',st:'Frozen -18°C',d:'Wild-caught whole round mackerel. Omega-3 rich. Strong demand in Europe and Africa.'},
+    {n:'Frozen Red Snapper',mi:'500 kg',mx:'1 MT',f:'Whole/Fillet',g:'A Grade',o:'Gujarat, Kerala',pk:'10kg Master Cartons',c:'MPEDA, EU, Halal, HACCP',sh:'18 months frozen',st:'Frozen -18°C',d:'Firm white flesh. Whole round, gutted and filleted forms. Premium restaurant and retail grade.'},
+    {n:'Frozen Blue Swim Crab',mi:'500 kg',mx:'1 MT',f:'Whole/Clusters',g:'A Grade',o:'Odisha, WB',pk:'10kg Master Cartons, IQF',c:'MPEDA, Halal, HACCP, EU',sh:'18 months frozen',st:'Frozen -18°C',d:'Whole, half-cut and cluster forms. Wild-caught. Exported to USA, Europe and GCC.'},
+    {n:'Frozen Deep Sea Shrimp',mi:'500 kg',mx:'1 MT',f:'IQF',g:'A Grade',o:'Gujarat, Maharashtra',pk:'1kg,2kg Retail; 10kg Master Carton',c:'MPEDA, Halal, HACCP, EU',sh:'24 months frozen',st:'Frozen -18°C',d:'Wild-caught Indian Ocean deep sea shrimp. Superior flavour. Preferred in European gourmet markets.'},
+  ],
+  chicken:[
+    {n:'Frozen Whole Chicken (Halal)',mi:'1 MT',mx:'2 MT',f:'Eviscerated IQF',g:'Grade A',o:'India',pk:'800g-1.5kg IQF; 10kg,20kg Cartons',c:'FSSAI, Halal, HACCP, BRC',sh:'18 months frozen',st:'Frozen -18°C',d:'Eviscerated cleaned whole chicken. Halal certified. Exported to GCC, Africa and Southeast Asia.'},
+    {n:'Frozen Chicken Quarter Leg',mi:'1 MT',mx:'2 MT',f:'IQF Cuts',g:'Grade A',o:'India',pk:'10kg,20kg Master Cartons, IQF',c:'FSSAI, Halal, HACCP, BRC',sh:'18 months frozen',st:'Frozen -18°C',d:'Drumstick and thigh. Juicy, flavourful. Most exported chicken cut to GCC, Vietnam and Africa.'},
+    {n:'Frozen Chicken Breast (Boneless)',mi:'1 MT',mx:'1 MT',f:'Boneless IQF',g:'Grade A',o:'India',pk:'500g,1kg,2kg Retail; 10kg Carton',c:'FSSAI, Halal, HACCP, BRC',sh:'18 months frozen',st:'Frozen -18°C',d:'Boneless skinless IQF breast. Lean protein. Used by QSR chains and hotels. Exported to GCC and SE Asia.'},
+    {n:'Frozen Chicken Wings',mi:'1 MT',mx:'2 MT',f:'IQF',g:'Grade A',o:'India',pk:'500g,1kg Retail; 10kg Master Carton',c:'FSSAI, Halal, HACCP',sh:'18 months frozen',st:'Frozen -18°C',d:'2-joint and 3-joint formats. Popular in fast food and QSR. Exported to GCC, SE Asia and Africa.'},
+    {n:'Frozen Chicken Feet (Paws)',mi:'2 MT',mx:'5 MT',f:'Cleaned IQF',g:'Grade A',o:'India',pk:'10kg,20kg Master Cartons, IQF',c:'FSSAI, Halal, HACCP',sh:'18 months frozen',st:'Frozen -18°C',d:'Cleaned blanched IQF paws. Strong demand in China, Southeast Asia and Africa.'},
+    {n:'Frozen Chicken Liver / Gizzard',mi:'1 MT',mx:'1 MT',f:'Cleaned IQF',g:'Grade A',o:'India',pk:'500g,1kg Packs; 10kg Cartons',c:'FSSAI, Halal, HACCP',sh:'18 months frozen',st:'Frozen -18°C',d:'Cleaned liver and gizzard. Rich in protein and iron. Demand from Vietnam and Middle East.'},
+  ],
+  mutton:[
+    {n:'Frozen Boneless Mutton (Goat)',mi:'500 kg',mx:'2 MT',f:'IQF / Block',g:'A Grade',o:'India',pk:'500g,1kg Retail; 10kg Cartons',c:'FSSAI, Halal, HACCP',sh:'18 months frozen',st:'Frozen -18°C',d:'Trimmed goat meat, IQF or block frozen. Used in GCC cooking. Halal certified. Multiple cut forms available.'},
+    {n:'Frozen Mutton Leg (Bone-in)',mi:'500 kg',mx:'1 MT',f:'Bone-in',g:'A Grade',o:'India',pk:'Whole Leg 1.5-2.5kg/pc; 10kg Cartons',c:'FSSAI, Halal, HACCP',sh:'18 months frozen',st:'Frozen -18°C',d:'Whole bone-in mutton leg. Premium roasting cut. Exported to GCC for festive cooking.'},
+    {n:'Whole Frozen Mutton (Carcass)',mi:'500 kg',mx:'1 MT',f:'Carcass',g:'A Grade',o:'India',pk:'Whole carcass 10-30kg; Custom',c:'FSSAI, Halal, HACCP',sh:'18 months frozen',st:'Frozen -18°C',d:'Skin-off eviscerated carcass. Goat and sheep. For roasting in GCC festive and catering segments.'},
+    {n:'Frozen Mutton Liver',mi:'500 kg',mx:'1 MT',f:'Cleaned IQF',g:'A Grade',o:'India',pk:'500g,1kg Packs; 10kg Cartons',c:'FSSAI, Halal, HACCP',sh:'18 months frozen',st:'Frozen -18°C',d:'Whole cleaned liver. Rich in iron and vitamins. Used across South Asia, Middle East and Africa.'},
+  ],
+  sugar:[
+    {n:'S30 White Refined Sugar',mi:'5 MT',mx:'25 MT / 1 FCL',f:'Fine Crystal',g:'S30 (ICUMSA 30-45)',o:'Maharashtra, UP',pk:'50kg PP Bags; 1MT Jumbo; 1kg Retail',c:'FSSAI, ISO 9001, Codex, Halal',sh:'24 months',st:'Cool, Dry Place',d:'Highly refined bright white sugar. ICUMSA ~30-45. Premium grade for beverages, confectionery and pharmaceuticals.'},
+    {n:'M30 White Mill Sugar',mi:'5 MT',mx:'25 MT / 1 FCL',f:'Crystal',g:'M30 (ICUMSA 180-250)',o:'Maharashtra, UP',pk:'50kg PP Bags; 1MT Jumbo; 1kg Retail',c:'FSSAI, ISO 9001, Codex, Halal',sh:'24 months',st:'Cool, Dry Place',d:'Mill white sugar, medium crystal. ICUMSA ~180-250. Exported to GCC, SE Asia and Africa.'},
+    {n:'Indian Jaggery (Gur)',mi:'1 MT',mx:'5 MT',f:'Block/Powder',g:'A Grade',o:'Maharashtra, UP',pk:'1kg,5kg,10kg Cartons; Jute Bags',c:'FSSAI, APEDA, Halal',sh:'12 months',st:'Cool, Dry Place',d:'Traditional unrefined sugarcane sweetener. No chemicals, no preservatives. Healthy sugar alternative gaining global popularity.'},
+    {n:'Molasses (Sugarcane)',mi:'5 MT',mx:'25 MT',f:'Liquid',g:'Feed/Food/Fermentation',o:'Maharashtra, Karnataka',pk:'Bulk tanker / IBC / 275L Drums',c:'FSSAI, COA',sh:'12 months',st:'Sealed, Room Temperature',d:'High-Brix sugarcane molasses for distilleries, animal feed and fermentation. Brix 80-85°. Direct from Indian sugar mills.'},
+  ]
+};
+
+// ════════════════════════════════════════════════════
+// HELPERS
+// ════════════════════════════════════════════════════
+function getCat(id){return CATS.find(function(c){return c.id===id;});}
+function allProds(){
+  var a=[];
+  Object.keys(PRODS).forEach(function(k){
+    var cat=getCat(k);
+    PRODS[k].forEach(function(p,i){a.push({p:p,catId:k,catName:cat?cat.name:'',catIc:cat?cat.ic:'📦',idx:i});});
+  });
+  return a;
+}
+
+// ════════════════════════════════════════════════════
+// PAGE ROUTER
+// ════════════════════════════════════════════════════
+function goPage(pg){
+  document.querySelectorAll('.pg').forEach(function(x){x.classList.remove('on');});
+  var t=document.getElementById('pg-'+pg);
+  if(t) t.classList.add('on');
+  window.scrollTo(0,0);
+  navActive(pg);
+  injectFooters();
+  if(pg==='catalogue') buildCatalogue();
+  if(pg==='home') buildHomeCats();
+  if(pg==='privacy') { buildPrivacyPage(); injectFooterInto('pg-privacy','ft-privacy'); }
+  if(pg==='terms') { buildTermsPage(); injectFooterInto('pg-terms','ft-terms'); }
+  runFades();
+}
+
+function goCat(cid){
+  var cat=getCat(cid); if(!cat) return goPage('catalogue');
+  var prods=PRODS[cid]||[];
+  document.getElementById('cat-bcname').textContent=cat.name;
+  document.getElementById('cat-title').innerHTML=cat.ic+' '+cat.name;
+  document.getElementById('cat-sub').textContent=prods.length+' Export Quality Products from India';
+  document.getElementById('cat-grid').innerHTML=prods.map(function(p,i){
+    var src=img(p.n)||img(cid);
+    return '<div class="pcard fade" onclick="goProd(\''+cid+'\','+i+')">'
+      +'<div class="pcard-img">'+(src?'<img src="'+src+'" alt="'+p.n+'" loading="lazy" onerror="this.parentNode.innerHTML=\'<div style=height:130px;background:linear-gradient(135deg,var(--ndk),var(--nlt));display:flex;align-items:center;justify-content:center;font-size:2.5rem>'+cat.ic+'</div>\'">'
+        :'<div style="height:130px;background:linear-gradient(135deg,var(--ndk),var(--nlt));display:flex;align-items:center;justify-content:center;font-size:2.5rem;">'+cat.ic+'</div>')+'</div>'
+      +'<div class="pcard-b"><h4>'+p.n+'</h4><div class="moq">MOQ: '+p.mx+'</div><div class="more">View Details →</div></div></div>';
+  }).join('');
+  goPage('category'); runFades();
+}
+
+function goProd(cid,idx){
+  var cat=getCat(cid); var p=(PRODS[cid]||[])[idx]; if(!cat||!p) return;
+  document.getElementById('pd-bc').innerHTML='<a onclick="goPage(\'home\')">Home</a><span class="sep">›</span><a onclick="goPage(\'catalogue\')">Products</a><span class="sep">›</span><a onclick="goCat(\''+cid+'\')">'+cat.name+'</a><span class="sep">›</span><span>'+p.n+'</span>';
+  document.getElementById('pd-title').textContent=p.n;
+  document.getElementById('pd-sub').textContent=cat.name+' — Export Quality from India';
+  document.getElementById('pd-back').onclick=function(){goCat(cid);};
+  var wa=encodeURIComponent('Hi, I am interested in '+p.n+'. Please share pricing and specifications.');
+  var src=img(p.n)||img(cid);
+  document.getElementById('pd-layout').innerHTML=
+    '<div class="pd-top">'
+      +'<div class="pd-img">'+(src?'<img src="'+src+'" alt="'+p.n+'" onerror="this.parentNode.innerHTML=\'<div style=height:310px;background:linear-gradient(135deg,var(--ndk),var(--nlt));display:flex;align-items:center;justify-content:center;font-size:5rem>'+cat.ic+'</div>\'">'
+        :'<div style="height:310px;background:linear-gradient(135deg,var(--ndk),var(--nlt));display:flex;align-items:center;justify-content:center;font-size:5rem;">'+cat.ic+'</div>')+'<div class="pd-zoom">🖼 Replace with your product image</div><div class="pd-share">🔗</div></div>'
+      +'<div class="pd-info"><h1>'+p.n+'</h1>'
+        +'<div class="pd-moq"><strong>'+p.mx+'</strong> (MOQ for Export)</div>'
+        +'<div class="pd-qrow"><input type="number" placeholder="Quantity" min="1"><select><option>Kilogram</option><option>MT (Metric Ton)</option><option>FCL (Container)</option><option>Pieces</option></select><button class="pd-gpb" onclick="scrollToEnq()">Get Best Price</button></div>'
+        +'<table class="pd-stbl"><tr><td>Business Type</td><td>Exporter, Supplier, Trader</td></tr><tr><td>MOQ in India</td><td>'+p.mi+'</td></tr><tr><td>MOQ for Export</td><td>'+p.mx+'</td></tr><tr><td>Form</td><td>'+p.f+'</td></tr>'+(p.g?'<tr><td>Grade</td><td>'+p.g+'</td></tr>':'')+'<tr><td>Country of Origin</td><td>🇮🇳 India ('+p.o+')</td></tr></table>'
+        +'<div class="pd-vm" onclick="document.getElementById(\'pd-det\').style.display=\'\'">Click to view full specifications ▼</div>'
+        +'<div class="pd-acts"><button class="btn-call" onclick="window.location.href=\'tel:+918999662331\'">📞 Request to Call</button><button class="btn-enq" onclick="scrollToEnq()">✉ Send Enquiry</button><a href="https://wa.me/918999662331?text='+wa+'" target="_blank" class="btn-waz">💬 WhatsApp</a></div>'
+      +'</div>'
+    +'</div>'
+    +'<div class="pd-det" id="pd-det"><h3>Product Details</h3>'
+      +'<div class="pd-dgrid"><div class="pd-dc"><div class="dcl">Packaging</div><div class="dcv">'+p.pk+'</div></div><div class="pd-dc"><div class="dcl">Shelf Life</div><div class="dcv">'+p.sh+'</div></div><div class="pd-dc"><div class="dcl">Storage</div><div class="dcv">'+p.st+'</div></div><div class="pd-dc"><div class="dcl">Certifications</div><div class="dcv">'+p.c+'</div></div><div class="pd-dc"><div class="dcl">Origin</div><div class="dcv">'+p.o+'</div></div><div class="pd-dc"><div class="dcl">Country</div><div class="dcv">🇮🇳 India</div></div></div>'
+      +'<p class="pd-desc">'+p.d+'</p>'
+      +'<div class="pd-int"><button class="btn-enq" onclick="scrollToEnq()">Yes! I am interested →</button></div>'
+    +'</div>'
+    +'<div class="enq-box" id="pd-enq-box">'
+      +'<h3>Looking for "'+p.n+'" ?</h3>'
+      +'<div id="pe-ok" class="suc"></div>'
+      +'<div class="eg">'
+        +'<div class="fg"><label>Name *</label><input type="text" id="pe-name" placeholder="Your Name"></div>'
+        +'<div class="fg"><label>Email *</label><input type="email" id="pe-email" placeholder="your@email.com"></div>'
+        +'<div class="fg"><label>Mobile No.</label><div class="pr"><select><option>+91</option><option>+1</option><option>+44</option><option>+971</option><option>+966</option><option>+61</option><option>+234</option></select><input type="tel" id="pe-phone" placeholder="Phone"></div></div>'
+        +'<div class="fg"><label>Quantity</label><div class="pr"><input type="number" id="pe-qty" placeholder="Qty"><select><option>Kilogram</option><option>MT</option><option>FCL</option><option>Pieces</option></select></div></div>'
+        +'<div class="fg full"><label>Purpose of Requirement</label><div class="purp"><label><input type="radio" name="pe-pur" value="Reselling" checked> Reselling</label><label><input type="radio" name="pe-pur" value="End Use"> End Use</label><label><input type="radio" name="pe-pur" value="Both"> Both</label></div></div>'
+        +'<div class="fg full"><label>Requirement Details</label><textarea id="pe-msg" rows="3" placeholder="I am interested. Kindly send the quotation for the same."></textarea></div>'
+      +'</div>'
+      +'<button class="esub" onclick="submitPE(this,\''+p.n.replace(/'/g,"\\'")+'\')" id="pe-sub">Send Enquiry</button>'
+    +'</div>';
+  buildCarousel(cid,idx);
+  goPage('product'); runFades();
+}
+
+function scrollToEnq(){
+  var el=document.getElementById('pd-enq-box');
+  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ════════════════════════════════════════════════════
+// CAROUSEL
+// ════════════════════════════════════════════════════
+var carPos={};
+function buildCarousel(cid,curIdx){
+  var cat=getCat(cid); var items=[];
+  (PRODS[cid]||[]).forEach(function(p,i){if(i!==parseInt(curIdx))items.push({p:p,cid:cid,i:i,ic:cat.ic});});
+  var all=allProds();
+  all.filter(function(x){return x.catId!==cid;}).slice(0,8-items.length).forEach(function(x){items.push({p:x.p,cid:x.catId,i:x.idx,ic:x.catIc});});
+  items=items.slice(0,8);
+  var html=items.map(function(x){
+    var s=img(x.p.n)||img(x.cid);
+    return '<div class="car-itm" onclick="goProd(\''+x.cid+'\','+x.i+')">'
+      +(s?'<img src="'+s+'" alt="'+x.p.n+'" loading="lazy" onerror="this.style.display=\'none\'">':'<div style="height:120px;background:linear-gradient(135deg,var(--ndk),var(--nlt));display:flex;align-items:center;justify-content:center;font-size:2rem;">'+x.ic+'</div>')
+      +'<div class="car-ib"><h4>'+x.p.n+'</h4><button class="car-gq">Get Best Quote</button></div></div>';
+  }).join('');
+  document.getElementById('pd-more').innerHTML=
+    '<div class="car-sec"><h3>Explore More Products</h3>'
+      +'<div class="car-wrap">'
+        +'<button class="car-btn car-prev" onclick="slideCar(-1)">‹</button>'
+        +'<div class="car-out"><div class="car-trk" id="car0">'+html+'</div></div>'
+        +'<button class="car-btn car-next" onclick="slideCar(1)">›</button>'
+      +'</div></div>';
+  carPos['car0']=0;
+}
+function slideCar(dir){
+  var t=document.getElementById('car0'); if(!t) return;
+  var max=Math.max(0,t.children.length-4);
+  carPos['car0']=Math.max(0,Math.min(max,(carPos['car0']||0)+dir));
+  t.style.transform='translateX(-'+(carPos['car0']*207)+'px)';
+}
+
+// ════════════════════════════════════════════════════
+// HOME CATS
+// ════════════════════════════════════════════════════
+function buildHomeCats(){
+  var g=document.getElementById('home-cats'); if(!g||g.dataset.built) return; g.dataset.built=1;
+  g.innerHTML=CATS.slice(0,8).map(function(cat){
+    var cnt=(PRODS[cat.id]||[]).length;
+    var s=img(cat.id);
+    return '<div class="ccard fade" onclick="goCat(\''+cat.id+'\')">'
+      +'<div class="ccard-img">'+(s?'<img src="'+s+'" alt="'+cat.name+'" loading="lazy" onerror="this.parentNode.innerHTML=\'<div style=height:170px;background:linear-gradient(135deg,var(--ndk),var(--nlt));display:flex;align-items:center;justify-content:center;font-size:3rem>'+cat.ic+'</div>\'">'
+        :'<div style="height:170px;background:linear-gradient(135deg,var(--ndk),var(--nlt));display:flex;align-items:center;justify-content:center;font-size:3rem;">'+cat.ic+'</div>')
+        +'<span class="ccard-bdg">'+cnt+' Products</span></div>'
+      +'<div class="ccard-body"><div class="cc-ic">'+cat.ic+'</div><h3>'+cat.name+'</h3><p>'+cat.sub+'</p><div class="ccard-lnk">Explore →</div></div></div>';
+  }).join('');
+  buildFeaturedProds();
+}
+
+function buildFeaturedProds(){
+  var el=document.getElementById('feat-prods'); if(!el||el.dataset.built) return; el.dataset.built=1;
+  // Pick one top product from each of 5 key categories
+  var picks=[
+    {cid:'basmati',idx:0},{cid:'wholespices',idx:0},{cid:'freshfruits',idx:0},
+    {cid:'freshveg',idx:0},{cid:'seafood',idx:0},{cid:'pulses',idx:0},
+    {cid:'dairy',idx:0},{cid:'chicken',idx:0},{cid:'sugar',idx:0},{cid:'sesame',idx:0}
+  ];
+  el.innerHTML=picks.map(function(pick){
+    var cat=getCat(pick.cid); var prods=PRODS[pick.cid]||[]; var p=prods[pick.idx];
+    if(!cat||!p) return '';
+    var s=img(p.n)||img(pick.cid);
+    return '<div class="fpcard fade" onclick="goProd(\''+pick.cid+'\','+pick.idx+')">'
+      +'<div class="fpcard-img">'+(s?'<img src="'+s+'" alt="'+p.n+'" loading="lazy" onerror="this.style.display=\'none\'">':'')+'</div>'
+      +'<div class="fpcard-body"><h4>'+p.n+'</h4><div class="moq" style="font-size:.62rem;color:var(--mut);">MOQ: '+p.mx+'</div><div class="lnk" style="font-size:.65rem;font-weight:700;color:var(--red);margin-top:5px;">View Details →</div></div>'
+      +'</div>';
+  }).join('');
+}
+
+// ════════════════════════════════════════════════════
+// FULL CATALOGUE
+// ════════════════════════════════════════════════════
+function buildCatalogue(){
+  var con=document.getElementById('cat-con'); if(!con||con.dataset.built) return; con.dataset.built=1;
+  var html=''; CATS.forEach(function(cat){
+    var prods=PRODS[cat.id]||[]; if(!prods.length) return;
+    html+='<div class="csec" data-cid="'+cat.id+'">'
+      +'<div class="csh"><span class="cs-ic">'+cat.ic+'</span><h2>'+cat.name+'</h2><span class="cs-cnt">'+prods.length+' Products</span><button class="cs-btn" onclick="goCat(\''+cat.id+'\')">View All →</button></div>'
+      +'<div class="pgrid">'+prods.map(function(p,i){
+        var s=img(p.n)||img(cat.id);
+        return '<div class="pcard fade" onclick="goProd(\''+cat.id+'\','+i+')">'
+          +'<div class="pcard-img">'+(s?'<img src="'+s+'" alt="'+p.n+'" loading="lazy" onerror="this.style.display=\'none\'">'
+            :'<div style="height:130px;background:linear-gradient(135deg,var(--ndk),var(--nlt));display:flex;align-items:center;justify-content:center;font-size:2.5rem;">'+cat.ic+'</div>')+'</div>'
+          +'<div class="pcard-b"><h4>'+p.n+'</h4><div class="moq">MOQ: '+p.mx+'</div><div class="more">View Details →</div></div></div>';
+      }).join('')+'</div></div>';
+  });
+  con.innerHTML=html;
+  // Filter bar
+  var fb=document.getElementById('fbar'); if(fb){
+    fb.innerHTML='<button class="fb act" onclick="filt(\'all\',this)">All</button>'
+      +CATS.map(function(c){return '<button class="fb" onclick="filt(\''+c.id+'\',this)">'+c.ic+' '+c.name+'</button>';}).join('');
+  }
+  runFades();
+}
+function filt(id,btn){
+  document.querySelectorAll('.fb').forEach(function(b){b.classList.remove('act');});
+  btn.classList.add('act');
+  document.querySelectorAll('.csec').forEach(function(s){s.hidden=(id!=='all'&&s.dataset.cid!==id);});
+}
+
+// ════════════════════════════════════════════════════
+// DROPDOWNS
+// ════════════════════════════════════════════════════
+function buildNav(){
+  var dd=document.getElementById('prod-dd');
+  if(dd) dd.innerHTML=CATS.map(function(c){return '<a onclick="goCat(\''+c.id+'\')">'+c.ic+' '+c.name+'</a>';}).join('');
+  var mp=document.getElementById('mob-prods');
+  if(mp) mp.innerHTML=CATS.map(function(c){return '<a class="ml" style="padding-left:32px;font-size:.85rem;" onclick="goCat(\''+c.id+'\');closeMob()">'+c.ic+' '+c.name+'</a>';}).join('');
+}
+
+// ════════════════════════════════════════════════════
+// FOOTERS
+// ════════════════════════════════════════════════════
+var ftDone={};
+function injectFooters(){
+  var tpl=document.getElementById('ftpl'); if(!tpl) return;
+  ['home','catalogue','category','product','about','contact','flipbook'].forEach(function(id){
+    var sl=document.getElementById('ft-'+id);
+    if(sl&&!ftDone[id]){sl.innerHTML=tpl.innerHTML;ftDone[id]=1;}
+  });
+}
+function injectFooterInto(pgId, ftId){
+  var tpl=document.getElementById('ftpl'); if(!tpl) return;
+  var sl=document.getElementById(ftId);
+  if(sl&&!ftDone[ftId]){sl.innerHTML=tpl.innerHTML;ftDone[ftId]=1;}
+}
+
+// ════════════════════════════════════════════════════
+// NAV ACTIVE
+// ════════════════════════════════════════════════════
+function navActive(pg){
+  document.querySelectorAll('.nl>li>a').forEach(function(a){a.classList.remove('act');});
+  var m={home:'nv-home',about:'nv-about',catalogue:'nv-prod',category:'nv-prod',product:'nv-prod',flipbook:'nv-flip',contact:'nv-con'};
+  var el=document.getElementById(m[pg]); if(el) el.classList.add('act');
+}
+
+// ════════════════════════════════════════════════════
+// MOBILE NAV
+// ════════════════════════════════════════════════════
+function openMob(){document.getElementById('mnav').classList.add('open');}
+function closeMob(){document.getElementById('mnav').classList.remove('open');}
+function chkClose(e){if(e.target===document.getElementById('mnav'))closeMob();}
+
+// ════════════════════════════════════════════════════
+// WHATSAPP
+// ════════════════════════════════════════════════════
+function openWA(m){window.open('https://wa.me/918999662331?text='+encodeURIComponent(m||'Hi Memane International, I am interested in your products. Please share details.'),'_blank');}
+
+// ════════════════════════════════════════════════════
+// FORMS — Custom Cloudflare Worker Integration
+// ════════════════════════════════════════════════════
+async function submitPE(btn,prod){
+  var nm=document.getElementById('pe-name').value.trim();
+  var em=document.getElementById('pe-email').value.trim();
+  var ph=document.getElementById('pe-phone').value.trim();
+  var qt=document.getElementById('pe-qty').value.trim();
+  var pur=document.querySelector('input[name="pe-pur"]:checked');
+  var mg=document.getElementById('pe-msg').value.trim();
+  if(!nm||!em){alert('Please enter your name and email.');return;}
+  btn.textContent='Sending...';btn.disabled=true;
+  
+  var data={
+    name:nm, email:em, phone:ph, quantity:qt, 
+    purpose:pur?pur.value:'', 
+    message:mg||'I am interested. Kindly send the quotation.', 
+    product:prod
+  };
+  
+  try {
+    var res = await fetch('/api/enquiry',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+    var result = await res.json();
+    btn.textContent='Send Enquiry';btn.disabled=false;
+    
+    if(result.ok) {
+      var ok=document.getElementById('pe-ok');
+      ok.textContent='✅ Enquiry sent! We\'ll get back to you within 24 hours.';ok.style.display='block';
+      setTimeout(function(){if(confirm('Also send via WhatsApp for instant response?')) openWA('Hi, enquiry for '+prod+'. Name: '+nm+', Qty: '+qt+', Email: '+em);},400);
+    } else {
+      alert('Something went wrong. Please try again.');
+    }
+  } catch(err) {
+    btn.textContent='Send Enquiry';btn.disabled=false;
+    openWA('Hi, I need a quote for '+prod+'. Name: '+nm+', Qty: '+qt+', Email: '+em+'. '+(mg||''));
+    var ok=document.getElementById('pe-ok');
+    ok.textContent='✅ Opening WhatsApp for instant response!';ok.style.display='block';
+  }
+}
+
+async function submitCF(btn){
+  var nm=document.getElementById('cf-name').value.trim();
+  var em=document.getElementById('cf-email').value.trim();
+  var co=document.getElementById('cf-country').value.trim();
+  var ph=document.getElementById('cf-phone').value.trim();
+  var pr=document.getElementById('cf-prod').value;
+  var qt=document.getElementById('cf-qty').value.trim();
+  var pt=document.getElementById('cf-port').value.trim();
+  var mg=document.getElementById('cf-msg').value.trim();
+  if(!nm||!em){alert('Please enter your name and email.');return;}
+  btn.textContent='Sending...';btn.disabled=true;
+  
+  var data={
+    name:nm, email:em, country:co, phone:ph, 
+    product:pr, quantity:qt, destination_port:pt, message:mg
+  };
+  
+  try {
+    var res = await fetch('/api/enquiry',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+    var result = await res.json();
+    btn.textContent='Send Enquiry →';btn.disabled=false;
+    
+    if(result.ok) {
+      document.getElementById('cf-ok').style.display='block';
+      setTimeout(function(){if(confirm('Also send via WhatsApp for faster response?')) openWA('Hi, Trade Enquiry. Name: '+nm+', Country: '+co+', Product: '+pr+', Qty: '+qt+', Email: '+em);},400);
+    } else {
+      alert('Something went wrong. Please try again.');
+    }
+  } catch(err) {
+    btn.textContent='Send Enquiry →';btn.disabled=false;
+    openWA('Trade Enquiry from '+nm+' ('+co+'). Product: '+pr+', Qty: '+qt+', Email: '+em+'. '+mg);
+    document.getElementById('cf-ok').textContent='✅ Opening WhatsApp for instant response!';
+    document.getElementById('cf-ok').style.display='block';
+  }
+}
+
+function openBrochure(){window.open('images/brochure.pdf','_blank')||(window.location.href='images/brochure.pdf');}
+
+// ════════════════════════════════════════════════════
+// FADE OBSERVER
+// ════════════════════════════════════════════════════
+function runFades(){
+  if(!('IntersectionObserver' in window)){
+    document.querySelectorAll('.fade:not(.in)').forEach(function(e){e.classList.add('in');}); return;
+  }
+  var ob=new IntersectionObserver(function(ents){
+    ents.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');ob.unobserve(e.target);}});
+  },{threshold:0.07});
+  document.querySelectorAll('.fade:not(.in)').forEach(function(e,i){
+    e.style.transitionDelay=(i%6*0.07)+'s'; ob.observe(e);
+  });
+}
+
+// ════════════════════════════════════════════════════
+// PRIVACY POLICY PAGE
+// ════════════════════════════════════════════════════
+function buildPrivacyPage() {
+  var el = document.getElementById('pg-privacy');
+  if (!el) return;
+  if (el.dataset.built) return;
+  el.dataset.built = '1';
+  el.innerHTML = '<div class="wrap" style="max-width:860px;margin:0 auto;padding:60px 24px;">' +
+  '<h1 style="font-family:Playfair Display,serif;font-size:2rem;color:var(--navy);margin-bottom:8px;">Privacy Policy</h1>' +
+  '<p style="color:var(--mut);font-size:.82rem;margin-bottom:32px;">Last updated: March 2025 &nbsp;·&nbsp; Memane International, Pune, Maharashtra, India</p>' +
+  section('1. Who We Are',
+    'Memane International ("we", "us", "our") is an import-export company registered in Pune, Maharashtra, India. We operate the website <strong>memaneinternational.in</strong>. Contact: <a href="mailto:info@memaneinternational.in">info@memaneinternational.in</a> | +91 8999662331.'
+  ) +
+  section('2. Information We Collect',
+    '<strong>Information you provide:</strong> When you fill out our enquiry or contact forms, we collect your name, email address, phone number, country, and message content.<br><br>' +
+    '<strong>Information collected automatically:</strong> We collect standard server logs including IP address, browser type, and pages visited. We use Cloudflare for hosting which may process your IP address as part of their service.'
+  ) +
+  section('3. How We Use Your Information',
+    'We use the information you provide solely to: respond to your enquiries and business requests; send you product information and quotes you have requested; improve our website and services. We do not use your data for advertising. We do not sell, rent, or share your personal data with third parties except as required to fulfil your request (e.g., logistics partners) or as required by law.'
+  ) +
+  section('4. Cookies',
+    'We use only essential functional cookies required to operate this website. We do not use tracking cookies, advertising cookies, or analytics cookies. By clicking "Accept" on our cookie banner, you consent to essential cookies only.'
+  ) +
+  section('5. Third-Party Services',
+    '<strong>Cloudflare:</strong> Our website is hosted on Cloudflare Pages. Cloudflare processes your IP address for security and performance. See <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Cloudflare Privacy Policy</a>.<br><br>' +
+    '<strong>Unsplash:</strong> Product images are served from Unsplash CDN.'
+  ) +
+  section('6. Data Retention',
+    'We retain enquiry data for a maximum of 3 years for business correspondence purposes. You may request deletion of your data at any time by emailing us.'
+  ) +
+  section('7. Your Rights (GDPR)',
+    'If you are located in the European Union, you have the following rights under GDPR: right to access your data; right to rectification; right to erasure ("right to be forgotten"); right to data portability; right to object to processing. To exercise any of these rights, email <a href="mailto:info@memaneinternational.in">info@memaneinternational.in</a>. We will respond within 30 days.'
+  ) +
+  section('8. Security',
+    'We implement appropriate technical and organisational measures to protect your personal information. Our website uses HTTPS (SSL/TLS) encryption for all data transmission.'
+  ) +
+  section('9. Children\'s Privacy',
+    'Our website and services are intended for business use and are not directed at children under 16. We do not knowingly collect personal information from children.'
+  ) +
+  section('10. Changes to This Policy',
+    'We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated date. Continued use of the website after changes constitutes acceptance.'
+  ) +
+  section('11. Contact',
+    'For any privacy-related queries: <strong>Memane International</strong><br>Email: <a href="mailto:info@memaneinternational.in">info@memaneinternational.in</a><br>Phone: +91 8999662331<br>Address: Pune, Maharashtra, India'
+  ) +
+  '</div>';
+}
+
+function buildTermsPage() {
+  var el = document.getElementById('pg-terms');
+  if (!el) return;
+  if (el.dataset.built) return;
+  el.dataset.built = '1';
+  el.innerHTML = '<div class="wrap" style="max-width:860px;margin:0 auto;padding:60px 24px;">' +
+  '<h1 style="font-family:Playfair Display,serif;font-size:2rem;color:var(--navy);margin-bottom:8px;">Terms of Service</h1>' +
+  '<p style="color:var(--mut);font-size:.82rem;margin-bottom:32px;">Last updated: March 2025 &nbsp;·&nbsp; Memane International, Pune, Maharashtra, India</p>' +
+  section('1. Acceptance of Terms',
+    'By accessing and using the website <strong>memaneinternational.in</strong> (the "Site"), you agree to be bound by these Terms of Service. If you do not agree, please do not use the Site.'
+  ) +
+  section('2. About Us',
+    'Memane International is an import-export company registered in Pune, Maharashtra, India. We are APEDA (RCMC) registered and operate in compliance with Indian export regulations and international trade laws.'
+  ) +
+  section('3. Website Use',
+    'This website is provided for business enquiry and information purposes only. You may: browse product information; submit enquiries; download our catalogue. You may not: copy, reproduce, or distribute our website content without written permission; use the site for unlawful purposes; attempt to gain unauthorised access to any part of the Site.'
+  ) +
+  section('4. Product Information',
+    'Product details, specifications, and prices shown on this website are indicative and for enquiry purposes only. Final prices, MOQ, and specifications are subject to negotiation and formal quotation. Product availability is subject to seasonal and market conditions. Images are representative and may vary from actual products.'
+  ) +
+  section('5. Enquiries and Quotes',
+    'Submitting an enquiry through our website does not constitute a binding order or contract. A formal contract is only established upon issuance of a written Purchase Order or Sales Contract signed by authorised representatives of both parties.'
+  ) +
+  section('6. Intellectual Property',
+    'The Memane International name, logo, and website content are our intellectual property. Product photographs sourced from Unsplash are used under the Unsplash License. Unauthorised reproduction of our brand materials is prohibited.'
+  ) +
+  section('7. Export and Trade Compliance',
+    'All exports are conducted in compliance with Indian export regulations, FSSAI requirements, APEDA guidelines, and destination country import regulations. Buyers are responsible for compliance with their local import laws, duties, and regulations.'
+  ) +
+  section('8. Limitation of Liability',
+    'This website is provided "as is". We make no warranties about the accuracy or completeness of information on this Site. We shall not be liable for any indirect, incidental, or consequential damages arising from your use of this website or reliance on its content.'
+  ) +
+  section('9. Links to Third Parties',
+    'Our Site may contain links to third-party websites. We are not responsible for the content or privacy practices of those sites.'
+  ) +
+  section('10. Governing Law',
+    'These Terms are governed by the laws of India. Any disputes shall be subject to the exclusive jurisdiction of courts in Pune, Maharashtra, India.'
+  ) +
+  section('11. Changes',
+    'We reserve the right to modify these Terms at any time. Changes are effective immediately upon posting. Continued use of the Site constitutes acceptance of updated Terms.'
+  ) +
+  section('12. Contact',
+    'Questions about these Terms: <strong>Memane International</strong><br>Email: <a href="mailto:info@memaneinternational.in">info@memaneinternational.in</a><br>Phone: +91 8999662331<br>Address: Pune, Maharashtra, India'
+  ) +
+  '</div>';
+}
+
+function section(title, body) {
+  return '<div style="margin-bottom:28px;">' +
+    '<h2 style="font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--bdr);">' + title + '</h2>' +
+    '<p style="font-size:.87rem;color:var(--txt);line-height:1.8;">' + body + '</p>' +
+    '</div>';
+}
+
+// ════════════════════════════════════════════════════
+// COOKIE CONSENT
+// ════════════════════════════════════════════════════
+function initCookieBanner() {
+  var consent = localStorage.getItem('mi_cookie_consent');
+  if (!consent) {
+    var banner = document.getElementById('cookie-banner');
+    if (banner) { banner.style.display = 'flex'; }
+  }
+}
+function acceptCookies() {
+  localStorage.setItem('mi_cookie_consent', 'accepted');
+  var b = document.getElementById('cookie-banner'); if (b) b.style.display = 'none';
+}
+function declineCookies() {
+  localStorage.setItem('mi_cookie_consent', 'declined');
+  var b = document.getElementById('cookie-banner'); if (b) b.style.display = 'none';
+}
+
+// ════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════
+var _spl = document.getElementById('splash');
+setTimeout(function(){
+  if(_spl){ _spl.classList.add('hide'); setTimeout(function(){_spl.style.display='none';},900); }
+  goPage('home');
+  buildNav();
+  injectFooters();
+  runFades();
+  initCookieBanner();
+}, 2400);
+</script>
+</body>
+</html>
