@@ -6,7 +6,7 @@ const CORS={'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'GE
 function json(data,status=200){return new Response(JSON.stringify(data),{status,headers:{'Content-Type':'application/json',...CORS}});}
 function err(msg,status=400){return json({ok:false,msg},status);}
 
-const DEFAULT_SETTINGS={company:'Memane International',proprietor:'Tejas Memane',tagline:'Reliable Global Sourcing from India',about_short:'India-based import-export company specializing in agricultural commodities, food products, minerals and engineering goods. APEDA (RCMC) Registered.',about_long:"Memane International was founded with a single belief: that India's agricultural wealth deserves to reach every corner of the world. Starting from Pune, Maharashtra, our founder Tejas Memane built a company rooted in trust, transparency, and the pure goodness of natural produce. We source directly from verified farmers and processors across India, ensuring consistency, competitive pricing, and export-ready standards for every shipment.",phone1:'+91 8999662331',phone2:'+91 9011503140',whatsapp:'918999662331',email1:'info@memaneinternational.in',email2:'memaneexim@gmail.com',website:'www.memaneinternational.in',address:'Pune, Maharashtra, India',hours:'Monday – Saturday, 9:00 AM – 6:00 PM IST',w3f_enquiry:'1744dc02-e069-4ed8-8869-5e185b6b0415',w3f_contact:'ceeae473-d8e0-4dbd-9741-2ae400c5f2dc',certifications:['APEDA (RCMC)','FSSAI','FIEO','Phytosanitary'],stats:[{icon:'🌍',num:'40+',label:'Countries Served'},{icon:'📦',num:'91+',label:'Products Listed'},{icon:'✅',num:'APEDA',label:'RCMC Registered'},{icon:'🤝',num:'17',label:'Categories'}],hero_badge:'🇮🇳 APEDA (RCMC) · FSSAI · FIEO · Pune, India',hero_h1:'Bridging India & the World — One Harvest at a Time',hero_sub:'Your trusted partner for premium agricultural exports from India. Rice, Spices, Fresh Produce, Dairy, Frozen Foods & more — delivered to 40+ countries.',admin_password:'admin123'};
+const DEFAULT_SETTINGS={company:'Memane International',proprietor:'Tejas Memane',tagline:'Reliable Global Sourcing from India',about_short:'India-based import-export company specializing in agricultural commodities, food products, minerals and engineering goods. APEDA (RCMC) Registered.',about_long:"Memane International was founded with a single belief: that India's agricultural wealth deserves to reach every corner of the world. Starting from Pune, Maharashtra, our founder Tejas Memane built a company rooted in trust, transparency, and the pure goodness of natural produce. We source directly from verified farmers and processors across India, ensuring consistency, competitive pricing, and export-ready standards for every shipment.",phone1:'+91 8999662331',phone2:'+91 9011503140',whatsapp:'918999662331',email1:'info@memaneinternational.in',email2:'memaneexim@gmail.com',website:'www.memaneinternational.in',address:'Pune, Maharashtra, India',hours:'Monday – Saturday, 9:00 AM – 6:00 PM IST',certifications:['APEDA (RCMC)','FSSAI','FIEO','Phytosanitary'],stats:[{icon:'🌍',num:'40+',label:'Countries Served'},{icon:'📦',num:'91+',label:'Products Listed'},{icon:'✅',num:'APEDA',label:'RCMC Registered'},{icon:'🤝',num:'17',label:'Categories'}],hero_badge:'🇮🇳 APEDA (RCMC) · FSSAI · FIEO · Pune, India',hero_h1:'Bridging India & the World — One Harvest at a Time',hero_sub:'Your trusted partner for premium agricultural exports from India. Rice, Spices, Fresh Produce, Dairy, Frozen Foods & more — delivered to 40+ countries.',admin_password:'admin123'};
 
 const DEFAULT_CATEGORIES=[
   {id:'basmati',icon:'🌾',name:'Basmati Rice',sub:'Premium aromatic long-grain varieties',img:'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&q=80'},
@@ -153,19 +153,28 @@ async function setKV(env,key,data){
 function b32dec(s){const a='ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';let bits=0,val=0;const out=[];for(const c of s.toUpperCase().replace(/=+$/,'')){val=(val<<5)|a.indexOf(c);bits+=5;if(bits>=8){out.push((val>>>(bits-8))&255);bits-=8;}}return new Uint8Array(out);}
 async function genTOTP(secret,w=0){const epoch=Math.floor(Date.now()/1000);const ctr=Math.floor(epoch/30)+w;const key=await crypto.subtle.importKey('raw',b32dec(secret),{name:'HMAC',hash:'SHA-1'},false,['sign']);const data=new DataView(new ArrayBuffer(8));data.setUint32(4,ctr,false);const sig=new Uint8Array(await crypto.subtle.sign('HMAC',key,data.buffer));const off=sig[19]&0xf;const code=(((sig[off]&0x7f)<<24)|(sig[off+1]<<16)|(sig[off+2]<<8)|sig[off+3])%1000000;return code.toString().padStart(6,'0');}
 async function verifyTOTP(secret,token){for(const w of[-1,0,1])if(await genTOTP(secret,w)===token)return true;return false;}
-async function sendEmail(toEmail,toName,subject,htmlBody){
+
+// ── NEW RESEND API INTEGRATION ────────────────────────────────
+async function sendEmail(env, toEmail, toName, subject, htmlBody){
   try{
-    const res=await fetch('https://api.mailchannels.net/tx/v1/send',{
+    if (!env.RESEND_API_KEY) {
+      console.error("RESEND_API_KEY missing from environment variables");
+      return false;
+    }
+    const res=await fetch('https://api.resend.com/emails',{
       method:'POST',
-      headers:{'content-type':'application/json'},
+      headers:{
+        'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+        'Content-Type':'application/json'
+      },
       body:JSON.stringify({
-        personalizations:[{to:[{email:toEmail,name:toName}]}],
-        from:{email:'noreply@memaneinternational.in',name:'Memane International'},
+        from:'Memane Admin <info@memaneinternational.in>', // Using your verified professional domain
+        to:toEmail,
         subject:subject,
-        content:[{type:'text/html',value:htmlBody}]
+        html:htmlBody
       })
     });
-    return res.status===202;
+    return res.ok;
   }catch(e){return false;}
 }
 
@@ -178,7 +187,7 @@ async function seedIfEmpty(env){
     await setKV(env,'categories',DEFAULT_CATEGORIES);
     await setKV(env,'products',DEFAULT_PRODUCTS);
     await setKV(env,'enquiries',[]);
-    await setKV(env,'admins',[{id:'admin1',username:'admin',password:'admin123',role:'superadmin',name:'Tejas Memane',totp_secret:null,totp_enabled:false,created:Date.now()}]);
+    await setKV(env,'admins',[{id:'admin1',username:'admin',password:'admin123',role:'superadmin',name:'Tejas Memane',email:'memaneexim@gmail.com',totp_secret:null,totp_enabled:false,created:Date.now()}]);
   }
 }
 
@@ -204,12 +213,49 @@ export async function onRequest(context){
   // ── ALL POST ROUTES ─────────────────────────────────────────────────
   if(request.method==='POST'){
 
-    // PUBLIC: Enquiry
+    // 1. PUBLIC: Enquiry (Saves to DB + Sends Resend Email to Admin)
     if(path==='enquiry'){
       const body=await request.json().catch(()=>({}));
       const enquiries=await getKV(env,'enquiries',[]);
+      
+      // Clean up stray Web3Forms keys if any get passed
+      delete body.access_key; delete body.botcheck; delete body.subject;
+      
       enquiries.unshift({id:'eq'+Date.now(),...body,status:'new',ts:Date.now()});
       await setKV(env,'enquiries',enquiries.slice(0,500));
+
+      // Fetch admin email from settings
+      const s=await getKV(env,'settings',DEFAULT_SETTINGS);
+      const adminEmail = s.email1 || 'info@memaneinternational.in';
+      
+      // Build email notification
+      const emailHtml = `
+        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;border:1px solid #e0e0e0;">
+          <div style="background:#1A2B5F;padding:20px;text-align:center;">
+            <h2 style="color:#fff;margin:0;">New Website Enquiry</h2>
+            <p style="color:#C9A84C;margin:5px 0 0;font-size:14px;">Memane International</p>
+          </div>
+          <div style="padding:24px;background:#f9f9f9;">
+            <p><strong>Name:</strong> ${body.name || 'Not provided'}</p>
+            <p><strong>Email:</strong> ${body.email || 'Not provided'}</p>
+            <p><strong>Phone:</strong> ${body.phone || 'Not provided'}</p>
+            <p><strong>Product:</strong> ${body.product || 'Not provided'}</p>
+            <p><strong>Quantity:</strong> ${body.quantity || 'Not provided'}</p>
+            <p><strong>Company/Country/Port:</strong> ${body.company || ''} ${body.country || ''} ${body.destination_port || ''}</p>
+            <div style="background:#fff;padding:15px;border-left:4px solid #C9A84C;margin-top:20px;">
+              <p style="margin:0;font-weight:bold;font-size:12px;color:#999;text-transform:uppercase;">Message / Requirements</p>
+              <p style="margin:8px 0 0;line-height:1.6;">${body.message || body.requirements || 'No message provided.'}</p>
+            </div>
+            <div style="text-align:center;margin-top:30px;">
+              <a href="https://memaneinternational.in/admin.html" style="background:#9B1C31;color:#fff;padding:12px 24px;text-decoration:none;border-radius:4px;font-weight:bold;font-size:14px;">View in Dashboard</a>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Fire off the email to admin via Resend
+      await sendEmail(env, adminEmail, s.proprietor || 'Admin', '🔔 New Lead: ' + (body.name || 'Website Enquiry'), emailHtml);
+
       return json({ok:true});
     }
 
@@ -256,7 +302,7 @@ export async function onRequest(context){
       return json({ok:true,token:authToken,role:admin.role,username:admin.username,name:admin.name});
     }
 
-    // PUBLIC: Forgot Password (by EMAIL — secure)
+    // PUBLIC: Forgot Password (by EMAIL — secure via Resend)
     if(path==='admin/forgot-password'){
       const body=await request.json().catch(()=>({}));
       const{email}=body;
@@ -269,7 +315,9 @@ export async function onRequest(context){
         const resetToken=Array.from(tokenBytes).map(b=>b.toString(16).padStart(2,'0')).join('');
         await env.KV.put(`pwreset:${resetToken}`,JSON.stringify({username:admin.username,created:Date.now()}),{expirationTtl:3600});
         const resetLink=`https://memaneinternational.in/admin.html?reset=${resetToken}`;
-        const sent=await sendEmail(admin.email,admin.name||admin.username,'Account Recovery — Memane International',
+        
+        // Using updated sendEmail with env
+        const sent=await sendEmail(env, admin.email,admin.name||admin.username,'Account Recovery — Memane International',
           `<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;"><div style="background:#1A2B5F;padding:24px;text-align:center;"><h2 style="color:#fff;margin:0;">Memane International</h2><p style="color:#C9A84C;margin:4px 0 0;font-size:13px;">Account Recovery Request</p></div><div style="padding:28px;background:#f9f9f9;border:1px solid #e0e0e0;"><p>Hi <strong>${admin.name||admin.username}</strong>,</p><p>We received an account recovery request for this email.</p><div style="background:#fff;padding:16px;border-left:4px solid #1A2B5F;margin:20px 0;"><p style="margin:0;font-size:16px;"><strong>Your Username:</strong> ${admin.username}</p></div><p>Click below to reset your password:</p><div style="text-align:center;margin:28px 0;"><a href="${resetLink}" style="background:#9B1C31;color:#fff;padding:14px 32px;text-decoration:none;border-radius:6px;font-weight:bold;font-size:15px;display:inline-block;">Reset My Password</a></div><p style="color:#666;font-size:13px;">Or copy: <a href="${resetLink}">${resetLink}</a></p><p style="color:#666;font-size:13px;">⏱ Expires in 1 hour.</p><hr style="border:none;border-top:1px solid #e0e0e0;margin:20px 0;"><p style="color:#999;font-size:12px;">— Memane International Admin System · memaneinternational.in</p></div></div>`
         );
         if(!sent)console.log('Email send failed for:',admin.email);
@@ -295,7 +343,9 @@ export async function onRequest(context){
       await env.KV.delete(`pwreset:${resetToken}`);
       const s=await getKV(env,'settings',DEFAULT_SETTINGS);
       const adminEmail=admins[idx].email||s.email1||'info@memaneinternational.in';
-      await sendEmail(adminEmail,admins[idx].name||username,'Password Reset Successful — Memane International',
+      
+      // Using updated sendEmail with env
+      await sendEmail(env, adminEmail,admins[idx].name||username,'Password Reset Successful — Memane International',
         `<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;"><div style="background:#1A2B5F;padding:24px;text-align:center;"><h2 style="color:#fff;margin:0;">Memane International</h2><p style="color:#27AE60;margin:4px 0 0;font-size:13px;">✅ Password Reset Successful</p></div><div style="padding:28px;background:#f9f9f9;border:1px solid #e0e0e0;"><p>Hi <strong>${admins[idx].name||username}</strong>,</p><p>Your password was reset on <strong>${new Date().toUTCString()}</strong>.</p><p><a href="https://memaneinternational.in/admin.html" style="color:#9B1C31;font-weight:bold;">Click here to log in</a></p><hr style="border:none;border-top:1px solid #e0e0e0;margin:20px 0;"><p style="color:#999;font-size:12px;">— Memane International Admin System</p></div></div>`
       );
       return json({ok:true,msg:'Password reset successfully. You can now log in.'});
@@ -305,6 +355,13 @@ export async function onRequest(context){
     const authHeader=request.headers.get('Authorization')||'';
     const token=authHeader.replace('Bearer ','');
     const session=await validateToken(env,token);
+    
+    // Session check endpoint
+    if(path==='admin' || path==='admin/verify') {
+       if(!session) return json({ok:false, msg:'Not authenticated'}, 401);
+       return json({ok:true, session});
+    }
+    
     if(!session)return json({ok:false,msg:'Not authenticated'},403);
 
     const body=await request.json().catch(()=>({}));
@@ -350,7 +407,8 @@ export async function onRequest(context){
       admins[idx].password=newPassword;admins[idx].password_changed=Date.now();
       await setKV(env,'admins',admins);
       const s=await getKV(env,'settings',DEFAULT_SETTINGS);
-      await sendEmail(admins[idx].email||s.email1,admins[idx].name||session.username,'Admin Password Changed — Memane International',`<p>Your password was changed on ${new Date().toUTCString()}.</p>`);
+      // Using updated sendEmail with env
+      await sendEmail(env, admins[idx].email||s.email1,admins[idx].name||session.username,'Admin Password Changed — Memane International',`<p>Your password was changed on ${new Date().toUTCString()}.</p>`);
       return json({ok:true,msg:'Password changed. Confirmation email sent.'});
     }
     if(path==='admin/save-product'){
