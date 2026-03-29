@@ -281,73 +281,7 @@ export async function onRequest(context){
       return json({ok:true});
     }
 
-// ── PUBLIC: AI Sales Assistant (Powered by Gemini) ──
-    if(path==='chat'){
-      if(request.method !== 'POST') return json({msg:'Method not allowed'}, 405);
-      
-      const body = await request.json().catch(()=>({}));
-      const userMsg = body.message;
-      if(!userMsg) return json({ok:false, msg:'No message provided'}, 400);
-      
-      if(!env.GEMINI_API_KEY) return json({ok:false, msg:'AI Key missing from Cloudflare'}, 500);
 
-      const [settings, prods] = await Promise.all([
-        getKV(env,'settings',DEFAULT_SETTINGS),
-        getKV(env,'products',DEFAULT_PRODUCTS)
-      ]);
-
-      const activeProds = prods.filter(p=>p.active!==false);
-      const catalogText = activeProds.map(p => `- ${p.name} (MOQ: ${p.moq_export || 'Variable'})`).join('\n');
-
-      const systemPrompt = `You are KIM, the Executive Assistant at Memane International. 
-Your job is to be polite, professional, and help buyers find products. 
-Here is our exact, live product catalog:\n${catalogText}
-Contact Email: ${settings.email1 || 'info@memaneinternational.in'}
-WhatsApp: ${settings.whatsapp || '+91 8999662331'}
-
-Rule 1: The user is sending you a chat transcript. Read the whole transcript to understand the context.
-Rule 2: If they ask for a product we have, confirm we have it and state the MOQ.
-Rule 3: IMPORTANT: You do NOT have pricing data. If a user asks for a price, quote, or cost, you MUST reply: "I don't have live pricing available here, but our sales team can give you an exact quote right now. Please message us on WhatsApp at +91 8999662331."
-Rule 4: Keep answers VERY short, friendly, and human-like (1-2 sentences).`;
-
-      try {
-        // --- STEP 1: DYNAMIC MODEL DISCOVERY ---
-        // Automatically find Google's latest, active "Flash" model so it never breaks.
-        let targetModel = 'models/gemini-1.5-flash'; // ultimate fallback
-        try {
-          const listRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${env.GEMINI_API_KEY}`);
-          const listData = await listRes.json();
-          if (listData.models) {
-             // Grab the first model that supports text generation and is a fast/free "flash" variant
-             const activeModel = listData.models.find(m => m.name.includes('flash') && m.supportedGenerationMethods.includes('generateContent'));
-             if (activeModel) targetModel = activeModel.name;
-          }
-        } catch(e) {
-          console.log('Model discovery failed, using fallback.');
-        }
-
-        // --- STEP 2: GENERATE RESPONSE ---
-        const aiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/${targetModel}:generateContent?key=${env.GEMINI_API_KEY}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: systemPrompt + "\n\nUser asked: " + userMsg }] }]
-          })
-        });
-        
-        const aiData = await aiRes.json();
-        
-        if (aiData.error) {
-           return json({ok:false, msg: 'Google says: ' + aiData.error.message}, 500);
-        }
-        
-        const botReply = aiData.candidates[0].content.parts[0].text;
-        return json({ok:true, reply: botReply});
-        
-      } catch(e) {
-        return json({ok:false, msg:'Code crash: ' + e.message}, 500);
-      }
-    }
     
     // PUBLIC: Login
     if(path==='login'){
