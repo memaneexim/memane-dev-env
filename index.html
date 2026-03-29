@@ -1795,5 +1795,83 @@ setTimeout(function(){
   initCookieBanner();
 }, 2400);
 </script>
+
+  <style>
+  #ai-chat-btn { position:fixed; bottom:26px; left:26px; z-index:888; background:var(--navy); color:#fff; padding:12px 20px; border-radius:30px; font-weight:700; cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,0.2); transition:transform 0.2s; display:flex; align-items:center; gap:8px; font-size:0.9rem; }
+  #ai-chat-btn:hover { transform:scale(1.05); }
+  #ai-chat-window { position:fixed; bottom:90px; left:26px; z-index:889; width:340px; background:#fff; border-radius:12px; box-shadow:0 10px 40px rgba(0,0,0,0.25); display:none; flex-direction:column; overflow:hidden; border:1px solid var(--bdr); transform-origin:bottom left; animation:chatPop 0.3s ease; }
+  #ai-chat-window.open { display:flex; }
+  @keyframes chatPop { from { opacity:0; transform:scale(0.8); } to { opacity:1; transform:scale(1); } }
+  .ai-chat-head { background:var(--navy); color:#fff; padding:16px; display:flex; justify-content:space-between; align-items:center; font-size:0.9rem; }
+  .ai-chat-head button { background:none; border:none; color:#fff; font-size:1.4rem; cursor:pointer; line-height:1; }
+  .ai-chat-body { padding:16px; height:320px; overflow-y:auto; display:flex; flex-direction:column; gap:12px; background:#f4f7f9; }
+  .ai-msg { padding:12px 14px; border-radius:12px; font-size:0.85rem; max-width:85%; line-height:1.5; }
+  .ai-msg.bot { background:#fff; color:var(--txt); border:1px solid var(--bdr); align-self:flex-start; border-bottom-left-radius:2px; box-shadow:0 2px 4px rgba(0,0,0,0.02); }
+  .ai-msg.user { background:var(--red); color:#fff; align-self:flex-end; border-bottom-right-radius:2px; box-shadow:0 2px 4px rgba(155,28,49,0.2); }
+  .ai-chat-foot { padding:14px; background:#fff; border-top:1px solid var(--bdr); display:flex; gap:8px; }
+  #ai-chat-input { flex:1; border:1px solid var(--bdr); border-radius:20px; padding:10px 16px; font-size:0.85rem; outline:none; transition:border 0.2s; }
+  #ai-chat-input:focus { border-color:var(--navy); }
+  .ai-chat-foot button { background:var(--navy); color:#fff; border:none; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background 0.2s; }
+  .ai-chat-foot button:hover { background:var(--ndk); }
+  @media(max-width:768px) { #ai-chat-window { left:16px; right:16px; width:auto; bottom:80px; } #ai-chat-btn { left:16px; bottom:16px; } }
+</style>
+
+<div id="ai-chat-btn" onclick="toggleChat()">🤖 Ask AI Assistant</div>
+<div id="ai-chat-window">
+  <div class="ai-chat-head">
+    <div style="line-height:1.2;"><b>Memane AI</b><br><span style="font-size:10px;color:#C9A84C;">● Online 24/7</span></div>
+    <button onclick="toggleChat()">✕</button>
+  </div>
+  <div class="ai-chat-body" id="ai-chat-body">
+    <div class="ai-msg bot">Hi! I am the Memane International AI Assistant. What products are you looking to import from India today?</div>
+  </div>
+  <div class="ai-chat-foot">
+    <input type="text" id="ai-chat-input" placeholder="e.g. Do you sell Basmati Rice?" onkeydown="if(event.key==='Enter')sendChat()">
+    <button onclick="sendChat()">➤</button>
+  </div>
+</div>
+
+<script>
+  function toggleChat() {
+    document.getElementById('ai-chat-window').classList.toggle('open');
+  }
+  async function sendChat() {
+    const input = document.getElementById('ai-chat-input');
+    const msg = input.value.trim();
+    if(!msg) return;
+    
+    const body = document.getElementById('ai-chat-body');
+    
+    // Add user message
+    const udiv = document.createElement('div');
+    udiv.className = 'ai-msg user';
+    udiv.textContent = msg;
+    body.appendChild(udiv);
+    
+    input.value = '';
+    body.scrollTop = body.scrollHeight;
+    
+    // Show Loading
+    const ldiv = document.createElement('div');
+    ldiv.className = 'ai-msg bot';
+    ldiv.textContent = 'Thinking...';
+    body.appendChild(ldiv);
+    body.scrollTop = body.scrollHeight;
+    
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({message: msg})
+      });
+      const data = await res.json();
+      
+      ldiv.textContent = data.ok ? data.reply : 'Sorry, the AI is currently offline. Please use our WhatsApp button!';
+    } catch(e) {
+      ldiv.textContent = 'Network error. Please contact us via WhatsApp.';
+    }
+    body.scrollTop = body.scrollHeight;
+  }
+</script>
 </body>
 </html>
