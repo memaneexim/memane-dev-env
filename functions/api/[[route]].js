@@ -311,7 +311,7 @@ Rule 3: Keep your answers VERY short, friendly, and human-like (1-3 sentences ma
 Rule 4: USE PLAIN TEXT ONLY. Do not use bolding or markdown.`;
 
       try {
-        const aiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${env.GEMINI_API_KEY}`, {
+        const aiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-002:generateContent?key=${env.GEMINI_API_KEY}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
