@@ -1,3 +1,4 @@
+// Waking up the Gemini Key
 // ============================================================
 // MEMANE INTERNATIONAL — Cloudflare Worker API v7
 // 17 Categories · 91 Products · Full TOTP Multi-Admin Auth
