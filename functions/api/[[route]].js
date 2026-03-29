@@ -28,6 +28,7 @@ const DEFAULT_CATEGORIES=[
   {id:'sugar',icon:'🍬',name:'Sugar & Molasses',sub:'Refined white sugar ICUMSA 30/45',img:'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=600&q=80'},
 ];
 
+
 const DEFAULT_PRODUCTS=[
   // BASMATI RICE
   {id:'p001',category_id:'basmati',name:'1121 Golden Sella Basmati Rice',moq_india:'1–10 MT',moq_export:'25 MT / 1 FCL',form:'Parboiled Sella',grade:'Golden',origin:'Punjab, Haryana',packing:'5kg, 10kg, 25kg, 50kg PP/Jute',certifications:'APEDA, Phytosanitary, COO',shelf_life:'24 months',storage:'Cool, Dry Place',description:'Extra-long grain with non-sticky texture and rich golden aroma. Most popular variety for the Gulf market. Grain length 8.35mm+.',img:'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&q=80',active:true},
