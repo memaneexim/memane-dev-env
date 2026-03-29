@@ -299,7 +299,7 @@ export async function onRequest(context){
       const activeProds = prods.filter(p=>p.active!==false);
       const catalogText = activeProds.map(p => `- ${p.name} (MOQ: ${p.moq_export || 'Variable'})`).join('\n');
 
-      const systemPrompt = `You are KIM, the Artificial Intelligence Export Specialist at Memane International. 
+      const systemPrompt = `You are KIM, the Executive Assistant at Memane International. 
 Your job is to be polite, professional, and help buyers find products. 
 Here is our exact, live product catalog:\n${catalogText}
 Contact Email: ${settings.email1 || 'info@memaneinternational.in'}
@@ -311,7 +311,23 @@ Rule 3: Keep your answers VERY short, friendly, and human-like (1-3 sentences ma
 Rule 4: USE PLAIN TEXT ONLY. Do not use bolding or markdown.`;
 
       try {
-        const aiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${env.GEMINI_API_KEY}`, {
+        // --- STEP 1: DYNAMIC MODEL DISCOVERY ---
+        // Automatically find Google's latest, active "Flash" model so it never breaks.
+        let targetModel = 'models/gemini-1.5-flash'; // ultimate fallback
+        try {
+          const listRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${env.GEMINI_API_KEY}`);
+          const listData = await listRes.json();
+          if (listData.models) {
+             // Grab the first model that supports text generation and is a fast/free "flash" variant
+             const activeModel = listData.models.find(m => m.name.includes('flash') && m.supportedGenerationMethods.includes('generateContent'));
+             if (activeModel) targetModel = activeModel.name;
+          }
+        } catch(e) {
+          console.log('Model discovery failed, using fallback.');
+        }
+
+        // --- STEP 2: GENERATE RESPONSE ---
+        const aiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/${targetModel}:generateContent?key=${env.GEMINI_API_KEY}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -321,7 +337,6 @@ Rule 4: USE PLAIN TEXT ONLY. Do not use bolding or markdown.`;
         
         const aiData = await aiRes.json();
         
-        // THIS WILL PRINT GOOGLE'S EXACT ERROR IF THEY REJECT IT
         if (aiData.error) {
            return json({ok:false, msg: 'Google says: ' + aiData.error.message}, 500);
         }
