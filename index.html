@@ -1832,6 +1832,13 @@ setTimeout(function(){
 </div>
 
 <script>
+  // Auto-open chat and greet visitor after 3 seconds
+  setTimeout(function() {
+    var chatWindow = document.getElementById('ai-chat-window');
+    if (!chatWindow.classList.contains('open')) {
+      toggleChat();
+    }
+  }, 3000);
   function toggleChat() {
     document.getElementById('ai-chat-window').classList.toggle('open');
   }
