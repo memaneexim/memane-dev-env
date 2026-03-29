@@ -50,7 +50,6 @@
             <b style="font-size:1.05rem; letter-spacing:0.5px;">KIM</b><br>
             <span style="font-size:0.65rem; color:#7EC8E3; font-weight:700; letter-spacing:1px; text-transform:uppercase;">● Executive Assistant</span>
           </div>
-        </div>
         <button onclick="toggleKIMChat()">✕</button>
       </div>
       <div class="ai-chat-body" id="ai-chat-body">
