@@ -300,7 +300,7 @@ export async function onRequest(context){
       const activeProds = prods.filter(p=>p.active!==false);
       const catalogText = activeProds.map(p => `- ${p.name} (MOQ: ${p.moq_export || 'Variable'})`).join('\n');
 
-      const systemPrompt = `You are Meera, the Executive Assistant at Memane International. 
+      const systemPrompt = `You are kim, the Executive Assistant at Memane International. 
 Your job is to be polite, professional, and help buyers find products. 
 Here is our exact, live product catalog:\n${catalogText}
 Contact Email: ${settings.email1 || 'info@memaneinternational.in'}
