@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
+  <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "wg840x6a74");
+    </script>
+  
 <title>Memane International | Premium Agri Export Company — India</title>
 <meta name="description" content="Memane International — APEDA (RCMC) registered export company from Pune, India. Export-quality Rice, Spices, Fresh Fruits, Vegetables, Dairy, Frozen Seafood, Chicken and more to 40+ countries.">
 <meta name="keywords" content="India agri export, basmati rice export, spices export India, fresh fruits export, APEDA registered exporter, Pune export company, Indian food export, halal food export India">
@@ -937,7 +945,7 @@ footer{background:var(--ndk);padding:48px 0 0;}
           <div class="fg" style="grid-column:1/-1;"><label>Destination Port</label><input type="text" id="cf-port" placeholder="e.g. Dubai, Hamburg, Singapore"></div>
           <div class="fg" style="grid-column:1/-1;"><label>Message / Requirements</label><textarea id="cf-msg" rows="4" placeholder="Product specs, packaging preferences, or any other requirements..."></textarea></div>
         </div>
-        <button class="btn-r" style="width:100%;justify-content:center;margin-top:6px;padding:13px;" onclick="submitCF(this)">Send Enquiry →</button>
+        <button class="btn-r" style="width:100%;justify-content:center;margin-top:6px;padding:13px;" onclick="clarity('event', 'lead_form_submitted'); submitCF(this);">Send Enquiry →</button>
       </div>
     </div>
   </div></section>
@@ -1468,7 +1476,7 @@ function goProd(cid,idx){
         +'<div class="fg full"><label>Purpose of Requirement</label><div class="purp"><label><input type="radio" name="pe-pur" value="Reselling" checked> Reselling</label><label><input type="radio" name="pe-pur" value="End Use"> End Use</label><label><input type="radio" name="pe-pur" value="Both"> Both</label></div></div>'
         +'<div class="fg full"><label>Requirement Details</label><textarea id="pe-msg" rows="3" placeholder="I am interested. Kindly send the quotation for the same."></textarea></div>'
       +'</div>'
-      +'<button class="esub" onclick="submitPE(this,\''+p.n.replace(/'/g,"\\'")+'\')" id="pe-sub">Send Enquiry</button>'
+      +'<button class="esub" onclick="clarity(&apos;event&apos;, &apos;product_lead_submitted&apos;); submitPE(this,\''+p.n.replace(/'/g,"\\'")+'\')" id="pe-sub">Send Enquiry</button>'
     +'</div>';
   buildCarousel(cid,idx);
   goPage('product'); runFades();
