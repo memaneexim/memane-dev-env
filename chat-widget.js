@@ -30,10 +30,12 @@
   document.head.appendChild(styleSheet);
 
   const avatarUrl = "/kim.jpg";
+  
+  // The Memory Bank
   let chatHistory = "KIM: Welcome to Memane International. I'm KIM. What commodities are you looking to source today?\n";
 
   const chatHTML = `
-    <button id="ai-chat-btn" style="display:flex !important;" onclick="toggleKIMChat()">
+    <button id="ai-chat-btn" onclick="toggleKIMChat()">
       <img src="${avatarUrl}" class="ai-btn-avatar" alt="KIM" onerror="this.src='https://ui-avatars.com/api/?name=KIM&background=0A1520&color=7EC8E3'">
       Chat with KIM
     </button>
@@ -71,12 +73,14 @@
     if(!msg) return;
     
     const body = document.getElementById('ai-chat-body');
+    
     const udiv = document.createElement('div');
     udiv.className = 'ai-msg user';
     udiv.textContent = msg;
     body.appendChild(udiv);
     
     chatHistory += "Buyer: " + msg + "\n";
+    
     input.value = '';
     body.scrollTop = body.scrollHeight;
     
@@ -87,6 +91,7 @@
     body.scrollTop = body.scrollHeight;
     
     try {
+      // TOKEN SAVER: Only keep the last 6 lines of conversation
       let historyLines = chatHistory.split('\n').filter(line => line.trim() !== '');
       if (historyLines.length > 6) {
         historyLines = historyLines.slice(historyLines.length - 6);
@@ -112,11 +117,10 @@
     body.scrollTop = body.scrollHeight;
   };
 
-  // Safe timing popup — executes inside localized execution frame
   setTimeout(function() {
     var chatWindow = document.getElementById('ai-chat-window');
     if (chatWindow && !chatWindow.classList.contains('open')) {
       window.toggleKIMChat();
     }
-  }, 4000);
+  }, 3000);
 })();

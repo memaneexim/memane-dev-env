@@ -37,7 +37,7 @@
 
 <link rel="icon" type="image/jpeg" href="/uploads/logo.jpeg">
 <link rel="apple-touch-icon" href="/uploads/logo.jpeg">
-<meta name="theme-color" content="#9B1C31">
+<meta name="theme-color" content="#1A2B5F">
 <meta name="msapplication-TileColor" content="#1A2B5F">
 
 <meta name="geo.region" content="IN-MH">
@@ -118,15 +118,8 @@ button{cursor:pointer;}
 @media(max-width:768px){.mi-ticker{animation-duration:18s;} .cert-badge{min-width:90px;padding:12px 14px;}}
 @media(max-width:768px){section div[style*="grid-template-columns:1fr 1fr"]{display:block!important;} section div[style*="grid-template-columns:1fr 1fr"] > div:first-child{margin-bottom:16px;}}
 
-/* GRID MATRIX FOR BROCHURE BLOCKS */
-.brochure-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;}
-.brochure-card{background:#fff;border:1px solid var(--bdr);border-radius:8px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.05);text-align:left;}
-.brochure-card h3{font-family:'Playfair Display',serif;color:var(--navy);font-size:1.2rem;margin-bottom:10px;border-bottom:2px solid var(--gold);padding-bottom:6px;}
-.brochure-ul{list-style:disc;padding-left:20px;font-size:0.88rem;color:var(--txt);line-height:1.6;}
-.brochure-ul li{margin-bottom:6px;}
-
 /* SPLASH */
-#splash{position:fixed;inset:0;z-index:99999;background:var(--ndk);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;transition:opacity .8s;}
+#splash{position:fixed;inset:0;z-index:9999;background:var(--ndk);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;transition:opacity .8s;}
 #splash.hide{opacity:0;pointer-events:none;}
 .spl-logo{width:80px;height:80px;border-radius:12px;background:#fff;padding:8px;object-fit:contain;animation:pulse 1.5s ease-in-out infinite;}
 .spl-name{font-family:'Playfair Display',serif;font-size:1.8rem;color:#fff;font-weight:700;}.spl-name span{color:var(--gold);}
@@ -136,13 +129,16 @@ button{cursor:pointer;}
 @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
 @keyframes load{0%{width:0;}100%{width:100%;}}
 
+/* TOPBAR */
+
 /* NAV */
 #nav{position:sticky;top:0;z-index:900;background:#fff;border-bottom:3px solid var(--red);box-shadow:0 2px 14px rgba(0,0,0,.07);}
+/* BIGGER NAVIGATION BRANDING */
 .navi {
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 32px;
-  height: 90px;
+  height: 90px; /* Increased from 66px to give more room */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -151,12 +147,12 @@ button{cursor:pointer;}
 .nlogo {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 15px; /* Increased gap */
 }
 
 .nlogo img {
-  width: 65px;
-  height: 65px;
+  width: 65px; /* Increased from 46px */
+  height: 65px; /* Increased from 46px */
   object-fit: contain;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -166,7 +162,7 @@ button{cursor:pointer;}
 .nlogo-t .nn {
   display: block;
   font-family: 'Playfair Display', serif;
-  font-size: 1.5rem;
+  font-size: 1.5rem; /* MUCH bigger main name */
   font-weight: 800;
   color: var(--navy);
   line-height: 1;
@@ -174,7 +170,7 @@ button{cursor:pointer;}
 
 .nlogo-t .nt {
   display: block;
-  font-size: 0.7rem;
+  font-size: 0.7rem; /* Bigger tagline */
   letter-spacing: 2.5px;
   text-transform: uppercase;
   color: var(--red);
@@ -458,7 +454,7 @@ button{cursor:pointer;}
 .wnxt li{font-size:.77rem;color:var(--mut);padding:4px 0 4px 16px;position:relative;line-height:1.5;}
 .wnxt li::before{content:'→';position:absolute;left:0;color:var(--red);}
 
-/* FLIPBOOK LAYOUT STYLING */
+/* FLIPBOOK */
 .flip-sec{background:#fff;border-radius:10px;padding:40px;text-align:center;border:1px solid var(--bdr);box-shadow:var(--shd);}
 .flip-prev{background:var(--off);border:1px solid var(--bdr);border-radius:8px;padding:56px 40px;margin:24px 0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;}
 .flip-prev .fic{font-size:4rem;}
@@ -506,7 +502,7 @@ footer{background:var(--ndk);padding:48px 0 0;}
 
 /* RESPONSIVE */
 @media(max-width:1024px){.cgrid{grid-template-columns:repeat(3,1fr);}.fprow{grid-template-columns:repeat(3,1fr);}.ftmain{grid-template-columns:1fr 1fr;}.vgrid{grid-template-columns:repeat(2,1fr);}.astrip-in{grid-template-columns:1fr;}.pd-top{grid-template-columns:1fr;}.pd-dgrid{grid-template-columns:repeat(2,1fr);}.ctgrid{grid-template-columns:1fr;}.trustbar-in{justify-content:center;}}
-@media(max-width:768px){.tb{flex-direction:column;gap:5px;text-align:center;}.navi{padding:0 18px;}.nl,.ncta{display:none;}.hbg{display:block;}.con{padding:0 18px;}.hero-in{grid-template-columns:1fr;padding:48px 18px 40px;}.hero h1{font-size:1.9rem;}.hero-right{grid-template-columns:repeat(3,1fr);gap:8px;}.sbar-in{grid-template-columns:repeat(2,1fr);}.cgrid{grid-template-columns:repeat(2,1fr);}.fprow{grid-template-columns:repeat(2,1fr);}.wgrid{grid-template-columns:1fr;}.pgrid{grid-template-columns:repeat(2,1fr);}.ftmain{grid-template-columns:1fr;padding:0 18px;gap:24px;}.fbot{padding:15px 18px;flex-direction:column;text-align:center;}.pdwrap{padding:16px 18px;}.eg{grid-template-columns:1fr;}.cfgrid{grid-template-columns:1fr;}.fbar-in{padding:0 18px;}.ph-in{padding:0 18px;}.vgrid{grid-template-columns:1fr 1fr;}.clst{grid-template-columns:1fr;}.trustbar-in{flex-direction:column;align-items:flex-start;}.trust-chips{width:100%;}.brochure-grid{grid-template-columns:1fr;}}
+@media(max-width:768px){.tb{flex-direction:column;gap:5px;text-align:center;}.navi{padding:0 18px;}.nl,.ncta{display:none;}.hbg{display:block;}.con{padding:0 18px;}.hero-in{grid-template-columns:1fr;padding:48px 18px 40px;}.hero h1{font-size:1.9rem;}.hero-right{grid-template-columns:repeat(3,1fr);gap:8px;}.sbar-in{grid-template-columns:repeat(2,1fr);}.cgrid{grid-template-columns:repeat(2,1fr);}.fprow{grid-template-columns:repeat(2,1fr);}.wgrid{grid-template-columns:1fr;}.pgrid{grid-template-columns:repeat(2,1fr);}.ftmain{grid-template-columns:1fr;padding:0 18px;gap:24px;}.fbot{padding:15px 18px;flex-direction:column;text-align:center;}.pdwrap{padding:16px 18px;}.eg{grid-template-columns:1fr;}.cfgrid{grid-template-columns:1fr;}.fbar-in{padding:0 18px;}.ph-in{padding:0 18px;}.vgrid{grid-template-columns:1fr 1fr;}.clst{grid-template-columns:1fr;}.trustbar-in{flex-direction:column;align-items:flex-start;}.trust-chips{width:100%;}}
 @media(max-width:480px){.cgrid{grid-template-columns:1fr 1fr;}.fprow{grid-template-columns:1fr 1fr;}.sbar-in{grid-template-columns:1fr 1fr;}.hero h1{font-size:1.65rem;}.hero-right{display:none;}}
 </style>
 </head>
@@ -918,7 +914,6 @@ footer{background:var(--ndk);padding:48px 0 0;}
             <li>Confirm order → receive proforma invoice → begin shipment</li>
           </ul>
         </div>
-      </div>
       <div class="cfbox fade">
         <h3>Send a Trade Enquiry</h3>
         <p>Fill in your details and our team will respond within 24 hours.</p>
@@ -957,95 +952,28 @@ footer{background:var(--ndk);padding:48px 0 0;}
 </div>
 
 
-<!-- ============================================================
-     OPTION 1: DYNAMIC INTERACTIVE FLIPBOOK INTERFACE
-     ============================================================ -->
 <div id="pg-flipbook" class="pg">
   <div class="ph"><div class="ph-in">
-    <div class="bc"><a onclick="goPage('home')">Home</a><span class="sep">›</span><span>Digital Brochure</span></div>
-    <h1>Memane International Official Brochure</h1>
-    <p>Global Merchant Exporters & Importers — Connecting Markets, Delivering Excellence.</p>
+    <div class="bc"><a onclick="goPage('home')">Home</a><span class="sep">›</span><span>Flipbook / Brochure</span></div>
+    <h1>Product Catalogue &amp; Brochure</h1><p>Download our complete product catalogue</p>
   </div></div>
-  
-  <section class="sec" style="background:#fff;">
-    <div class="con" style="max-width:1000px;margin:0 auto;">
-      <div class="flip-sec fade">
-        <div style="margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px;">
-          <h2 class="sh" style="margin:0; font-size:1.5rem;">Corporate Sourcing Portfolio</h2>
-          <button class="btn-r" onclick="openBrochure()">Download Official PDF Brochure</button>
-        </div>
-        
-        <div class="brochure-grid">
-          <!-- Section 1: About Us -->
-          <div class="brochure-card">
-            <h3>Corporate Profile & Operations</h3>
-            <p style="font-size:0.88rem; line-height:1.6; color:var(--txt); margin-bottom:10px;">
-              Memane International is an APEDA (RCMC) registered merchant export house operating out of Pune, Maharashtra[cite: 2]. Sourcing directly from verified farms and processing zones across India, we handle customized private label solutions and complete customs documentation logistics[cite: 2].
-            </p>
-            <ul class="brochure-ul">
-              <li><strong>Founder:</strong> Tejas Memane[cite: 2]</li>
-              <li><strong>Certifications:</strong> APEDA, FSSAI, FIEO licensed network[cite: 2]</li>
-              <li><strong>Markets Covered:</strong> Middle East, Africa, Europe, Southeast Asia, Americas & Global Markets[cite: 2]</li>
-            </ul>
-          </div>
-
-          <!-- Section 2: Rice Desk -->
-          <div class="brochure-card">
-            <h3>Grains & Pulses Desk</h3>
-            <ul class="brochure-ul">
-              <li><strong>Basmati Rice:</strong> 1121 Golden Sella, 1121 Steam, 1121 Raw White, 1509 Varieties, Sugandha, Sharbati[cite: 2]</li>
-              <li><strong>Non-Basmati Rice:</strong> IR 64 Parboiled, IR 64 Raw, Sona Masoori, Swarna, Ponni, Matta Red, Broken Rice[cite: 2]</li>
-              <li><strong>Pulses & Lentils:</strong> Toor Dal (Yellow), Masoor Dal (Red), Chana Dal, Moong Dal, Black Urad Dal, White Kabuli Chana[cite: 2]</li>
-            </ul>
-          </div>
-
-          <!-- Section 3: Spices & Fruits -->
-          <div class="brochure-card">
-            <h3>Whole Spices & Horticulture</h3>
-            <ul class="brochure-ul">
-              <li><strong>Pure Spices:</strong> Whole Black Pepper, Turmeric Finger, Dry Red Chilli, Green Cardamom, Cumin Seeds, Coriander, Cloves, Cinnamon Sticks[cite: 2]</li>
-              <li><strong>Finely Milled Powders:</strong> Red Chilli Powder, Turmeric Powder, Cumin Powder, Coriander Powder, Garam Masala Blend[cite: 2]</li>
-              <li><strong>Fresh Fruits:</strong> Fresh Apples, Pomegranates, Fresh Oranges, Fresh Papaya, Grapes, Kiwi, Guava, Avocado[cite: 2]</li>
-            </ul>
-          </div>
-
-          <!-- Section 4: Vegetables & Dehydrated Powders -->
-          <div class="brochure-card">
-            <h3>Fresh Vegetables & Dry Processing</h3>
-            <ul class="brochure-ul">
-              <li><strong>Fresh Vegetables:</strong> Fresh Red Onion, Potatoes, Garlic, Ginger, Green Chilli, Red Chilli, Carrots, Cabbage, Cauliflower, Broccoli, Okra[cite: 2]</li>
-              <li><strong>Dehydrated Ingredients:</strong> Amchur Powder, Amla Powder, Red Onion Powder, Coriander Powder, Garlic Powder, Tomato Powder[cite: 2]</li>
-            </ul>
-          </div>
-
-          <!-- Section 5: Dairy & Commercial Foods -->
-          <div class="brochure-card">
-            <h3>Dairy, Commercial Milling & Bakery</h3>
-            <ul class="brochure-ul">
-              <li><strong>Dairy Fats:</strong> Desi Cow Ghee, Buffalo Fat Ghee, Fresh Curd, Fresh Milk Paneer, Cream Milk Powder, Mozzarella Cheese[cite: 2]</li>
-              <li><strong>Milling Products:</strong> Semolina Flour, Indian Gram Flour, White Corn Flour, White Wheat Flour[cite: 2]</li>
-              <li><strong>Bakery Goods & Sugar:</strong> Ajwain Rusk, Butter Bite Cookies, Desi Ghee Cookies, Fruit Bread, Multigrain Bread[cite: 2]</li>
-            </ul>
-          </div>
-
-          <!-- Section 6: Cold Chain & Frozen Desk -->
-          <div class="brochure-card">
-            <h3>Cold Chain & Frozen Exports</h3>
-            <ul class="brochure-ul">
-              <li><strong>Frozen Seafood:</strong> Frozen Black Tiger Shrimp, Blue Swim Crab, Deep Sea Shrimp, Mackerel Fish, Mullets Fish, Prawns[cite: 2]</li>
-              <li><strong>Halal Frozen Meats:</strong> Frozen Chicken Breast, Chicken Feet, Chicken Gizzard, Chicken Liver[cite: 2]</li>
-            </ul>
-          </div>
-        </div>
-        
-        <div style="margin-top:30px; background:var(--off); padding:20px; border-radius:8px; border-left:4px solid var(--red);">
-          <p style="font-size:0.85rem; color:var(--txt); margin:0;">
-            💡 <strong>Sourcing Note:</strong> Private labels and customized packing metrics (Retail/Wholesale pouches or standard bulk jute shipments) can be executed across all portfolios[cite: 2].
-          </p>
-        </div>
+  <section class="sec" style="background:#fff;"><div class="con" style="max-width:1400px;margin:0 auto;">
+    <div class="flip-sec fade">
+      <div class="stag" style="text-align:center;">Digital Catalogue</div>
+      <h2 class="sh" style="text-align:center;">Memane International <span>Brochure</span></h2>
+      <p style="color:var(--mut);text-align:center;margin-bottom:22px;">Download our complete product catalogue with specifications, packaging options and export details for all 17 categories.</p>
+      <div style="width:100%;height:1200px;">
+          <object
+             data="images/brochure.pdf"
+             type="application/pdf"
+             width="100%"
+             height="900">
+         </object>
+       </div>
       </div>
     </div>
-  </section>
+  </div></section>
+  <div id="ft-flipbook"></div>
 </div>
 
 <div id="pg-privacy" class="pg" style="background:#fff;">
@@ -1125,7 +1053,11 @@ footer{background:var(--ndk);padding:48px 0 0;}
 </div>
 
 <script>
+// ════════════════════════════════════════════════════
+// IMAGE MAP — Unsplash (free, Unsplash License)
+// ════════════════════════════════════════════════════
 var IMGS = {
+  // ── Category fallbacks
   basmati:    'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500&q=80',
   nonbasmati: 'https://images.unsplash.com/photo-1516684732162-798a0062be99?w=500&q=80',
   pulses:     'https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?w=500&q=80',
@@ -1143,6 +1075,7 @@ var IMGS = {
   chicken:    'https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=500&q=80',
   mutton:     'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=500&q=80',
   sugar:      'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=500&q=80',
+  // ── Basmati Rice (10)
   '1121 Golden Sella Basmati Rice':  'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500&q=80',
   '1121 Steam Basmati Rice':         'https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?w=500&q=80',
   '1121 Raw Basmati Rice':           'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=500&q=80',
@@ -1153,6 +1086,7 @@ var IMGS = {
   'Pusa Basmati Rice':               'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=500&q=80',
   'Sugandha Basmati Rice':           'https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=500&q=80',
   'Traditional Basmati Rice':        'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500&q=80',
+  // ── Non Basmati Rice (7)
   'IR 64 Parboiled Rice':            'https://images.unsplash.com/photo-1516684732162-798a0062be99?w=500&q=80',
   'IR 64 Raw White Rice':            'https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=500&q=80',
   'Sona Masoori Rice':               'https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?w=500&q=80',
@@ -1160,12 +1094,14 @@ var IMGS = {
   'Ponni Rice':                      'https://images.unsplash.com/photo-1516684732162-798a0062be99?w=500&q=80',
   '100% Broken Rice':                'https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=500&q=80',
   'Matta Red Rice':                  'https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?w=500&q=80',
+  // ── Indian Pulses (6)
   'Toor Dal (Yellow)':               'https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?w=500&q=80',
   'Chana Dal (Yellow)':              'https://images.unsplash.com/photo-1612857440200-fe15d3f2b4b7?w=500&q=80',
   'Moong Dal (Green)':               'https://images.unsplash.com/photo-1598169284893-2a208d28cbe1?w=500&q=80',
   'Masoor Dal (Red)':                'https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=500&q=80',
   'Kabuli Chana (White)':            'https://images.unsplash.com/photo-1559181567-c3190b007a5a?w=500&q=80',
   'Urad Dal (Black)':                'https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?w=500&q=80',
+  // ── Whole Spices (9)
   'Black Pepper (Whole)':            'https://images.unsplash.com/photo-1599909631628-cbb61e600827?w=500&q=80',
   'Turmeric Finger':                 'https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=500&q=80',
   'Green Cardamom':                  'https://images.unsplash.com/photo-1573477236062-6e8b3dcc8f8d?w=500&q=80',
@@ -1175,6 +1111,7 @@ var IMGS = {
   'Cloves':                          'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=500&q=80',
   'Cinnamon Sticks':                 'https://images.unsplash.com/photo-1514733670139-4d66e2fb5c59?w=500&q=80',
   'Black Cardamom':                  'https://images.unsplash.com/photo-1532336414038-cf19250c5757?w=500&q=80',
+  // ── Grounded Spices (7)
   'Red Chilli Powder':               'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&q=80',
   'Turmeric Powder':                 'https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=500&q=80',
   'Coriander Powder':                'https://images.unsplash.com/photo-1505253716362-afcea1eae1f2?w=500&q=80',
@@ -1182,6 +1119,7 @@ var IMGS = {
   'Black Pepper Powder':             'https://images.unsplash.com/photo-1599909631628-cbb61e600827?w=500&q=80',
   'Cinnamon Powder':                 'https://images.unsplash.com/photo-1514733670139-4d66e2fb5c59?w=500&q=80',
   'Cardamom Powder (Green)':         'https://images.unsplash.com/photo-1573477236062-6e8b3dcc8f8d?w=500&q=80',
+  // ── Fresh Fruits (9)
   'Fresh Mango (Alphonso / Kesar)':  'https://images.unsplash.com/photo-1553279768-865429fa0078?w=500&q=80',
   'Green A Grade Malda Mango':       'https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?w=500&q=80',
   'Fresh Pomegranate (Bhagwa)':      'https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=500&q=80',
@@ -1191,6 +1129,7 @@ var IMGS = {
   'Fresh Papaya (Red Lady)':         'https://images.unsplash.com/photo-1526318472351-c75fcf070305?w=500&q=80',
   'Fresh Guava':                     'https://images.unsplash.com/photo-1536511132770-e5058c7e8c46?w=500&q=80',
   'Fresh Watermelon':                'https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?w=500&q=80',
+  // ── Fresh Vegetables (11)
   'Fresh Red Onion':                 'https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=500&q=80',
   'Fresh White Garlic':              'https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?w=500&q=80',
   'Fresh Potato':                    'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500&q=80',
@@ -1202,57 +1141,77 @@ var IMGS = {
   'Fresh Carrot':                    'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=500&q=80',
   'Fresh Lemon':                     'https://images.unsplash.com/photo-1582087654735-8cdf5ad35c6f?w=500&q=80',
   'Fresh Broccoli':                  'https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=500&q=80',
+  // ── Dairy (6)
   'Pure Cow Ghee (Desi)':            'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&q=80',
   'Buffalo Ghee':                    'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&q=80',
   'Fresh Paneer':                    'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=500&q=80',
   'Full Cream Milk Powder':          'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&q=80',
   'Skimmed Milk Powder':             'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&q=80',
   'Salted / Unsalted Butter':        'https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=500&q=80',
+  // ── Canned (5)
   'Canned Sweet Corn':               'https://images.unsplash.com/photo-1601593346740-925612772716?w=500&q=80',
   'Canned Mushroom':                 'https://images.unsplash.com/photo-1504545102780-26774c1bb073?w=500&q=80',
   'Canned Pineapple':                'https://images.unsplash.com/photo-1589927986089-35812388d1f4?w=500&q=80',
   'Canned Lychee':                   'https://images.unsplash.com/photo-1519996529931-28324d5a630e?w=500&q=80',
   'Canned Fruit Cocktail':           'https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=500&q=80',
+  // ── Flour (5)
   'Whole Wheat Flour (Atta)':        'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&q=80',
   'White Wheat Flour (Maida)':       'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&q=80',
   'Gram Flour (Besan)':              'https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=500&q=80',
   'Fine Semolina (Suji/Rawa)':       'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&q=80',
   'Maize Flour (Corn)':              'https://images.unsplash.com/photo-1601593346740-925612772716?w=500&q=80',
+  // ── Bakery (6)
   'Wheat Rusk':                      'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&q=80',
   'Ajwain Rusk':                     'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&q=80',
   'Butter Cookies':                  'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=500&q=80',
   'Jeera Cookies':                   'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=500&q=80',
   'Sandwich / Milk Bread':           'https://images.unsplash.com/photo-1549931319-a545dcf3bc7b?w=500&q=80',
   'Multigrain Bread':                'https://images.unsplash.com/photo-1549931319-a545dcf3bc7b?w=500&q=80',
+  // ── Edible Oil (5)
   'Refined Sunflower Oil':           'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=500&q=80',
   'Pure Mustard Oil (Kachi Ghani)':  'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=500&q=80',
   'Pure Coconut Oil (Virgin)':       'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=500&q=80',
   'Pure Sesame Oil':                 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=500&q=80',
   'Groundnut Oil':                   'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=500&q=80',
+  // ── Sesame (3)
   'Natural White Sesame Seeds':      'https://images.unsplash.com/photo-1612187029458-cef1b9a76da2?w=500&q=80',
   'Hulled White Sesame Seeds':       'https://images.unsplash.com/photo-1612187029458-cef1b9a76da2?w=500&q=80',
   'Black Sesame Seeds':              'https://images.unsplash.com/photo-1612187029458-cef1b9a76da2?w=500&q=80',
+  // ── Frozen Seafood (6)
   'Frozen Vannamei Prawns (White)':  'https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=500&q=80',
   'Frozen Black Tiger Shrimp':       'https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=500&q=80',
   'Frozen Mackerel':                 'https://images.unsplash.com/photo-1534482421-64566f976cfa?w=500&q=80',
   'Frozen Red Snapper':              'https://images.unsplash.com/photo-1534482421-64566f976cfa?w=500&q=80',
   'Frozen Blue Swim Crab':           'https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=500&q=80',
   'Frozen Deep Sea Shrimp':          'https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=500&q=80',
+  // ── Frozen Chicken (6)
   'Frozen Whole Chicken (Halal)':    'https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=500&q=80',
   'Frozen Chicken Quarter Leg':      'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=500&q=80',
   'Frozen Chicken Breast (Boneless)':'https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=500&q=80',
   'Frozen Chicken Wings':            'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=500&q=80',
   'Frozen Chicken Feet (Paws)':      'https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=500&q=80',
   'Frozen Chicken Liver / Gizzard':  'https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=500&q=80',
+  // ── Frozen Mutton (4)
   'Frozen Boneless Mutton (Goat)':   'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=500&q=80',
   'Frozen Mutton Leg (Bone-in)':     'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=500&q=80',
   'Whole Frozen Mutton (Carcass)':   'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=500&q=80',
   'Frozen Mutton Liver':             'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=500&q=80',
+  // ── Sugar (4)
   'S30 White Refined Sugar':         'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=500&q=80',
   'M30 White Mill Sugar':            'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=500&q=80',
   'Indian Jaggery (Gur)':            'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&q=80',
   'Molasses (Sugarcane)':            'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=500&q=80'
 };
+function img(key){ return IMGS[key]||null; }
+function imgEl(key,alt,h,cover){
+  var src=img(key)||'';
+  if(!src) return '<div style="height:'+(h||130)+'px;background:linear-gradient(135deg,var(--ndk),var(--nlt));display:flex;align-items:center;justify-content:center;font-size:2.5rem;">📦</div>';
+  return '<img src="'+src+'" alt="'+alt+'" loading="lazy" style="width:100%;height:'+(h||130)+'px;object-fit:'+(cover||'cover')+';display:block;" onerror="this.parentNode.innerHTML=\'<div style=height:'+(h||130)+'px;background:linear-gradient(135deg,var(--ndk),var(--nlt));display:flex;align-items:center;justify-content:center;font-size:2.5rem\'>📦</div>\'">';
+}
+
+// ════════════════════════════════════════════════════
+// PRODUCT DATA — 17 Categories, 120+ Products
+// ════════════════════════════════════════════════════
 var CATS=[
   {id:'basmati',      ic:'🌾',name:'Basmati Rice',        sub:'Premium aromatic long-grain varieties'},
   {id:'nonbasmati',   ic:'🍚',name:'Non Basmati Rice',     sub:'Everyday rice for all markets'},
@@ -1297,7 +1256,7 @@ var PRODS={
   ],
   pulses:[
     {n:'Toor Dal (Yellow)',mi:'1-5 MT',mx:'10 MT',f:'Split, Dehusked',g:'A Grade',o:'Maharashtra, Gujarat',pk:'1kg,5kg,25kg,50kg',c:'FSSAI, Phytosanitary',sh:'18 months',st:'Cool, Dry Place',d:"Yellow Toor Dal (Arhar) — India's most consumed dal. High protein. Exported to USA, UK, UAE and East Africa."},
-    {n:'Chana Dal (Yellow)',mi:'1-5 MT',mx:'10 MT',f:'Split, Dehusked',g:'A Grade',o:'Rajasthan, MP',pk:'1kg,5kg,25kg,50kg',c:'FSSAI, Phytosanitary',sh:'18 months',st:'Cool, Dry Place',d:'Yellow Chana Dal — split Bengal gram. High fibre, low GI. Major export demand in GCC and UK.'},
+    {n:'Chana Dal (Yellow)',mi:'1-5 MT',mx:'10 MT',f:'Split, Dehusked',g:'A Grade',o:'Rajasthan, MP',pk:'1kg,5kg,25kg,50kg',c:'FSSAI, Phytosanitary',sh:'18 months',st:'Cool, Dry Place',d:'Yellow Chana Dal — split Bengal gram. High fiber, low GI. Major export demand in GCC and UK.'},
     {n:'Moong Dal (Green)',mi:'1-5 MT',mx:'10 MT',f:'Whole/Split',g:'A Grade',o:'Rajasthan, Maharashtra',pk:'1kg,5kg,25kg',c:'FSSAI, Phytosanitary',sh:'18 months',st:'Cool, Dry Place',d:'Green Moong Dal — easy to digest, high protein. Popular in South Asia and Middle East.'},
     {n:'Masoor Dal (Red)',mi:'1-5 MT',mx:'10 MT',f:'Whole/Split',g:'A Grade',o:'MP, UP, Bihar',pk:'1kg,5kg,25kg,50kg',c:'FSSAI, Phytosanitary',sh:'18 months',st:'Cool, Dry Place',d:'Red Masoor Dal — quick-cooking, high protein. Widely exported to UK, Canada, UAE and Europe.'},
     {n:'Kabuli Chana (White)',mi:'1-5 MT',mx:'10 MT',f:'Whole',g:'A Grade',o:'MP, Rajasthan',pk:'1kg,5kg,25kg,50kg',c:'FSSAI, Phytosanitary',sh:'18 months',st:'Cool, Dry Place',d:'White Kabuli Chana — large white chickpeas for hummus and chole. Strong export to Europe and Middle East.'},
@@ -1320,7 +1279,7 @@ var PRODS={
     {n:'Coriander Powder',mi:'1 MT',mx:'1 MT',f:'Powder',g:'Double Sortex',o:'Rajasthan, MP',pk:'1kg,5kg,25kg PP',c:'FSSAI, Spices Board',sh:'18 months',st:'Cool, Dry Place',d:'Coriander Powder — mild citrusy earthy flavour. Foundation of Indian curry powders. High export demand.'},
     {n:'Cumin Powder',mi:'1 MT',mx:'1 MT',f:'Powder',g:'Premium',o:'Rajasthan',pk:'1kg,5kg,25kg PP',c:'FSSAI, Spices Board',sh:'18 months',st:'Cool, Dry Place',d:'Cumin Powder — aromatic earthy. Ground from premium Rajasthani cumin. Used in Middle Eastern and Indian cuisines.'},
     {n:'Black Pepper Powder',mi:'500 kg',mx:'500 kg',f:'Powder',g:'Premium',o:'Kerala',pk:'1kg,5kg,25kg PP',c:'FSSAI, Spices Board',sh:'18 months',st:'Cool, Dry Place',d:'Black Pepper Powder — freshly ground Kerala pepper. Strong aroma, high piperine. Coarse and fine grind available.'},
-    {n:'Cinnamon Powder',mi:'500 kg',mx:'1 MT',f:'Powder',g:'Premium',o:'Kerala',pk:'1kg,5kg,25kg PP',c:'FSSAI, Spices Board',sh:'18 months',st:'Cool, Dry Place',d:'Cinnamon Powder — finely milled from whole sticks. Sweet warm aroma for bakery and beverages worldwide.'},
+    {n:'Cinnamon Powder',mi:'500 kg',mx:'500 kg',f:'Powder',g:'Premium',o:'Kerala',pk:'1kg,5kg,25kg PP',c:'FSSAI, Spices Board',sh:'18 months',st:'Cool, Dry Place',d:'Cinnamon Powder — finely milled from whole sticks. Sweet warm aroma for bakery and beverages worldwide.'},
     {n:'Cardamom Powder (Green)',mi:'250 kg',mx:'250 kg',f:'Powder',g:'Premium',o:'Kerala (Idukki)',pk:'500g,1kg,5kg PP',c:'FSSAI, Spices Board',sh:'12 months',st:'Airtight, Cool Place',d:'Green Cardamom Powder — intense floral aroma. Premium for chai, desserts and Middle Eastern beverages.'},
   ],
   freshfruits:[
@@ -1364,7 +1323,7 @@ var PRODS={
   ],
   flour:[
     {n:'Whole Wheat Flour (Atta)',mi:'5 MT',mx:'10 MT',f:'Fine Powder',g:'Standard/Premium',o:'Punjab, Rajasthan, UP',pk:'1kg,5kg,10kg,25kg,50kg PP',c:'FSSAI, APEDA, Halal',sh:'9 months',st:'Cool, Dry Place',d:'Whole wheat chapati flour. Custom protein content available. Exported to GCC, Africa and SE Asia.'},
-    {n:'White Wheat Flour (Maida)',mi:'5 MT',mx:'10 MT',f:'Fine Powder',g:'All Purpose',o:'Punjab, UP',pk:'1kg,5kg,10kg,25kg,50kg PP',c:'FSSAI, Halal',sh:'9 months',st:'Cool, Dry Place',d:'All-purpose refined wheat flour. Used in bakery, pasta and food service. Exported to GCC and Africa.'},
+    {n:'White Wheat Flour (Maida)',mi:'5 MT',mx:'10 MT',f:'Fine Powder',g:'All Purpose',o:'Punjab, UP',pk:'1kg,5kg,25kg,50kg PP',c:'FSSAI, Halal',sh:'9 months',st:'Cool, Dry Place',d:'All-purpose refined wheat flour. Used in bakery, pasta and food service. Exported to GCC and Africa.'},
     {n:'Gram Flour (Besan)',mi:'2 MT',mx:'5 MT',f:'Fine Powder',g:'Premium',o:'Rajasthan, MP',pk:'500g,1kg,5kg,25kg PP',c:'FSSAI, Halal',sh:'12 months',st:'Cool, Dry Place',d:'Indian Gram Flour — gluten-free, high protein. Used in pakora, kadhi and bakery. Growing health food segment.'},
     {n:'Fine Semolina (Suji/Rawa)',mi:'2 MT',mx:'5 MT',f:'Coarse/Fine',g:'A Grade',o:'UP, Rajasthan',pk:'500g,1kg,5kg,25kg PP',c:'FSSAI, Halal',sh:'12 months',st:'Cool, Dry Place',d:'Coarse and fine semolina. Used in pasta, upma, halwa and bakery products.'},
     {n:'Maize Flour (Corn)',mi:'2 MT',mx:'5 MT',f:'Fine Powder',g:'Standard',o:'India',pk:'500g,1kg,5kg,25kg PP',c:'FSSAI, Halal',sh:'12 months',st:'Cool, Dry Place',d:'White corn flour. Used in cornbread, tortillas and food thickening. Exported to Africa and Middle East.'},
@@ -1387,7 +1346,7 @@ var PRODS={
   sesame:[
     {n:'Natural White Sesame Seeds',mi:'1 MT',mx:'1 MT',f:'Whole Seeds',g:'FAQ/99% Purity',o:'Gujarat, Rajasthan',pk:'25kg,50kg PP Bags',c:'FSSAI, Halal, Organic avail.',sh:'18 months',st:'Cool, Dry Place',d:'Un-hulled white sesame seeds. Full nutrition. Used in bread and oil extraction. India is top global exporter.'},
     {n:'Hulled White Sesame Seeds',mi:'1 MT',mx:'1 MT',f:'Hulled',g:'99.9% Purity',o:'Gujarat, Rajasthan',pk:'25kg,50kg PP Bags',c:'FSSAI, Halal, EU Organic',sh:'12 months',st:'Cool, Dry Place',d:'Skin removed, bright white, mild nutty. Used in tahini, burger buns and confectionery. Top export grade.'},
-    {n:'Black Sesame Seeds',mi:'1 MT',mx:'1 MT',f:'Whole Seeds',g:'FAQ/Bold',o:'Gujarat, Rajasthan',pk:'25kg,50kg PP Bags',c:'FSSAI, Halal, Organic avail.',sh:'18 months',st:'Cool, Dry Place',d:'Un-hulled deep black seeds. Bold nutty flavour. High antioxidants. Used in Asian cuisine, confectionery and ayurvedic supplements.'},
+    {n:'Black Sesame Seeds',mi:'1 MT',mx:'1 MT',f:'Whole Seeds',g:'FAQ/Bold',o:'Gujarat, Rajasthan',pk:'25kg,50kg PP Bags',c:'FSSAI, Halal, Organic avail.',sh:'18 months',st:'Cool, Dry Place',d:'Un-hulled deep black seeds. Bold nutty flavour. Strong demand in Japan, China, Korea and USA.'},
   ],
   seafood:[
     {n:'Frozen Vannamei Prawns (White)',mi:'500 kg',mx:'1 MT',f:'IQF / Block',g:'HOSO/HLSO/PD',o:'Andhra Pradesh',pk:'1kg,2kg Retail; 10kg Master Carton',c:'MPEDA, EU, Halal, HACCP, BAP',sh:'24 months frozen',st:'Frozen -18°C',d:'Farm-raised Vannamei. India is top shrimp exporter. All formats available. Exported to USA, EU and Japan.'},
@@ -1420,20 +1379,21 @@ var PRODS={
 };
 
 // ════════════════════════════════════════════════════
-// CORE FUNCTIONS
+// HELPERS
 // ════════════════════════════════════════════════════
 function getCat(id){return CATS.find(function(c){return c.id===id;});}
 function allProds(){
   var a=[];
   Object.keys(PRODS).forEach(function(k){
     var cat=getCat(k);
-    if(cat){
-      PRODS[k].forEach(function(p,i){a.push({p:p,catId:k,catName:cat.name,catIc:cat.ic,idx:i});});
-    }
+    PRODS[k].forEach(function(p,i){a.push({p:p,catId:k,catName:cat?cat.name:'',catIc:cat?cat.ic:'📦',idx:i});});
   });
   return a;
 }
 
+// ════════════════════════════════════════════════════
+// PAGE ROUTER
+// ════════════════════════════════════════════════════
 function goPage(pg){
   document.querySelectorAll('.pg').forEach(function(x){x.classList.remove('on');});
   var t=document.getElementById('pg-'+pg);
@@ -1511,7 +1471,9 @@ function scrollToEnq(){
   if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-// ── CAROUSEL ──
+// ════════════════════════════════════════════════════
+// CAROUSEL
+// ════════════════════════════════════════════════════
 var carPos={};
 function buildCarousel(cid,curIdx){
   var cat=getCat(cid); var items=[];
@@ -1541,7 +1503,9 @@ function slideCar(dir){
   t.style.transform='translateX(-'+(carPos['car0']*207)+'px)';
 }
 
-// ── AUTOMATED GENERATORS ──
+// ════════════════════════════════════════════════════
+// HOME CATS
+// ════════════════════════════════════════════════════
 function buildHomeCats(){
   var g=document.getElementById('home-cats'); if(!g||g.dataset.built) return; g.dataset.built=1;
   g.innerHTML=CATS.slice(0,8).map(function(cat){
@@ -1558,6 +1522,7 @@ function buildHomeCats(){
 
 function buildFeaturedProds(){
   var el=document.getElementById('feat-prods'); if(!el||el.dataset.built) return; el.dataset.built=1;
+  // Pick one top product from each of 5 key categories
   var picks=[
     {cid:'basmati',idx:0},{cid:'wholespices',idx:0},{cid:'freshfruits',idx:0},
     {cid:'freshveg',idx:0},{cid:'seafood',idx:0},{cid:'pulses',idx:0},
@@ -1574,6 +1539,9 @@ function buildFeaturedProds(){
   }).join('');
 }
 
+// ════════════════════════════════════════════════════
+// FULL CATALOGUE
+// ════════════════════════════════════════════════════
 function buildCatalogue(){
   var con=document.getElementById('cat-con'); if(!con||con.dataset.built) return; con.dataset.built=1;
   var html=''; CATS.forEach(function(cat){
@@ -1589,6 +1557,7 @@ function buildCatalogue(){
       }).join('')+'</div></div>';
   });
   con.innerHTML=html;
+  // Filter bar
   var fb=document.getElementById('fbar'); if(fb){
     fb.innerHTML='<button class="fb act" onclick="filt(\'all\',this)">All</button>'
       +CATS.map(function(c){return '<button class="fb" onclick="filt(\''+c.id+'\',this)">'+c.ic+' '+c.name+'</button>';}).join('');
@@ -1601,6 +1570,9 @@ function filt(id,btn){
   document.querySelectorAll('.csec').forEach(function(s){s.hidden=(id!=='all'&&s.dataset.cid!==id);});
 }
 
+// ════════════════════════════════════════════════════
+// DROPDOWNS
+// ════════════════════════════════════════════════════
 function buildNav(){
   var dd=document.getElementById('prod-dd');
   if(dd) dd.innerHTML=CATS.map(function(c){return '<a onclick="goCat(\''+c.id+'\')">'+c.ic+' '+c.name+'</a>';}).join('');
@@ -1608,6 +1580,9 @@ function buildNav(){
   if(mp) mp.innerHTML=CATS.map(function(c){return '<a class="ml" style="padding-left:32px;font-size:.85rem;" onclick="goCat(\''+c.id+'\');closeMob()">'+c.ic+' '+c.name+'</a>';}).join('');
 }
 
+// ════════════════════════════════════════════════════
+// FOOTERS
+// ════════════════════════════════════════════════════
 var ftDone={};
 function injectFooters(){
   var tpl=document.getElementById('ftpl'); if(!tpl) return;
@@ -1622,21 +1597,30 @@ function injectFooterInto(pgId, ftId){
   if(sl&&!ftDone[ftId]){sl.innerHTML=tpl.innerHTML;ftDone[ftId]=1;}
 }
 
+// ════════════════════════════════════════════════════
+// NAV ACTIVE
+// ════════════════════════════════════════════════════
 function navActive(pg){
   document.querySelectorAll('.nl>li>a').forEach(function(a){a.classList.remove('act');});
   var m={home:'nv-home',about:'nv-about',catalogue:'nv-prod',category:'nv-prod',product:'nv-prod',flipbook:'nv-flip',contact:'nv-con'};
   var el=document.getElementById(m[pg]); if(el) el.classList.add('act');
 }
 
+// ════════════════════════════════════════════════════
+// MOBILE NAV
+// ════════════════════════════════════════════════════
 function openMob(){document.getElementById('mnav').classList.add('open');}
 function closeMob(){document.getElementById('mnav').classList.remove('open');}
 function chkClose(e){if(e.target===document.getElementById('mnav'))closeMob();}
 
-// ── CUSTOM PIPELINES & TRACKING ──
-function openBrochure(){
-  window.open('Memane_International_Brochure.pdf','_blank')||(window.location.href='Memane_International_Brochure.pdf');
-}
+// ════════════════════════════════════════════════════
+// WHATSAPP
+// ════════════════════════════════════════════════════
+function openWA(m){window.open('https://wa.me/918999662331?text='+encodeURIComponent(m||'Hi Memane International, I am interested in your products. Please share details.'),'_blank');}
 
+// ════════════════════════════════════════════════════
+// FORMS — Custom Cloudflare Worker Integration
+// ════════════════════════════════════════════════════
 async function submitPE(btn,prod){
   var nm=document.getElementById('pe-name').value.trim();
   var em=document.getElementById('pe-email').value.trim();
@@ -1647,16 +1631,31 @@ async function submitPE(btn,prod){
   if(!nm||!em){alert('Please enter your name and email.');return;}
   btn.textContent='Sending...';btn.disabled=true;
   
-  var data={name:nm, email:em, phone:ph, quantity:qt, purpose:pur?pur.value:'', message:mg||'I am interested.', product:prod};
+  var data={
+    name:nm, email:em, phone:ph, quantity:qt, 
+    purpose:pur?pur.value:'', 
+    message:mg||'I am interested. Kindly send the quotation.', 
+    product:prod
+  };
+  
   try {
     var res = await fetch('/api/enquiry',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
     var result = await res.json();
     btn.textContent='Send Enquiry';btn.disabled=false;
+    
     if(result.ok) {
       var ok=document.getElementById('pe-ok');
-      ok.textContent='✅ Enquiry sent!';ok.style.display='block';
+      ok.textContent='✅ Enquiry sent! We\'ll get back to you within 24 hours.';ok.style.display='block';
+      setTimeout(function(){if(confirm('Also send via WhatsApp for instant response?')) openWA('Hi, enquiry for '+prod+'. Name: '+nm+', Qty: '+qt+', Email: '+em);},400);
+    } else {
+      alert('Something went wrong. Please try again.');
     }
-  } catch(err) { btn.disabled=false; }
+  } catch(err) {
+    btn.textContent='Send Enquiry';btn.disabled=false;
+    openWA('Hi, I need a quote for '+prod+'. Name: '+nm+', Qty: '+qt+', Email: '+em+'. '+(mg||''));
+    var ok=document.getElementById('pe-ok');
+    ok.textContent='✅ Opening WhatsApp for instant response!';ok.style.display='block';
+  }
 }
 
 async function submitCF(btn){
@@ -1671,15 +1670,35 @@ async function submitCF(btn){
   if(!nm||!em){alert('Please enter your name and email.');return;}
   btn.textContent='Sending...';btn.disabled=true;
   
-  var data={name:nm, email:em, country:co, phone:ph, product:pr, quantity:qt, destination_port:pt, message:mg};
+  var data={
+    name:nm, email:em, country:co, phone:ph, 
+    product:pr, quantity:qt, destination_port:pt, message:mg
+  };
+  
   try {
     var res = await fetch('/api/enquiry',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
     var result = await res.json();
     btn.textContent='Send Enquiry →';btn.disabled=false;
-    if(result.ok) { document.getElementById('cf-ok').style.display='block'; }
-  } catch(err) { btn.disabled=false; }
+    
+    if(result.ok) {
+      document.getElementById('cf-ok').style.display='block';
+      setTimeout(function(){if(confirm('Also send via WhatsApp for faster response?')) openWA('Hi, Trade Enquiry. Name: '+nm+', Country: '+co+', Product: '+pr+', Qty: '+qt+', Email: '+em);},400);
+    } else {
+      alert('Something went wrong. Please try again.');
+    }
+  } catch(err) {
+    btn.textContent='Send Enquiry →';btn.disabled=false;
+    openWA('Trade Enquiry from '+nm+' ('+co+'). Product: '+pr+', Qty: '+qt+', Email: '+em+'. '+mg);
+    document.getElementById('cf-ok').textContent='✅ Opening WhatsApp for instant response!';
+    document.getElementById('cf-ok').style.display='block';
+  }
 }
 
+function openBrochure(){window.open('images/brochure.pdf','_blank')||(window.location.href='images/brochure.pdf');}
+
+// ════════════════════════════════════════════════════
+// FADE OBSERVER
+// ════════════════════════════════════════════════════
 function runFades(){
   if(!('IntersectionObserver' in window)){
     document.querySelectorAll('.fade:not(.in)').forEach(function(e){e.classList.add('in');}); return;
@@ -1692,9 +1711,112 @@ function runFades(){
   });
 }
 
-function buildPrivacyPage() {}
-function buildTermsPage() {}
+// ════════════════════════════════════════════════════
+// PRIVACY POLICY PAGE
+// ════════════════════════════════════════════════════
+function buildPrivacyPage() {
+  var el = document.getElementById('pg-privacy');
+  if (!el) return;
+  if (el.dataset.built) return;
+  el.dataset.built = '1';
+  el.innerHTML = '<div class="wrap" style="max-width:860px;margin:0 auto;padding:60px 24px;">' +
+  '<h1 style="font-family:Playfair Display,serif;font-size:2rem;color:var(--navy);margin-bottom:8px;">Privacy Policy</h1>' +
+  '<p style="color:var(--mut);font-size:.82rem;margin-bottom:32px;">Last updated: March 2025 &nbsp;·&nbsp; Memane International, Pune, Maharashtra, India</p>' +
+  section('1. Who We Are',
+    'Memane International ("we", "us", "our") is an import-export company registered in Pune, Maharashtra, India. We operate the website <strong>memaneinternational.in</strong>. Contact: <a href="mailto:info@memaneinternational.in">info@memaneinternational.in</a> | +91 8999662331.'
+  ) +
+  section('2. Information We Collect',
+    '<strong>Information you provide:</strong> When you fill out our enquiry or contact forms, we collect your name, email address, phone number, country, and message content.<br><br>' +
+    '<strong>Information collected automatically:</strong> We collect standard server logs including IP address, browser type, and pages visited. We use Cloudflare for hosting which may process your IP address as part of their service.'
+  ) +
+  section('3. How We Use Your Information',
+    'We use the information you provide solely to: respond to your enquiries and business requests; send you product information and quotes you have requested; improve our website and services. We do not use your data for advertising. We do not sell, rent, or share your personal data with third parties except as required to fulfil your request (e.g., logistics partners) or as required by law.'
+  ) +
+  section('4. Cookies',
+    'We use only essential functional cookies required to operate this website. We do not use tracking cookies, advertising cookies, or analytics cookies. By clicking "Accept" on our cookie banner, you consent to essential cookies only.'
+  ) +
+  section('5. Third-Party Services',
+    '<strong>Cloudflare:</strong> Our website is hosted on Cloudflare Pages. Cloudflare processes your IP address for security and performance. See <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Cloudflare Privacy Policy</a>.<br><br>' +
+    '<strong>Unsplash:</strong> Product images are served from Unsplash CDN.'
+  ) +
+  section('6. Data Retention',
+    'We retain enquiry data for a maximum of 3 years for business correspondence purposes. You may request deletion of your data at any time by emailing us.'
+  ) +
+  section('7. Your Rights (GDPR)',
+    'If you are located in the European Union, you have the following rights under GDPR: right to access your data; right to rectification; right to erasure ("right to be forgotten"); right to data portability; right to object to processing. To exercise any of these rights, email <a href="mailto:info@memaneinternational.in">info@memaneinternational.in</a>. We will respond within 30 days.'
+  ) +
+  section('8. Security',
+    'We implement appropriate technical and organisational measures to protect your personal information. Our website uses HTTPS (SSL/TLS) encryption for all data transmission.'
+  ) +
+  section('9. Children\'s Privacy',
+    'Our website and services are intended for business use and are not directed at children under 16. We do not knowingly collect personal information from children.'
+  ) +
+  section('10. Changes to This Policy',
+    'We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated date. Continued use of the website after changes constitutes acceptance.'
+  ) +
+  section('11. Contact',
+    'For any privacy-related queries: <strong>Memane International</strong><br>Email: <a href="mailto:info@memaneinternational.in">info@memaneinternational.in</a><br>Phone: +91 8999662331<br>Address: Pune, Maharashtra, India'
+  ) +
+  '</div>';
+}
 
+function buildTermsPage() {
+  var el = document.getElementById('pg-terms');
+  if (!el) return;
+  if (el.dataset.built) return;
+  el.dataset.built = '1';
+  el.innerHTML = '<div class="wrap" style="max-width:860px;margin:0 auto;padding:60px 24px;">' +
+  '<h1 style="font-family:Playfair Display,serif;font-size:2rem;color:var(--navy);margin-bottom:8px;">Terms of Service</h1>' +
+  '<p style="color:var(--mut);font-size:.82rem;margin-bottom:32px;">Last updated: March 2025 &nbsp;·&nbsp; Memane International, Pune, Maharashtra, India</p>' +
+  section('1. Acceptance of Terms',
+    'By accessing and using the website <strong>memaneinternational.in</strong> (the "Site"), you agree to be bound by these Terms of Service. If you do not agree, please do not use the Site.'
+  ) +
+  section('2. About Us',
+    'Memane International is an import-export company registered in Pune, Maharashtra, India. We are APEDA (RCMC) registered and operate in compliance with Indian export regulations and international trade laws.'
+  ) +
+  section('3. Website Use',
+    'This website is provided for business enquiry and information purposes only. You may: browse product information; submit enquiries; download our catalogue. You may not: copy, reproduce, or distribute our website content without written permission; use the site for unlawful purposes; attempt to gain unauthorised access to any part of the Site.'
+  ) +
+  section('4. Product Information',
+    'Product details, specifications, and prices shown on this website are indicative and for enquiry purposes only. Final prices, MOQ, and specifications are subject to negotiation and formal quotation. Product availability is subject to seasonal and market conditions. Images are representative and may vary from actual products.'
+  ) +
+  section('5. Enquiries and Quotes',
+    'Submitting an enquiry through our website does not constitute a binding order or contract. A formal contract is only established upon issuance of a written Purchase Order or Sales Contract signed by authorised representatives of both parties.'
+  ) +
+  section('6. Intellectual Property',
+    'The Memane International name, logo, and website content are our intellectual property. Product photographs sourced from Unsplash are used under the Unsplash License. Unauthorised reproduction of our brand materials is prohibited.'
+  ) +
+  section('7. Export and Trade Compliance',
+    'All exports are conducted in compliance with Indian export regulations, FSSAI requirements, APEDA guidelines, and destination country import regulations. Buyers are responsible for compliance with their local import laws, duties, and regulations.'
+  ) +
+  section('8. Limitation of Liability',
+    'This website is provided "as is". We make no warranties about the accuracy or completeness of information on this Site. We shall not be liable for any indirect, incidental, or consequential damages arising from your use of this website or reliance on its content.'
+  ) +
+  section('9. Links to Third Parties',
+    'Our Site may contain links to third-party websites. We are not responsible for the content or privacy practices of those sites.'
+  ) +
+  section('10. Governing Law',
+    'These Terms are governed by the laws of India. Any disputes shall be subject to the exclusive jurisdiction of courts in Pune, Maharashtra, India.'
+  ) +
+  section('11. Changes',
+    'We reserve the right to modify these Terms at any time. Changes are effective immediately upon posting. Continued use of the Site constitutes acceptance of updated Terms.'
+  ) +
+  section('12. Contact',
+    'Questions about these Terms: <strong>Memane International</strong><br>Email: <a href="mailto:info@memaneinternational.in">info@memaneinternational.in</a><br>Phone: +91 8999662331<br>Address: Pune, Maharashtra, India'
+  ) +
+  '</div>';
+}
+
+function section(title, body) {
+  return '<div style="margin-bottom:28px;">' +
+    '<h2 style="font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--bdr);">' + title + '</h2>' +
+    '<p style="font-size:.87rem;color:var(--txt);line-height:1.8;">' + body + '</p>' +
+    '</div>';
+}
+
+// ════════════════════════════════════════════════════
+// COOKIE CONSENT
+// ════════════════════════════════════════════════════
 function initCookieBanner() {
   var consent = localStorage.getItem('mi_cookie_consent');
   if (!consent) {
@@ -1704,14 +1826,16 @@ function initCookieBanner() {
 }
 function acceptCookies() {
   localStorage.setItem('mi_cookie_consent', 'accepted');
-  document.getElementById('cookie-banner').style.display = 'none';
+  var b = document.getElementById('cookie-banner'); if (b) b.style.display = 'none';
 }
 function declineCookies() {
   localStorage.setItem('mi_cookie_consent', 'declined');
-  document.getElementById('cookie-banner').style.display = 'none';
+  var b = document.getElementById('cookie-banner'); if (b) b.style.display = 'none';
 }
 
-// THE SPEED & STEALTH INITIALIZER SEQUENCE
+// ════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════
 var _spl = document.getElementById('splash');
 setTimeout(function(){
   if(_spl){ _spl.classList.add('hide'); setTimeout(function(){_spl.style.display='none';},900); }
